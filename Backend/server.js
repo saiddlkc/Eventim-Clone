@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const userRoutes = require("./Routers/userRoutes");
 
 const app = express();
 
@@ -11,12 +12,17 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/dashboard", userRoutes);
+
 mongoose
   .connect(process.env.SERVER)
   .then(() => {
+    console.log("connected to db");
     // listen for requests
     app.listen(process.env.PORT, () => {
-      console.log(`connected to db , server is running`);
+      console.log(
+        `connected to dbatlas , server is running on port ${process.env.PORT}`
+      );
     });
   })
   .catch((error) => {
