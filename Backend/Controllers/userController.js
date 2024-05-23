@@ -2,7 +2,7 @@ const Users = require("../Models/usersSchema");
 
 exports.createUser = async (req, res) => {
   try {
-    const user = new Users(req, res);
+    const user = new Users(req.body);
     await user.save();
     res.status(201).json(user);
   } catch (error) {
@@ -11,6 +11,17 @@ exports.createUser = async (req, res) => {
 };
 
 exports.getUsers = async (req, res) => {
+  try {
+    const users = await Users.find().populate(
+      "events createdEvents bookedEvents"
+    );
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+exports.getUser = async (req, res) => {
   try {
     const user = await Users.findById(req.params.id).populate(
       "events createdEvents bookedEvents"
