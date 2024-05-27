@@ -26,24 +26,24 @@ const usersSchema = new Schema({
     type: String,
     default: "",
   },
-  events: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Events",
-    },
-  ],
-  createdEvents: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Events",
-    },
-  ],
-  bookedEvents: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Events",
-    },
-  ],
+  //   events: [
+  //     {
+  //       type: Schema.Types.ObjectId,
+  //       ref: "Events",
+  //     },
+  //   ],
+  //   createdEvents: [
+  //     {
+  //       type: Schema.Types.ObjectId,
+  //       ref: "Events",
+  //     },
+  //   ],
+  //   bookedEvents: [
+  //     {
+  //       type: Schema.Types.ObjectId,
+  //       ref: "Events",
+  //     },
+  //   ],
 });
 
 module.exports = mongoose.model("Users", usersSchema);
