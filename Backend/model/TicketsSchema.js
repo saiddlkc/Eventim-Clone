@@ -2,85 +2,50 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const TicketsSchema = new Schema({
-  event_name: {
-    type: String,
-    // required: true,
-  },
+  event_name: { type: String, required: true },
   category: {
     type: String,
-    enum: ["Music", "Theater", "Sports", "Comedy", "Conference"], // Add more categories as needed
-    // required: true,
+    enum: ["Music", "Theater", "Sports", "Comedy", "Conference"],
+    required: true,
   },
   genre: {
     type: String,
-    enum: ["Classical", "Jazz", "Rock", "Pop", "Opera"], // Add more genres as needed
-    // required: true,
+    enum: ["Classical", "Jazz", "Rock", "Pop", "Opera"],
+    required: true,
   },
-  artist: {
-    type: String,
-    // required: true,
-  },
-  price: {
-    type: String,
-    // required: true,
-  },
+  artist: { type: String, required: true },
+  price: { type: String, required: true },
   location: {
-    venue: {
-      type: String,
-      // required: true,
-    },
+    venue: { type: String, required: true },
     city: {
       type: String,
-      enum: ["Berlin", "Munich", "Hamburg", "Cologne", "Frankfurt"], // Add more cities as needed
-      // required: true,
+      enum: ["Berlin", "Munich", "Hamburg", "Cologne", "Frankfurt"],
+      required: true,
     },
-    address: {
-      type: String,
-      // required: true,
-    },
+    address: { type: String, required: true },
   },
-  date_time: {
-    type: Date,
-    // required: true,
-  },
-  organizer: {
-    type: String,
-    // required: true,
-  },
+  date_time: { type: Date, default: Date.now, required: true },
+  organizer: { type: String, required: true },
   additional_info: {
-    age_restriction: {
-      type: String,
-      // required: true,
-    },
-    ticket_availability: {
-      type: Number,
-      // required: true,
-    },
-    tickets_sold: {
-      type: Number,
-      // required: true,
-    },
+    age_restriction: { type: String, required: true },
+    ticket_availability: { type: Number, required: true },
+    tickets_sold: { type: Number, required: true },
     event_status: {
       type: String,
       enum: ["Active", "Sold Out", "Cancelled"],
-      // required: true,
+      required: true,
     },
-    event_type: {
-      type: String,
-      // required: true,
-    },
+    event_type: { type: String, required: true },
     seating: {
-      type: String,
-      // required: true,
-      available_seats: {
-        type: Number,
-      },
+      type: { type: String, required: true },
+      available_seats: { type: Number },
     },
   },
 });
 
 // Pre-save middleware to validate date_time
 TicketsSchema.pre("save", function (next) {
+  // Change here
   if (this.date_time < new Date()) {
     return next(new Error("Event date and time must be in the future"));
   }

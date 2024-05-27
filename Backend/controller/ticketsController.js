@@ -10,8 +10,24 @@ const GetTeckets = async (req, res) => {
 };
 
 const PostTickets = async (req, res) => {
-  const { event_name, category, genre, artist, price, location, city } =
-    req.body;
+  const {
+    event_name,
+    category,
+    genre,
+    artist,
+    price,
+    location: { venue, city, address },
+    date_time,
+    organizer,
+    additional_info: {
+      age_restriction,
+      ticket_availability,
+      tickets_sold,
+      event_status,
+      event_type,
+      seating: { type, available_seats },
+    },
+  } = req.body;
   try {
     const tickets = await Ticktes.create({
       event_name,
@@ -19,8 +35,17 @@ const PostTickets = async (req, res) => {
       genre,
       artist,
       price,
-      location,
-      city,
+      location: { venue, city, address },
+      date_time,
+      organizer,
+      additional_info: {
+        age_restriction,
+        ticket_availability,
+        tickets_sold,
+        event_status,
+        event_type,
+        seating: { type, available_seats },
+      },
     });
     res.status(200).json(tickets);
   } catch (error) {
@@ -43,8 +68,24 @@ const GetTicketsID = async (req, res) => {
 
 const UpdateTicketsID = async (req, res) => {
   const { id } = req.params;
-  const { event_name, category, genre, artist, price, location, city } =
-    req.body;
+  const {
+    event_name,
+    category,
+    genre,
+    artist,
+    price,
+    location: { venue, city, address },
+    date_time,
+    organizer,
+    additional_info: {
+      age_restriction,
+      ticket_availability,
+      tickets_sold,
+      event_status,
+      event_type,
+      seating: { type, available_seats },
+    },
+  } = req.body;
   try {
     const tickets = await Ticktes.findByIdAndUpdate(id, {
       event_name,
@@ -52,21 +93,34 @@ const UpdateTicketsID = async (req, res) => {
       genre,
       artist,
       price,
-      location,
-      city,
+      location: { venue, city, address },
+      date_time,
+      organizer,
+      additional_info: {
+        age_restriction,
+        ticket_availability,
+        tickets_sold,
+        event_status,
+        event_type,
+        seating: { type, available_seats },
+      },
     });
-
+    if (!tickets) {
+      res.status(400).json({ message: "ticket is not found" });
+    }
     res.status(200).json(tickets);
   } catch (error) {
     res.status(400).json(error);
   }
 };
 
-const DeleteTicketsID = async () => {
+const DeleteTicketsID = async (req, res) => {
   const { id } = req.params;
-
   try {
     const tickets = await Ticktes.findByIdAndDelete(id);
+    if (!tickets) {
+      res.status(400).json({ message: "ticket is not found" });
+    }
     res.status(200).json(tickets);
   } catch (error) {
     res.status(400).json(error);

@@ -15,5 +15,5 @@ ticketsRoutes.get("/", GetTeckets).post("/", PostTickets);
 ticketsRoutes
   .get("/:id", GetTicketsID)
   .patch("/:id", UpdateTicketsID)
-  .delete("/id", DeleteTicketsID);
+  .delete("/:id", DeleteTicketsID);
 export default ticketsRoutes;
