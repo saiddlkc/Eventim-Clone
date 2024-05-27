@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="container mx-auto p-4">
       <Routes>
-        <Route path="/dashboard" element={<TableWithStripedColumns />} />
+        {/* <Route path="/dashboard" element={<TableWithStripedColumns />} /> */}
       </Routes><Dashboard></Dashboard>
     </div>
   );
