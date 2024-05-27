@@ -1,4 +1,10 @@
 import React, { useState, useEffect } from "react";
+import Sidebar from "./Dashboard/Sidebar";
+import TopBar from "./Dashboard/Topbar";
+import Table from "./Dashboard/Table";
+import "../index.css";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
@@ -18,33 +24,21 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div>
-      <h1 className='text-3xl font-bold  text-center'>Dashboard</h1>
-      <h2 className="text-2xl">User List</h2>
-      <table className="min-w-full divide-y divide-gray-200 mt-4">
-        <thead>
-          <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Profile Picture</th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {users.map((user) => (
-            <tr key={user._id}>
-              <td className="px-6 py-4 whitespace-nowrap">{user._id}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{user.role}</td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <img src={user.profilePicture} alt={`${user.name}'s profile`} className="w-10 h-10 rounded-full"/>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="flex">
+      <Sidebar />
+      <div className="w-full">
+
+        <TopBar />
+            <Table users={users} />
+      </div>
+          <Routes>
+            {/* <Route path="/" element={<Home />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/tickets" element={<Tickets />} />
+            <Route path="/logout" element={<Logout />} /> */}
+          </Routes>
+       
     </div>
   );
 };
