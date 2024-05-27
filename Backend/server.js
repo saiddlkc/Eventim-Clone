@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const userRoutes = require("./Routers/userRoutes");
+const eventRoutes = require("./Routers/eventRoutes");
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/dashboard", userRoutes);
+app.use("/event", eventRoutes);
 
 mongoose
   .connect(process.env.SERVER)
