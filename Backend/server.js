@@ -16,7 +16,7 @@ const MongoDb = async () => {
 MongoDb().catch((e) => {
   console.log(e, "error");
 });
-app.use("/tickets", ticketsRoutes);
+app.use("/dashboard/tickets", ticketsRoutes);
 app.listen(PORT, () => {
   console.log(`PORT ${PORT} is Connected`);
 });

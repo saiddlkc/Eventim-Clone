@@ -10,7 +10,7 @@ const TicketsSchema = new Schema({
   },
   genre: {
     type: String,
-    enum: ["Classical", "Jazz", "Rock", "Pop", "Opera"],
+    enum: ["Classical", "Jazz", "Rock", "Pop", "Opera", "Hip Hop"],
     required: true,
   },
   artist: { type: String, required: true },
@@ -24,7 +24,7 @@ const TicketsSchema = new Schema({
     },
     address: { type: String, required: true },
   },
-  date_time: { type: Date, default: Date.now, required: true },
+  date_time: { type: Date, default: Date.now },
   organizer: { type: String, required: true },
   additional_info: {
     age_restriction: { type: String, required: true },
