@@ -1,15 +1,20 @@
 import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
-import { SortableTable } from "./Pages/Dashboard/Users";
 
 import "./App.css";
-import Dashboard from './Components/Dashboard'
+import Dashboard from "./Components/Dashboard";
+import UsersTable from "./Components/Dashboard/Table";
+import TicketTable from "./Pages/Dashboard/TicketTable";
 
 function App() {
   return (
-    <div className="container mx-auto p-4">
+    <div className="">
+      <Dashboard />
       <Routes>
-        <Route path="/dashboard" element={<SortableTable />} />
+        <Route path="/" element={<UsersTable />} />
+        <Route path="/users" element={<UsersTable />} />
+        <Route path="/tickets" element={<TicketTable />} />
+        <Route path="/events" element={<UsersTable />} />
       </Routes>
     </div>
   );

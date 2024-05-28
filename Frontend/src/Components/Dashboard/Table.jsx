@@ -1,12 +1,15 @@
 import React from 'react';
-import TableWithStripedColumns from "../../Pages/Dashboard/Users";
-const Table = () => {
+import SortableTable from "../../Pages/Dashboard/UsersTable";
+const UserTable = () => {
 
 
   return (
-    <TableWithStripedColumns />
+    <div>
+     
+      <SortableTable/>
+    </div>
 
   );
 };
 
-export default Table;
+export default UserTable;

@@ -3,7 +3,7 @@ import React from 'react';
 
 const TopBar = () => {
   return (
-    <div className="bg-gray-900 text-white flex justify-between items-center p-4 shadow-md" style={{ height: '64px' }}>
+    <div className="bg-gray-900 text-white flex justify-between items-center p-4 shadow-md ">
       <h2 className="text-2xl font-bold">Dashboard</h2>
       <div className="flex items-center">
         <span className='mr-2'>Username</span>

@@ -4,7 +4,7 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@material-tailwind/react";
 import "./index.css";
-import './index.css'
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
