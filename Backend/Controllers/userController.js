@@ -1,18 +1,59 @@
 const Users = require("../Models/usersSchema");
+const multer = require("multer");
+const path = require("path");
 
+// Multer setup for file upload
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
+const upload = multer({ storage: storage }).single("profilePicture");
+
+// Create a new user
 exports.createUser = async (req, res) => {
+  upload(req, res, async function (err) {
+    if (err) {
+      return res.status(400).json({ error: err.message });
+    }
+
+    const { name, email, password, role } = req.body;
+    let profilePicture = req.file ? req.file.path : "";
+
+    try {
+      if (!name || !email || !password || !role) {
+        return res
+          .status(400)
+          .json({ error: "All fields except profile picture are required" });
+      }
+      const user = new Users({ name, email, password, role, profilePicture });
+      await user.save();
+      res.status(201).json(user);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  });
+};
+
+exports.getUsers = async (req, res) => {
   try {
-    const user = new Users(req.body);
-    await user.save();
-    res.status(201).json(user);
+    const users = await Users.find({});
+    res.status(200).json(users);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
 exports.getUsers = async (req, res) => {
   try {
-    const users = await Users.find(); //populate("events createdEvents bookedEvents");
+    const users = await Users.find({}); //populate("events createdEvents bookedEvents");
     res.status(200).json(users);
   } catch (error) {
     res.status(404).json({ message: error.message });
