@@ -24,7 +24,7 @@ const usersSchema = new Schema({
   },
   profilePicture: {
     type: String,
-    default: "",
+    default: `https://robohash.org/${this.name}`,
   },
   //   events: [
   //     {
