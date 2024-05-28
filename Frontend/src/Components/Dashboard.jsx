@@ -5,6 +5,7 @@ import Table from "./Dashboard/Table";
 import "../index.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import TicketTable from "../Pages/Dashboard/TicketTable";
+import Statistics from "../Pages/Dashboard/StatisticTable";
 
 const Dashboard = () => {
   return (
@@ -12,6 +13,7 @@ const Dashboard = () => {
       <Sidebar />
       <div className="w-full">
         <TopBar />
+        <Statistics></Statistics>
       </div>
     </div>
   );

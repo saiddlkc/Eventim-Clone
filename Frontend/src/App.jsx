@@ -10,7 +10,7 @@ import Statistics from "./Pages/Dashboard/StatisticTable";
 function App() {
   return (
     <div className="">
-      {/* <Dashboard /> */}
+      <Dashboard />
       <Routes>
         <Route path="/" element={<Statistics />} />
         <Route path="/users" element={<UsersTable />} />
