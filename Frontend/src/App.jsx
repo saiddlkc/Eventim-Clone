@@ -1,15 +1,13 @@
-import { useState } from 'react'
+import Tickest from "./Pages/Dashboard/Tickets";
 
-import './App.css'
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      
+      <Tickest></Tickest>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
