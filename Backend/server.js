@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/dashboard", userRoutes);
-app.use("/event", eventRoutes);
+app.use("/dashboard", eventRoutes);
 
 mongoose
   .connect(process.env.SERVER)
