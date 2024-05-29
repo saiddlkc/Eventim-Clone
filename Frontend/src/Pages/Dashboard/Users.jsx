@@ -32,6 +32,7 @@ export function SortableTable() {
     profilePicture: "",
   });
   const [error, setError] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     axios
@@ -100,6 +101,14 @@ export function SortableTable() {
       });
   };
 
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12 m-2">
       <ToastContainer />
@@ -116,14 +125,7 @@ export function SortableTable() {
                 </Typography>
               </div>
               <div className="flex shrink-0 flex-col gap-2 sm:flex-row p-4">
-                <div className="flex flex-col items-center justify-between gap-4 md:flex-row ">
-                  <div className="w-full md:w-72 ">
-                    <Input
-                      label="Search"
-                      icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-                    />
-                  </div>
-                </div>
+                <div className="flex flex-col items-center justify-between gap-4 md:flex-row "></div>
               </div>
             </div>
           </CardHeader>
@@ -223,9 +225,19 @@ export function SortableTable() {
             shadow={false}
             className="rounded-none bg-blue-gray-100"
           >
-            <Typography variant="h5" color="blue-gray">
-              Users
-            </Typography>
+            <div className="flex justify-between items-center">
+              <Typography variant="h5" color="blue-gray">
+                Users
+              </Typography>
+              <div className="w-72 m-3">
+                <Input
+                  label="Search"
+                  icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />
+              </div>
+            </div>
           </CardHeader>
           <CardBody className="overflow-scroll px-0">
             <table className="mt-4 w-full min-w-max table-auto text-left">
@@ -254,12 +266,12 @@ export function SortableTable() {
                 </tr>
               </thead>
               <tbody>
-                {users.map(
+                {filteredUsers.map(
                   (
                     { _id, profilePicture, name, email, role, createdAt },
                     index
                   ) => {
-                    const isLast = index === users.length - 1;
+                    const isLast = index === filteredUsers.length - 1;
                     const classes = isLast
                       ? "p-4"
                       : "p-4 border-b border-blue-gray-50";
