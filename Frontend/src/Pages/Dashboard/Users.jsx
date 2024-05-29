@@ -229,7 +229,7 @@ export function SortableTable() {
               <Typography variant="h5" color="blue-gray">
                 Users
               </Typography>
-              <div className="w-72 m-3">
+              <div className="w-72 mt-4">
                 <Input
                   label="Search"
                   icon={<MagnifyingGlassIcon className="h-5 w-5" />}
