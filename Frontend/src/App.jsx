@@ -1,16 +1,17 @@
-import { useState } from 'react'
-
-import './App.css'
-import Dashboard from './Components/Dashboard'
+import { Routes } from "react-router-dom";
+import { Route } from "react-router-dom";
+import ReactDOM from "react-dom";
+import { TableWithStripedColumns } from "./Pages/Dashboard/Users";
+import EventsTableList from "../src/Pages/Dashboard/EventsTableList.jsx";
+import "./App.css";
+import Dashboard from "./Components/Dashboard";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <Dashboard></Dashboard>
+      <EventsTableList />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
