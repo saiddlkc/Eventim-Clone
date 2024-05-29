@@ -13,6 +13,8 @@ import {
   CardBody,
   CardFooter,
   Avatar,
+  Select,
+  Option,
 } from "@material-tailwind/react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -49,6 +51,10 @@ export function SortableTable() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewUser((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSelectChange = (value) => {
+    setNewUser((prev) => ({ ...prev, role: value }));
   };
 
   const handleFileChange = (e) => {
@@ -127,7 +133,7 @@ export function SortableTable() {
                 <tr>
                   <th className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-500 p-4 transition-colors hover:bg-blue-gray-50 rounded">
                     <Typography
-                      variant="medium"
+                      variant="h6"
                       color="blue-gray"
                       className="flex items-center justify-between gap-2 font-normal leading-none opacity-70 capitalize"
                     >
@@ -169,13 +175,17 @@ export function SortableTable() {
                           value={newUser.password}
                           onChange={handleChange}
                         />
-                        <Input
-                          size="md"
-                          label="Role"
+
+                        <Select
+                          label="Select Role"
                           name="role"
                           value={newUser.role}
-                          onChange={handleChange}
-                        />
+                          onChange={handleSelectChange}
+                        >
+                          <Option value="admin">Admin</Option>
+                          <Option value="organizer">Organizer</Option>
+                          <Option value="customer">Customer</Option>
+                        </Select>
                       </div>
                       <div className="flex gap-4 p-2">
                         <div className="flex-grow" style={{ flexBasis: "70%" }}>
@@ -211,27 +221,27 @@ export function SortableTable() {
           <CardHeader
             floated={false}
             shadow={false}
-            className="rounded-none"
-          ></CardHeader>
+            className="rounded-none bg-blue-gray-100"
+          >
+            <Typography variant="h5" color="blue-gray">
+              Users
+            </Typography>
+          </CardHeader>
           <CardBody className="overflow-scroll px-0">
             <table className="mt-4 w-full min-w-max table-auto text-left">
               <thead>
-                <Typography variant="h5" color="blue-gray">
-                  Users
-                </Typography>
-
                 <tr>
                   {TABLE_HEAD.map((head, index) => (
                     <th
                       key={head}
-                      className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-500 p-4 transition-colors hover:bg-blue-gray-50 "
+                      className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-500 p-4 transition-colors hover:bg-blue-gray-50"
                     >
                       <Typography
-                        variant="medium"
+                        variant="h6"
                         color="blue-gray"
                         className="flex items-center justify-between gap-2 font-normal leading-none opacity-70 capitalize"
                       >
-                        {capitalizeFirstLetter(head)}{" "}
+                        {capitalizeFirstLetter(head)}
                         {index !== TABLE_HEAD.length - 1 && (
                           <ChevronUpDownIcon
                             strokeWidth={2}
