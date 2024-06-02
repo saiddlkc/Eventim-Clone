@@ -1,6 +1,6 @@
 import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
-import { SortableTable } from "./Pages/Dashboard/Users";
+import { SortableTable } from "./Pages/Dashboard/UsersTable";
 
 import "./App.css";
 
