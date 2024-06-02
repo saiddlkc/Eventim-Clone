@@ -110,12 +110,12 @@ export function SortableTable() {
   );
 
   return (
-    <div className="mt-12 mb-8 flex flex-col gap-12 m-2">
+    <div className="mt-96 mb-8 flex flex-col gap-12 m-2">
       <ToastContainer />
-      <div className="m-4">
-        <Card className="h-full w-full mb-6 bg-blue-gray-100">
+      <div className="m-2">
+        <Card className="h-full w-full mb-6 ">
           <CardHeader floated={false} shadow={false} className="rounded-none">
-            <div className="mb-8 flex items-center justify-between gap-8 bg-blue-gray-100">
+            <div className="mb-8 flex items-center justify-between gap-8 ">
               <div>
                 <Typography variant="h5" color="blue-gray">
                   Users Management
@@ -218,13 +218,10 @@ export function SortableTable() {
           </CardBody>
         </Card>
       </div>
-      <div className="m-4">
-        <Card className="h-full w-full bg-blue-gray-100">
-          <CardHeader
-            floated={false}
-            shadow={false}
-            className="rounded-none bg-blue-gray-100"
-          >
+      <hr className="border-t-2 border-blue-gray-200 mt-4 mb-4" />
+      <div className="m-2">
+        <Card className="h-full w-full ">
+          <CardHeader floated={false} shadow={false} className="rounded-none ">
             <div className="flex justify-between items-center">
               <Typography variant="h5" color="blue-gray">
                 Users
