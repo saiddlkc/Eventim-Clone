@@ -44,7 +44,7 @@ export function TicketTable() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/dashboard/tickets")
+      .get("http://localhost:4000/dashboard/Tickets")
       .then((res) => {
         setUsers(res.data);
       })
@@ -82,7 +82,7 @@ export function TicketTable() {
             </div>
           </div>
         </CardHeader>
-        <CardBody className="overflow-scroll px-0">
+        <CardBody className=" px-0">
           <table className="mt-4 w-full min-w-max table-auto text-left">
             <thead>
               <tr>
@@ -138,7 +138,7 @@ export function TicketTable() {
           shadow={false}
           className="rounded-none"
         ></CardHeader>
-        <CardBody className="overflow-scroll px-0">
+        <CardBody className=" px-0">
           <table className="mt-4 w-full min-w-max table-auto text-left">
             <thead>
               <tr>

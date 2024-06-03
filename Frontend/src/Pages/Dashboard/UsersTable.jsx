@@ -44,7 +44,7 @@ export function SortableTable() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/dashboard/users")
+      .get("http://localhost:4000/dashboard/Users")
       .then((res) => {
         setUsers(res.data);
       })
@@ -196,7 +196,7 @@ export function SortableTable() {
   );
 
   return (
-    <div className="mt-96 mb-8 flex flex-col gap-12 m-2">
+    <div className=" mb-8 flex flex-col gap-2 ">
       <ToastContainer />
       <div className="m-2">
         <Card className="h-full w-full mb-6 ">
@@ -215,7 +215,7 @@ export function SortableTable() {
               </div>
             </div>
           </CardHeader>
-          <CardBody className="overflow-scroll px-0">
+          <CardBody className=" px-0">
             <table className="mt-4 w-full min-w-max table-auto text-left">
               <thead>
                 <tr>
@@ -323,7 +323,7 @@ export function SortableTable() {
               </div>
             </div>
           </CardHeader>
-          <CardBody className="overflow-scroll px-0">
+          <CardBody className=" px-0">
             <table className="mt-4 w-full min-w-max table-auto text-left">
               <thead>
                 <tr>

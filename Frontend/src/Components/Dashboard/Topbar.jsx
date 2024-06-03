@@ -119,11 +119,11 @@ function ProfileMenu() {
 }
 
 export default function Topbar() {
-  // const location = useLocation();
+  const location = useLocation();
 
   return (
     <div className="flex justify-between items-center p-4">
-      <Navbar className="fixed top-0 right-0 left-6 m-4 p-3 z-10 bg-gray-300 rounded-xl">
+      <div className="fixed top-0 right-0 left-64 mx-3  p-3 z-10 bg-gray-300 rounded-xl ">
         <div className="flex justify-between items-center">
           <Typography
             as="span"
@@ -137,7 +137,7 @@ export default function Topbar() {
           </Typography>
           <ProfileMenu />
         </div>
-      </Navbar>
+      </div>
     </div>
   );
 }

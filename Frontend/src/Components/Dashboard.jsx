@@ -5,7 +5,12 @@ const Dashboard = () => {
   return (
     <div className="">
       <Sidebar />
-      <TopBar />
+      <div className="w-full">
+        {/* <TopBar > */}
+
+        {/* <Statistics></Statistics> */}
+        {/* </TopBar> */}
+      </div>
     </div>
   );
 };
