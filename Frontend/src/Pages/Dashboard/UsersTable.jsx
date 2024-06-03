@@ -110,7 +110,7 @@ export function SortableTable() {
   );
 
   return (
-    <div className="mt-12 mb-8 flex flex-col gap-12 m-2">
+    <div className="mt-12 mb-8 flex flex-col gap-12 m-2 w-full">
       <ToastContainer />
       <div className="m-4">
         <Card className="h-full w-full mb-6 bg-blue-gray-100">
@@ -129,7 +129,7 @@ export function SortableTable() {
               </div>
             </div>
           </CardHeader>
-          <CardBody className="overflow-scroll px-0">
+          <CardBody className=" px-0">
             <table className="mt-4 w-full min-w-max table-auto text-left">
               <thead>
                 <tr>
@@ -239,7 +239,7 @@ export function SortableTable() {
               </div>
             </div>
           </CardHeader>
-          <CardBody className="overflow-scroll px-0">
+          <CardBody className=" px-0">
             <table className="mt-4 w-full min-w-max table-auto text-left">
               <thead>
                 <tr>

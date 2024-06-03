@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Bar, Pie, Line } from 'react-chartjs-2';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Bar, Pie, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,7 +12,15 @@ import {
   ArcElement,
   LineElement,
   PointElement,
-} from 'chart.js';
+} from "chart.js";
+import {
+  
+  Card,
+  CardHeader,
+  CardBody,
+  Typography,
+  
+} from "@material-tailwind/react";
 
 ChartJS.register(
   CategoryScale,
@@ -30,7 +38,7 @@ const Statistics = () => {
   const [stats, setStats] = useState({
     users: 0,
     events: 0,
-    revenue: 0,
+    Umsatz: 0,
     recentActivity: [],
     revenueHistory: [],
   });
@@ -38,25 +46,30 @@ const Statistics = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const usersResponse = await axios.get("http://localhost:4000/dashboard/users");
-        const usersCount = usersResponse.data.length+900;
+        const usersResponse = await axios.get(
+          "http://localhost:4000/dashboard/users"
+        );
+        const usersCount = usersResponse.data.length + 900;
 
         // Mock data for events, revenue, recentActivity, and revenueHistory
         const eventsCount = 195; // Mocked number of events
-        const revenue = 2000; // Mocked revenue
-       
+        const Umsatz = 2000; // Mocked revenue
+
         const revenueHistory = [
-          { date: '2023-01-01', revenue: 4000 },
-          { date: '2023-02-01', revenue: 8000 },
-          { date: '2023-03-01', revenue: 9000 },
-          { date: '2023-04-01', revenue: 11500 },
-          { date: '2023-05-01', revenue: 4000 },
+          { date: "2023-01-01", revenue: 1000 },
+          { date: "2023-04-01", revenue: 6000 },
+          { date: "2023-06-01", revenue: 8000 },
+          { date: "2023-07-01", revenue: 4500 },
+          { date: "2023-08-01", revenue: 8000 },
+          { date: "2023-09-01", revenue: 6000 },
+          { date: "2023-10-01", revenue: 11500 },
+          { date: "2023-11-01", revenue: 4000 },
         ];
 
         setStats({
           users: usersCount,
           events: eventsCount,
-          revenue: revenue,
+          revenue: Umsatz,
           revenueHistory: revenueHistory,
         });
       } catch (error) {
@@ -68,68 +81,83 @@ const Statistics = () => {
   }, []);
 
   const barData = {
-    labels: ['Users', 'Events', 'Revenue'],
+    labels: ["Users", "Events", "Umsatz"],
     datasets: [
       {
-        label: 'Count',
+        label: "X",
         data: [stats.users, stats.events, stats.revenue],
-        backgroundColor: ['#3182CE', '#EC4899', '#4BBF6B'], // Neue Farben für Balkendiagramm (grün für Revenue)
-        borderColor: ['#3182CE', '#EC4899', '#4BBF6B'], // Neue Farben für Balkendiagramm (optional)
-        borderWidth: 1,
-      },
-    ],
-  };
-
-  const pieData = {
-    labels: ['Users', 'Events', 'Revenue'],
-    datasets: [
-      {
-        data: [stats.users, stats.events, stats.revenue],
-        backgroundColor: ['#3182CE', '#EC4899', '#4BBF6B'], // Neue Farben für Tortendiagramm (grün für Revenue)
-        borderColor: ['#FFFFFF', '#FFFFFF', '#FFFFFF'], // Border-Farben für Tortendiagramm (optional)
+        backgroundColor: ["#040414", "#000086", "#10B981"], // Neue Farben für Balkendiagramm
+        borderColor: ["#040414", "#000086", "#10B981"], // Neue Farben für Balkendiagramm (optional)
         borderWidth: 1,
       },
     ],
   };
 
   const lineData = {
-    labels: stats.revenueHistory.map(entry => entry.date),
+    labels: stats.revenueHistory.map((entry) => entry.date),
     datasets: [
       {
-        label: 'Revenue',
-        data: stats.revenueHistory.map(entry => entry.revenue),
+        label: "Umsatz",
+        data: stats.revenueHistory.map((entry) => entry.revenue),
         fill: false,
-        borderColor: '#4BBF6B',
+        borderColor: "#10B981",
         tension: 0.1,
       },
     ],
   };
 
   return (
-    <div className="p-4 bg-gray-900 min-h-screen text-white border-slate-50">
-      <h1 className="text-2xl font-bold mb-4">Dashboard Statistics</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-gray-800 p-4 rounded overflow-auto">
-          <h2 className="text-xl mb-4">Statistics Overview</h2>
-          <div className="h-64">
+    <div className="mb-32 flex flex-col gap-12 m-2">
+  <div className="m-1">
+    <Card className="h-64 w-full mb-6 bg-blue-gray-100">
+      <CardHeader floated={false} shadow={false} className="rounded-none bg-blue-gray-100">
+        <div className="mb-8 flex items-center justify-between gap-8">
+          <div>
+            <Typography variant="h2" >
+              Live Statistics
+            </Typography>
+          </div>
+        </div>
+      </CardHeader>
+      <CardBody className=" px-0">
+        <div className="bg-blue-gray-100 p-4 rounded overflow-auto h-96">
+          <Typography variant="h6" color="black" className="mb-4">
+            Statistics Overview
+          </Typography>
+          <div className="h-72">
             <Bar data={barData} options={{ maintainAspectRatio: false }} />
           </div>
         </div>
-        <div className="bg-gray-800 p-4 rounded overflow-auto">
-          <h2 className="text-xl mb-4">Statistics Distribution</h2>
-          <div className="h-64">
-            <Pie data={pieData} options={{ maintainAspectRatio: false }} />
+      </CardBody>
+    </Card>
+  </div>
+  <div className="m-1">
+    <Card className="h-64 w-full mb-6 bg-blue-gray-100 mt-24">
+      <CardHeader floated={false} shadow={false} className="rounded-none bg-blue-gray-100">
+        <div className="mb-8 flex items-center justify-between gap-8">
+          <div>
+            <Typography variant="h2" >
+              Revenue
+            </Typography>
           </div>
         </div>
-      </div>
-      <div className="bg-gray-800 p-4 rounded overflow-auto mt-4">
-        <h2 className="text-xl mb-4">Revenue History</h2>
-        <div className="h-64">
-          <Line data={lineData} options={{ maintainAspectRatio: false }} />
+      </CardHeader>
+      <CardBody className="px-0">
+        <div className="bg-blue-gray-100 rounded p-4 overflow-auto h-96">
+          <Typography variant="h6" color="black" className="mb-4" backgroundColor="blue-gray">
+            Statistics Distribution
+          </Typography>
+          <div className="h-72">
+            <Line data={lineData} options={{ maintainAspectRatio: false }} />
+          </div>
         </div>
-      </div>
-    </div>
+      </CardBody>
+    </Card>
+  </div>
+</div>
+
   );
 };
 
 export default Statistics;
+<bg-blue-gray-100></bg-blue-gray-100>

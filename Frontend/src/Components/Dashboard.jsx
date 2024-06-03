@@ -12,8 +12,10 @@ const Dashboard = () => {
     <div className="flex">
       <Sidebar />
       <div className="w-full">
-        <TopBar />
-        <Statistics></Statistics>
+        {/* <TopBar > */}
+
+        {/* <Statistics></Statistics> */}
+        {/* </TopBar> */}
       </div>
     </div>
   );
