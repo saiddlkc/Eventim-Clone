@@ -26,27 +26,34 @@ const usersSchema = new Schema({
     type: String,
     default: "",
   },
-  //   events: [
-  //     {
-  //       type: Schema.Types.ObjectId,
-  //       ref: "Events",
-  //     },
-  //   ],
-  //   createdEvents: [
-  //     {
-  //       type: Schema.Types.ObjectId,
-  //       ref: "Events",
-  //     },
-  //   ],
-  //   bookedEvents: [
-  //     {
-  //       type: Schema.Types.ObjectId,
-  //       ref: "Events",
-  //     },
-  //   ],
+  // events: [
+  //   {
+  //     type: Schema.Types.ObjectId,
+  //     ref: "Events",
+  //   },
+  // ],
+  // createdEvents: [
+  //   {
+  //     type: Schema.Types.ObjectId,
+  //     ref: "Events",
+  //   },
+  // ],
+  // bookedEvents: [
+  //   {
+  //     type: Schema.Types.ObjectId,
+  //     ref: "Events",
+  //   },
+  // ],
+});
+
+// Pre-save middleware to set default profile picture
+usersSchema.pre("save", function (next) {
+  if (!this.profilePicture) {
+    this.profilePicture = `https://robohash.org/${encodeURIComponent(
+      this.name
+    )}`;
+  }
+  next();
 });
 
 module.exports = mongoose.model("Users", usersSchema);
-
-// Events Schema
-// Tickets Schema

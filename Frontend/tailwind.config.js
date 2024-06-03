@@ -1,7 +1,9 @@
-module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+const withMT = require("@material-tailwind/react/utils/withMT");
+
+module.exports = withMT({
+  content: [],
   theme: {
     extend: {},
   },
   plugins: [],
-};
+});
