@@ -73,17 +73,30 @@ exports.getUser = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
-  try {
-    const user = await Users.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+  upload(req, res, async function (err) {
+    if (err) {
+      return res.status(400).json({ error: err.message });
     }
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
+
+    const { name, email, password, role } = req.body;
+    let profilePicture = req.file ? req.file.path : "";
+
+    try {
+      const user = await Users.findById(req.params.id);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      if (name) user.name = name;
+      if (email) user.email = email;
+      if (password) user.password = password;
+      if (role) user.role = role;
+      if (profilePicture) user.profilePicture = profilePicture;
+      await user.save();
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(404).json({ message: error.message });
+    }
+  });
 };
 
 exports.deleteUser = async (req, res) => {
