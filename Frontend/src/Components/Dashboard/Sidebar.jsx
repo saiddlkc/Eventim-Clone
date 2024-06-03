@@ -20,7 +20,7 @@ export default function Sidebar() {
   const location = useLocation();
 
   return (
-    <Card className="fixed top-3 left-3 h-full w-64 p-4 shadow-xl shadow-blue-gray-900/5 bg-gray-300">
+    <div className="fixed top-0 left-0 h-full w-64 p-4 shadow-xl shadow-blue-gray-900/5 bg-gray-300">
       <div className="mb-2 p-4">
         <Typography variant="h4" color="blue-gray">
           Logo
@@ -59,28 +59,7 @@ export default function Sidebar() {
             Tickets
           </ListItem>
         </Link>
-        <ListItem>
-          <ListItemPrefix>
-            <InboxIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Inbox
-          <ListItemSuffix>
-            <Chip
-              value="14"
-              size="sm"
-              variant="ghost"
-              color="blue-gray"
-              className="rounded-full"
-            />
-          </ListItemSuffix>
-        </ListItem>
 
-        <ListItem>
-          <ListItemPrefix>
-            <Cog6ToothIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Settings
-        </ListItem>
         <ListItem>
           <ListItemPrefix>
             <PowerIcon className="h-5 w-5" />
@@ -88,6 +67,6 @@ export default function Sidebar() {
           Log Out
         </ListItem>
       </List>
-    </Card>
+    </div>
   );
 }

@@ -196,7 +196,7 @@ export function SortableTable() {
   );
 
   return (
-    <div className="mt-96 mb-8 flex flex-col gap-12 m-2">
+    <div className=" mb-8 flex flex-col gap-2 ">
       <ToastContainer />
       <div className="m-2">
         <Card className="h-full w-full mb-6 ">

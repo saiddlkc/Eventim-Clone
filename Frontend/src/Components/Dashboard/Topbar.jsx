@@ -119,13 +119,13 @@ function ProfileMenu() {
 }
 
 export default function Topbar() {
-  // const location = useLocation();
+  const location = useLocation();
 
   return (
     <div className="flex justify-between items-center p-4">
-      <div className="fixed top-0 right-0 left-6 m-4 p-3 z-10 bg-gray-300 rounded-xl">
+      <div className="fixed top-0 right-0 left-64 mx-3  p-3 z-10 bg-gray-300 rounded-xl ">
         <div className="flex justify-between items-center">
-          {/* <Typography
+          <Typography
             as="span"
             variant="h6"
             className="font-medium text-blue-gray-900"
@@ -134,7 +134,7 @@ export default function Topbar() {
               ? "Dashboard"
               : location.pathname.slice(1).charAt(0).toUpperCase() +
                 location.pathname.slice(2)}
-          </Typography> */}
+          </Typography>
           <ProfileMenu />
         </div>
       </div>

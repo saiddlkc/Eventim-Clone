@@ -181,7 +181,7 @@ const EventsTableList = () => {
   ];
 
   return (
-    <div className="mt-12 mb-8 flex flex-col gap-12 m-2">
+    <div className="mb-8 flex flex-col gap-2 ">
       <ToastContainer />
       <div className="m-4">
         <Card className="h-full w-full bg-blue-gray-100">
