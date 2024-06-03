@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Bar, Pie, Line } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,14 +13,8 @@ import {
   LineElement,
   PointElement,
 } from "chart.js";
-import {
-  
-  Card,
-  CardHeader,
-  CardBody,
-  Typography,
-  
-} from "@material-tailwind/react";
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { Card, CardHeader, CardBody, Typography } from "@material-tailwind/react";
 
 ChartJS.register(
   CategoryScale,
@@ -31,7 +25,8 @@ ChartJS.register(
   Legend,
   ArcElement,
   LineElement,
-  PointElement
+  PointElement,
+  ChartDataLabels
 );
 
 const Statistics = () => {
@@ -86,8 +81,8 @@ const Statistics = () => {
       {
         label: "X",
         data: [stats.users, stats.events, stats.revenue],
-        backgroundColor: ["#040414", "#000086", "#10B981"], // Neue Farben für Balkendiagramm
-        borderColor: ["#040414", "#000086", "#10B981"], // Neue Farben für Balkendiagramm (optional)
+        backgroundColor: ["#040414", "#000086", "#10B981"],
+        borderColor: ["#040414", "#000086", "#10B981"],
         borderWidth: 1,
       },
     ],
@@ -106,58 +101,107 @@ const Statistics = () => {
     ],
   };
 
+  const middleBarData = {
+    labels: ["Users", "Tickets", "Revenues"],
+    datasets: [
+      {
+        label: "Statistics",
+        data: [stats.users, stats.events, stats.revenue],
+        backgroundColor: ["#040414", "#000086", "#10B981"],
+        borderColor: ["#040414", "#000086", "#10B981"],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const optionsWithLabels = {
+    plugins: {
+      datalabels: {
+        display: true,
+        color: 'white',
+        anchor: 'end',
+        align: 'start',
+        formatter: (value) => value,
+      },
+    },
+    maintainAspectRatio: false,
+  };
+
   return (
     <div className="mb-32 flex flex-col gap-12 m-2">
-  <div className="m-1">
-    <Card className="h-64 w-full mb-6 bg-blue-gray-100">
-      <CardHeader floated={false} shadow={false} className="rounded-none bg-blue-gray-100">
-        <div className="mb-8 flex items-center justify-between gap-8">
-          <div>
-            <Typography variant="h2" >
-              Live Statistics
-            </Typography>
-          </div>
-        </div>
-      </CardHeader>
-      <CardBody className=" px-0">
-        <div className="bg-blue-gray-100 p-4 rounded overflow-auto h-96">
-          <Typography variant="h6" color="black" className="mb-4">
-            Statistics Overview
-          </Typography>
-          <div className="h-72">
-            <Bar data={barData} options={{ maintainAspectRatio: false }} />
-          </div>
-        </div>
-      </CardBody>
-    </Card>
-  </div>
-  <div className="m-1">
-    <Card className="h-64 w-full mb-6 bg-blue-gray-100 mt-24">
-      <CardHeader floated={false} shadow={false} className="rounded-none bg-blue-gray-100">
-        <div className="mb-8 flex items-center justify-between gap-8">
-          <div>
-            <Typography variant="h2" >
-              Revenue
-            </Typography>
-          </div>
-        </div>
-      </CardHeader>
-      <CardBody className="px-0">
-        <div className="bg-blue-gray-100 rounded p-4 overflow-auto h-96">
-          <Typography variant="h6" color="black" className="mb-4" backgroundColor="blue-gray">
-            Statistics Distribution
-          </Typography>
-          <div className="h-72">
-            <Line data={lineData} options={{ maintainAspectRatio: false }} />
-          </div>
-        </div>
-      </CardBody>
-    </Card>
-  </div>
-</div>
+      <div className="m-1">
+        <Card className="h-64 w-full mb-6">
+          <CardHeader floated={false} shadow={false} className="rounded-none">
+            <div className="mb-8 flex items-center justify-between gap-8">
+              <div>
+                <Typography variant="h2">
+                  Live Statistics
+                </Typography>
+              </div>
+            </div>
+          </CardHeader>
+          <CardBody className="px-0">
+            <div className="p-4 rounded overflow-auto h-96">
+              <Typography variant="h6" color="black" className="mb-4">
+                Statistics Overview
+              </Typography>
+              <div className="h-72">
+                <Bar data={barData} options={{ maintainAspectRatio: false }} />
+              </div>
+            </div>
+          </CardBody>
+        </Card>
+      </div>
 
+      <div className="m-1">
+        <Card className="h-64 w-full mb-6 mt-24">
+          <CardHeader floated={false} shadow={false} className="rounded-none">
+            <div className="mb-8 flex items-center justify-between gap-8">
+              <div>
+                <Typography variant="h2">
+                  Revenue
+                </Typography>
+              </div>
+            </div>
+          </CardHeader>
+          <CardBody className="px-0">
+            <div className="rounded p-4 overflow-auto h-96">
+              <Typography variant="h6" color="black" className="mb-4">
+                Statistics Distribution
+              </Typography>
+              <div className="h-72">
+                <Line data={lineData} options={{ maintainAspectRatio: false }} />
+              </div>
+            </div>
+          </CardBody>
+        </Card>
+      </div>
+
+      <div className="m-1">
+        <Card className="h-64 w-full mb-6 mt-24">
+          <CardHeader floated={false} shadow={false} className="rounded-none">
+            <div className="mb-8 flex items-center justify-between gap-8">
+              <div>
+                <Typography variant="h2">
+                  Users, Tickets and Revenues
+                </Typography>
+              </div>
+            </div>
+          </CardHeader>
+          <CardBody className="px-0">
+            
+              <Typography variant="h6" color="black" className="mb-4">
+                Numbers Overview
+              </Typography>
+              <div className="h-72">
+                <Bar data={middleBarData} options={optionsWithLabels} />
+              </div>
+           
+          </CardBody>
+        </Card>
+      </div>
+    </div>
   );
 };
 
 export default Statistics;
-<bg-blue-gray-100></bg-blue-gray-100>
