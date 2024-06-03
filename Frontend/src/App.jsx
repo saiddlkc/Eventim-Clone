@@ -5,7 +5,7 @@ import TicketTable from "./Pages/Dashboard/TicketTable";
 import Statistics from "./Pages/Dashboard/StatisticTable";
 import Sidebar from "./Components/Dashboard/Sidebar";
 import Topbar from "./Components/Dashboard/Topbar";
-import MainLayoutDashnoard from "./Layout/MainLayoutDashboard";
+import EventsTableList from "./Pages/Dashboard/EventsTableList";
 
 function App() {
   return (
@@ -18,12 +18,10 @@ function App() {
         <Topbar />
         <main className="flex-1 mt-18 p-6">
           <Routes>
-            <Route path="/" element={<MainLayoutDashnoard />}>
-              <Route index element={<Statistics />} />
-              <Route path="/users" element={<UsersTable />} />
-              <Route path="/tickets" element={<TicketTable />} />
-              <Route path="/events" element={<UsersTable />} />
-            </Route>
+            <Route index element={<Statistics />} />
+            <Route path="/users" element={<UsersTable />} />
+            <Route path="/tickets" element={<TicketTable />} />
+            <Route path="/events" element={<EventsTableList />} />
           </Routes>
         </main>
       </div>
