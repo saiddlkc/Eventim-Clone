@@ -131,7 +131,7 @@ const Statistics = () => {
     <div className="mb-32 flex flex-col gap-12 m-2">
       <div className="m-1">
         <Card className="h-64 w-full mb-6">
-          <CardHeader floated={false} shadow={false} className="rounded-none">
+          <CardHeader floated={false} className="rounded-none">
             <div className="mb-8 flex items-center justify-between gap-8">
               <div>
                 <Typography variant="h2">
@@ -155,7 +155,7 @@ const Statistics = () => {
 
       <div className="m-1">
         <Card className="h-64 w-full mb-6 mt-24">
-          <CardHeader floated={false} shadow={false} className="rounded-none">
+          <CardHeader floated={false} className="rounded-none">
             <div className="mb-8 flex items-center justify-between gap-8">
               <div>
                 <Typography variant="h2">
@@ -179,7 +179,7 @@ const Statistics = () => {
 
       <div className="m-1">
         <Card className="h-64 w-full mb-6 mt-24">
-          <CardHeader floated={false} shadow={false} className="rounded-none">
+          <CardHeader floated={false} className="rounded-none">
             <div className="mb-8 flex items-center justify-between gap-8">
               <div>
                 <Typography variant="h2">
