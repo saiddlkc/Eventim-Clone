@@ -1,49 +1,93 @@
-// src/components/Sidebar.jsx
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FaHome, FaUsers, FaCalendarAlt, FaTicketAlt, FaSignOutAlt } from 'react-icons/fa';
-import "../../App.css";
+import {
+  Card,
+  Typography,
+  List,
+  ListItem,
+  ListItemPrefix,
+  ListItemSuffix,
+  Chip,
+} from "@material-tailwind/react";
+import {
+  PresentationChartBarIcon,
+  Cog6ToothIcon,
+  InboxIcon,
+  PowerIcon,
+} from "@heroicons/react/24/solid";
+import { FaUsers, FaCalendarAlt, FaTicketAlt } from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
 
-const Sidebar = () => {
+export default function Sidebar() {
+  const location = useLocation();
+
   return (
-    <div className="w-54 bg-blue-gray-100 flex flex-col">
-      <div className="p-6 mt-4">
-        <span className="text-xl font-semibold">LOGO</span>
+    <Card className="fixed top-3 left-3 h-full w-64 p-4 shadow-xl shadow-blue-gray-900/5 bg-gray-300">
+      <div className="mb-2 p-4">
+        <Typography variant="h4" color="blue-gray">
+          Logo
+        </Typography>
       </div>
-      <ul>
-        <li className="mb-4" >
-          <Link to="/" className="hover:bg-blue-gray-500 transition duration-1000 ease-in-out p-1 m-2 flex items-center rounded">
-            <FaHome className="h-6 w-6 mr-2" />
-            <span className="p-2">Home</span>
-          </Link>
-        </li>
-        <li className="mb-4">
-          <Link to="/users" className="hover:bg-blue-gray-500 transition duration-1000 ease-in-out p-1 m-2 flex items-center rounded">
-            <FaUsers className="h-6 w-6 mr-2" />
-            <span className="p-2">Users</span>
-          </Link>
-        </li>
-        <li className="mb-4">
-          <Link to="/events" className=" hover:bg-blue-gray-500 transition duration-1000 ease-in-out p-1 m-2 flex items-center rounded">
-            <FaCalendarAlt className="h-6 w-6 mr-2" />
-            <span className="p-2">Events</span>
-          </Link>
-        </li>
-        <li className="mb-4">
-          <Link to="/tickets" className=" hover:bg-blue-gray-500 transition duration-1000 ease-in-out p-1 m-2 flex items-center rounded">
-            <FaTicketAlt className="h-6 w-6 mr-2" />
-            <span className=" p-2">Tickets</span>
-          </Link>
-        </li>
-        <li className="mb-4">
-          <Link to="/logout" className=" hover:bg-blue-gray-500 transition duration-1000 ease-in-out p-1 m-2 flex items-center rounded">
-            <FaSignOutAlt className="h-6 w-6 mr-2" />
-            <span className="p-2">Logout</span>
-          </Link>
-        </li>
-      </ul>
-    </div>
-  );
-};
+      <List>
+        <Link to="/">
+          <ListItem selected={location.pathname === "/"}>
+            <ListItemPrefix>
+              <PresentationChartBarIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Dashboard
+          </ListItem>
+        </Link>
+        <Link to="/users">
+          <ListItem selected={location.pathname === "/users"}>
+            <ListItemPrefix>
+              <FaUsers className="h-5 w-5" />
+            </ListItemPrefix>
+            Users
+          </ListItem>
+        </Link>
+        <Link to="/events">
+          <ListItem selected={location.pathname === "/events"}>
+            <ListItemPrefix>
+              <FaCalendarAlt className="h-5 w-5" />
+            </ListItemPrefix>
+            Events
+          </ListItem>
+        </Link>
+        <Link to="/tickets">
+          <ListItem selected={location.pathname === "/tickets"}>
+            <ListItemPrefix>
+              <FaTicketAlt className="h-5 w-5" />
+            </ListItemPrefix>
+            Tickets
+          </ListItem>
+        </Link>
+        <ListItem>
+          <ListItemPrefix>
+            <InboxIcon className="h-5 w-5" />
+          </ListItemPrefix>
+          Inbox
+          <ListItemSuffix>
+            <Chip
+              value="14"
+              size="sm"
+              variant="ghost"
+              color="blue-gray"
+              className="rounded-full"
+            />
+          </ListItemSuffix>
+        </ListItem>
 
-export default Sidebar;
+        <ListItem>
+          <ListItemPrefix>
+            <Cog6ToothIcon className="h-5 w-5" />
+          </ListItemPrefix>
+          Settings
+        </ListItem>
+        <ListItem>
+          <ListItemPrefix>
+            <PowerIcon className="h-5 w-5" />
+          </ListItemPrefix>
+          Log Out
+        </ListItem>
+      </List>
+    </Card>
+  );
+}
