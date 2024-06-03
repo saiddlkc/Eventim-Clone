@@ -44,7 +44,7 @@ export function TicketTable() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/dashboard/tickets")
+      .get("http://localhost:4000/dashboard/Tickets")
       .then((res) => {
         setUsers(res.data);
       })

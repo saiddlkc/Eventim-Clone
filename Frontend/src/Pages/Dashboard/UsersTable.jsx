@@ -44,7 +44,7 @@ export function SortableTable() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/dashboard/users")
+      .get("http://localhost:4000/dashboard/Users")
       .then((res) => {
         setUsers(res.data);
       })

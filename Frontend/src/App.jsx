@@ -6,6 +6,7 @@ import Statistics from "./Pages/Dashboard/StatisticTable";
 import Sidebar from "./Components/Dashboard/Sidebar";
 import Topbar from "./Components/Dashboard/Topbar";
 import MainLayoutDashnoard from "./Layout/MainLayoutDashboard";
+import EventsTableList from "./Pages/Dashboard/EventsTableList";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
               <Route index element={<Statistics />} />
               <Route path="/users" element={<UsersTable />} />
               <Route path="/tickets" element={<TicketTable />} />
-              <Route path="/events" element={<UsersTable />} />
+              <Route path="/events" element={<EventsTableList/>} />
             </Route>
           </Routes>
         </main>
