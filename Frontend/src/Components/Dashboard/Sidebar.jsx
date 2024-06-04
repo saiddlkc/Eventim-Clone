@@ -4,14 +4,11 @@ import {
   List,
   ListItem,
   ListItemPrefix,
-  ListItemSuffix,
-  Chip,
 } from "@material-tailwind/react";
 import {
   PresentationChartBarIcon,
-  Cog6ToothIcon,
-  InboxIcon,
   PowerIcon,
+  UserCircleIcon,
 } from "@heroicons/react/24/solid";
 import { FaUsers, FaCalendarAlt, FaTicketAlt } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
@@ -59,7 +56,14 @@ export default function Sidebar() {
             Tickets
           </ListItem>
         </Link>
-
+        <Link to="/profile">
+          <ListItem selected={location.pathname === "/profile"}>
+            <ListItemPrefix>
+              <UserCircleIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Profile
+          </ListItem>
+        </Link>
         <ListItem>
           <ListItemPrefix>
             <PowerIcon className="h-5 w-5" />

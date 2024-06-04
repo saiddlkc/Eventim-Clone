@@ -5,6 +5,7 @@ import TicketTable from "./Pages/Dashboard/TicketTable";
 import Statistics from "./Pages/Dashboard/StatisticTable";
 import Sidebar from "./Components/Dashboard/Sidebar";
 import Topbar from "./Components/Dashboard/Topbar";
+import Profile from "./Pages/Dashboard/Profile";
 
 import EventsTableList from "./Pages/Dashboard/EventsTableList";
 
@@ -23,6 +24,7 @@ function App() {
             <Route path="/users" element={<UsersTable />} />
             <Route path="/tickets" element={<TicketTable />} />
             <Route path="/events" element={<EventsTableList />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </main>
       </div>
