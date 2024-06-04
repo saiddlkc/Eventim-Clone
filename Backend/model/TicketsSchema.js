@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import moment from "moment-timezone";
 const { Schema, model } = mongoose;
 
 const TicketsSchema = new Schema({
@@ -24,8 +25,40 @@ const TicketsSchema = new Schema({
     },
     address: { type: String, required: true },
   },
-  date_time: { type: Date, default: Date.now },
+  purchaseDate: {
+    type: Date,
+    default: Date.now,
+  },
+  buyer: {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: String,
+      required: false,
+    },
+  },
+  barcode: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  event_date: {
+    type: Date,
+    default: () =>
+      new Date(
+        new Date().toLocaleString("en-US", { timeZone: "Europe/Berlin" })
+      ),
+  },
+  creatItDate: { type: Date, default: Date.now },
+  updateItDate: { type: Date, default: Date.now },
   organizer: { type: String, required: true },
+  event_information: { type: String, required: true },
   additional_info: {
     age_restriction: { type: String, required: true },
     ticket_availability: { type: Number, required: true },
