@@ -7,6 +7,7 @@ import Sidebar from "./Components/Dashboard/Sidebar";
 import Topbar from "./Components/Dashboard/Topbar";
 
 import EventsTableList from "./Pages/Dashboard/EventsTableList";
+import Login from "./Pages/Login/Login";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/users" element={<UsersTable />} />
             <Route path="/tickets" element={<TicketTable />} />
             <Route path="/events" element={<EventsTableList />} />
+            <Route path="/login" element={<Login />} /> 
           </Routes>
         </main>
       </div>
