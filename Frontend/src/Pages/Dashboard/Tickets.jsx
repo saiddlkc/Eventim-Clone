@@ -1,7 +1,4 @@
-import {
-  MagnifyingGlassIcon,
-  ChevronUpDownIcon,
-} from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
@@ -19,7 +16,8 @@ import {
   IconButton,
   Tooltip,
 } from "@material-tailwind/react";
-
+import axios from "axios";
+import { useEffect, useState } from "react";
 const TABS = [
   {
     label: "All",
@@ -35,57 +33,25 @@ const TABS = [
   },
 ];
 
-const TABLE_HEAD = ["Member", "Function", "Status", "Employed", ""];
+const TABLE_HEAD = ["Event Name", "Category", "Genre", "Event Date", ""];
 
-const TABLE_ROWS = [
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-    name: "John Michael",
-    email: "john@creative-tim.com",
-    job: "Manager",
-    org: "Organization",
-    online: true,
-    date: "23/04/18",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg",
-    name: "Alexa Liras",
-    email: "alexa@creative-tim.com",
-    job: "Programator",
-    org: "Developer",
-    online: false,
-    date: "23/04/18",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
-    name: "Laurent Perrier",
-    email: "laurent@creative-tim.com",
-    job: "Executive",
-    org: "Projects",
-    online: false,
-    date: "19/09/17",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
-    name: "Michael Levi",
-    email: "michael@creative-tim.com",
-    job: "Programator",
-    org: "Developer",
-    online: true,
-    date: "24/12/08",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-5.jpg",
-    name: "Richard Gran",
-    email: "richard@creative-tim.com",
-    job: "Manager",
-    org: "Executive",
-    online: false,
-    date: "04/10/21",
-  },
-];
+export function MembersTable() {
+  const [tickets, setTickets] = useState([]);
+  useEffect(() => {
+    const fetchTickets = async () => {
+      try {
+        const response = await axios(
+          "http://localhost:4000/dashboard/tickets/"
+        );
+        setTickets(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchTickets();
+  }, []);
 
-export function SortableTable() {
   return (
     <Card className="h-full w-full">
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -108,15 +74,6 @@ export function SortableTable() {
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <Tabs value="all" className="w-full md:w-max">
-            <TabsHeader>
-              {TABS.map(({ label, value }) => (
-                <Tab key={value} value={value}>
-                  &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                </Tab>
-              ))}
-            </TabsHeader>
-          </Tabs>
           <div className="w-full md:w-72">
             <Input
               label="Search"
@@ -124,61 +81,130 @@ export function SortableTable() {
             />
           </div>
         </div>
+        <tbody>
+          <tr>
+            <td className="p-4">
+              <div className="flex gap-4 p-2">
+                <Input type="text" size="md" label="Event Name" />
+                <Input
+                  type="text"
+                  label="Category"
+                  className="pr-20"
+                  containerProps={{
+                    className: "min-w-0",
+                  }}
+                />
+                <Input type="text" size="md" label="Genre" />
+                <Input type="text" size="md" label="Artist" />
+                <Input type="text" size="md" label="price" />
+                <Input type="text" size="md" label="Event Date" />
+              </div>
+              <div className="flex gap-4 p-2">
+                <Input type="text" size="md" label="location" />
+                <Input type="text" size="md" label="City" />
+                <Input type="text" size="md" label="Address" />
+                <Input type="text" size="md" label="Buyer" />
+                <Input type="text" size="md" label="Barcode" />
+                <Input type="text" size="md" label="Organizer" />
+              </div>
+              <div className="flex gap-4 p-2">
+                <Input type="text" size="md" label="Event Information" />
+                <Input type="text" size="md" label="genre" />
+                <Input type="text" size="md" label="Artist" />{" "}
+                <Input type="text" size="md" label="genre" />
+                <Input type="text" size="md" label="Artist" />
+              </div>
+              <div className="flex gap-4 p-2">
+                <div className="flex-grow" style={{ flexBasis: "70%" }}>
+                  <Input type="file" size="md" label="Profile" />
+                </div>
+                <div className="flex-grow" style={{ flexBasis: "30%" }}>
+                  <Button className="w-full flex items-center justify-center gap-2">
+                    Add user <UserPlusIcon className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
       </CardHeader>
       <CardBody className="overflow-scroll px-0">
         <table className="mt-4 w-full min-w-max table-auto text-left">
           <thead>
             <tr>
-              {TABLE_HEAD.map((head, index) => (
+              {TABLE_HEAD.map((head) => (
                 <th
                   key={head}
-                  className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
+                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
                 >
                   <Typography
                     variant="small"
                     color="blue-gray"
-                    className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
+                    className="font-normal leading-none opacity-70"
                   >
-                    {head}{" "}
-                    {index !== TABLE_HEAD.length - 1 && (
-                      <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
-                    )}
+                    {head}
                   </Typography>
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {TABLE_ROWS.map(
-              ({ img, name, email, job, org, online, date }, index) => {
-                const isLast = index === TABLE_ROWS.length - 1;
+            {tickets.map(
+              (
+                {
+                  event_name,
+                  category,
+                  genre,
+                  artist,
+                  price,
+                  img,
+                  // location: { venue, city, address },
+                  buyer,
+                  barcode,
+                  event_date,
+                  organizer,
+                  event_information,
+                  // additional_info: {
+                  //   age_restriction,
+                  //   ticket_availability,
+                  //   tickets_sold,
+                  //   event_status,
+                  //   event_type,
+                  //   seating: { type, available_seats },
+                  // },
+                },
+                index
+              ) => {
+                const isLast = index === tickets.length - 1;
                 const classes = isLast
                   ? "p-4"
                   : "p-4 border-b border-blue-gray-50";
 
                 return (
-                  <tr key={name}>
+                  <tr key={event_name}>
+                    {/* event_name */}
                     <td className={classes}>
                       <div className="flex items-center gap-3">
-                        <Avatar src={img} alt={name} size="sm" />
+                        <Avatar src={img} alt={event_name} size="sm" />
                         <div className="flex flex-col">
                           <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {name}
+                            {event_name}
                           </Typography>
                           <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal opacity-70"
                           >
-                            {email}
+                            {artist}
                           </Typography>
                         </div>
                       </div>
                     </td>
+                    {/* category */}
                     <td className={classes}>
                       <div className="flex flex-col">
                         <Typography
@@ -186,34 +212,35 @@ export function SortableTable() {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {job}
+                          {category}
                         </Typography>
                         <Typography
                           variant="small"
                           color="blue-gray"
                           className="font-normal opacity-70"
+                        ></Typography>
+                      </div>
+                    </td>
+                    {/* genre */}
+                    <td className={classes}>
+                      <div className="w-max">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal opacity-70"
                         >
-                          {org}
+                          {genre}
                         </Typography>
                       </div>
                     </td>
-                    <td className={classes}>
-                      <div className="w-max">
-                        <Chip
-                          variant="ghost"
-                          size="sm"
-                          value={online ? "online" : "offline"}
-                          color={online ? "green" : "blue-gray"}
-                        />
-                      </div>
-                    </td>
+                    {/* event_date */}
                     <td className={classes}>
                       <Typography
                         variant="small"
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {date}
+                        {event_date}
                       </Typography>
                     </td>
                     <td className={classes}>
@@ -246,5 +273,4 @@ export function SortableTable() {
     </Card>
   );
 }
-
-export default SortableTable;
+export default MembersTable;
