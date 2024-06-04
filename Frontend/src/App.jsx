@@ -6,11 +6,13 @@ import Profile from "./Pages/Dashboard/Profile";
 import EventsTableList from "./Pages/Dashboard/EventsTableList";
 import SignUp from "./Pages/Login/Register";
 import AdminLayout from "./Layout/AdminLayout";
+import Login from "./Pages/Login/Login";
 
 function App() {
   return (
     <Routes>
       <Route path="/sign-up" element={<SignUp />} />
+      <Route path="/login" element={<Login />} />
       <Route element={<AdminLayout />}>
         <Route index element={<Statistics />} />
         <Route path="/users" element={<UsersTable />} />
