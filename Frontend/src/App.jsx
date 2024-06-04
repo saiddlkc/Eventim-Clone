@@ -1,27 +1,26 @@
-// import Tickest from "./Pages/Dashboard/Tickets";
-// import EventList from "./components/EventList";
-// import CreateEvent from "./components/CreateEvent";
-// import GetEvent from "./components/GetEvent";
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Tickets from "./Pages/Dashboard/Tickets";
-// import Add from "./Pages/Dashboard/Add";
-import Update from "./Pages/Dashboard/Update";
-import StadiumSeating from "./components/stadion-seating/StadiumSeating";
+import UsersTable from "./components/Dashbord/Table";
+import TicketTable from "./Pages/Dashboard/Tickets";
+import Statistics from "./Pages/Dashboard/StatisticTable";
+import Profile from "./Pages/Dashboard/Profile";
+import EventsTableList from "./Pages/Dashboard/EventsTableList";
+// import SignUp from "./Pages/Login/Register";
+import AdminLayout from "./Layout/AdminLayout";
+// import Login from "./Pages/Login/Login";
 
 function App() {
   return (
-    <div className="">
-      {/* <Navbar /> */}
-      <Routes>
-        <Route path="/" element={<Tickets />} />
-        {/* <Route path="/add" element={<Add />} /> */}
-        <Route path="/seats" element={<StadiumSeating />} />
-        {/* <Route path="/update/:id" element={<Update />} />  */}
-        {/* <Route path="Register" element={<Register />} />
-          <Route path="Login" element={<Login />} /> */}
-      </Routes>
-    </div>
+    <Routes>
+      {/* <Route path="/sign-up" element={<SignUp />} />
+      <Route path="/login" element={<Login />} /> */}
+      <Route element={<AdminLayout />}>
+        <Route index element={<Statistics />} />
+        <Route path="/users" element={<UsersTable />} />
+        <Route path="/tickets" element={<TicketTable />} />
+        <Route path="/events" element={<EventsTableList />} />
+        <Route path="/profile" element={<Profile />} />
+      </Route>
+    </Routes>
   );
 }
 

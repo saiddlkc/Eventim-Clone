@@ -1,8 +1,5 @@
-import { useEffect, useState } from "react";
-import {
-  MagnifyingGlassIcon,
-  ChevronUpDownIcon,
-} from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   CardHeader,
@@ -10,694 +7,379 @@ import {
   Typography,
   Button,
   CardBody,
+  Chip,
   CardFooter,
+  Tabs,
+  TabsHeader,
+  Tab,
   Avatar,
-  Select,
-  Option,
   IconButton,
   Tooltip,
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
 } from "@material-tailwind/react";
-import { PencilIcon, TrashIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useEffect, useState } from "react";
+const TABS = [
+  {
+    label: "All",
+    value: "all",
+  },
+  {
+    label: "Monitored",
+    value: "monitored",
+  },
+  {
+    label: "Unmonitored",
+    value: "unmonitored",
+  },
+];
 
 const TABLE_HEAD = [
   "Event Name",
-  "category",
-  "genre",
+  "Category",
+  "Genre",
   "artist",
   "price",
+  "event_date",
   "location",
   "buyer",
   "barcode",
-  "event_date",
+
   "organizer",
   "event_information",
   "additional_info",
-  "profilePicture",
+  "age_restriction",
+  "ticket_availability",
+  "tickets_sold",
+  "event_status",
+  "event_type",
+  "seating",
+  "type",
+  "available_seats",
+  "seat_number",
+  "actions",
 ];
 
-export function Tickets() {
-  const [Ticket, setTicket] = useState([]);
-  const [newTicket, setNewTicket] = useState({
-    event_name: "",
-    category: "",
-    genre: "",
-    artist: "",
-    price: "",
-    location: { venue: "", city: "", address: "" },
-    buyer: { name: "", email: "", phone: "" },
-    barcode: "",
-    event_date: "",
-    organizer: "",
-    event_information: "",
-    additional_info: {
-      age_restriction: "",
-      ticket_availability: "",
-      tickets_sold: "",
-      event_status: "",
-      event_type: "",
-      seating: { type: "", available_seats: "", seat_number: "" },
-      profilePicture: "",
-    },
-  });
-  const [currentUser, setCurrentUser] = useState(null); // [1
-  const [error, setError] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+export function MembersTable() {
+  const [tickets, setTickets] = useState([]);
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/dashboard/tickets/")
-      .then((res) => {
-        setTicket(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const fetchTickets = async () => {
+      try {
+        const response = await axios(
+          "http://localhost:4000/dashboard/tickets/"
+        );
+        setTickets(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchTickets();
   }, []);
 
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNewTicket((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSelectChange = (value) => {
-    setNewTicket((prev) => ({ ...prev, role: value }));
-  };
-
-  const handleFileChange = (e) => {
-    setNewTicket((prev) => ({ ...prev, profilePicture: e.target.files[0] }));
-  };
-
-  const formatDate = (dateString) => {
-    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-    return new Date(dateString).toLocaleDateString("en-GB", options);
-  };
-
-  const openEditModal = (ticket) => {
-    setNewTicket({
-      event_name: ticket.event_name,
-      category: ticket.category,
-      genre: ticket.genre,
-      artist: ticket.artist,
-      price: ticket.price,
-      location: {
-        venue: ticket.vanue,
-        city: ticket.city,
-        address: ticket.address,
-      },
-      buyer: { name: ticket.name, email: ticket.email, phone: ticket.phone },
-      barcode: ticket.barcode,
-      event_date: ticket.event_date,
-      organizer: ticket.organizer,
-      event_information: ticket.event_information,
-      additional_info: {
-        age_restriction: ticket.age_restriction,
-        ticket_availability: ticket.ticket_availability,
-        tickets_sold: ticket.tickets_sold,
-        event_status: ticket.event_status,
-        event_type: ticket.event_type,
-        seating: {
-          type: ticket.type,
-          available_seats: ticket.available_seats,
-          seat_number: ticket.seat_number,
-        },
-      },
-      profilePicture: ticket.profilePicture,
-    });
-    setCurrentUser(user);
-    setIsEditModalOpen(true);
-  };
-
-  const closeEditModal = () => {
-    setIsEditModalOpen(false);
-    setNewTicket({
-      event_name: "",
-      category: "",
-      genre: "",
-      artist: "",
-      price: "",
-      location: { venue: "", city: "", address: "" },
-      buyer: { name: "", email: "", phone: "" },
-      barcode: "",
-      event_date: "",
-      organizer: "",
-      event_information: "",
-      additional_info: {
-        age_restriction: "",
-        ticket_availability: "",
-        tickets_sold: "",
-        event_status: "",
-        event_type: "",
-        seating: { type: "", available_seats: "", seat_number: "" },
-        profilePicture: "",
-      },
-      profilePicture: "",
-    });
-    setCurrentUser(null);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setError("");
-
-    if (currentUser) {
-      // Update existing user
-      const formData = new FormData();
-      Object.keys(newTicket).forEach((key) => {
-        if (newTicket[key] && newUnewTicketser[key] !== currentUser[key]) {
-          formData.append(key, newTicket[key]);
-        }
-      });
-
-      axios
-        .put(
-          `http://localhost:4000/dashboard/tickets//${currentUser._id}`,
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
-        )
-        .then((res) => {
-          setTicket(
-            Ticket.map((user) =>
-              user._id === currentUser._id ? res.data : user
-            )
-          );
-          toast.success("User updated successfully");
-          closeEditModal();
-        })
-        .catch((err) => {
-          setError("Error updating user. Please try again.");
-          toast.error("Error updating user. Please try again.");
-          console.log(err);
-        });
-    } else {
-      // Create new user
-      if (
-        !newTicket.name ||
-        !newTicket.email ||
-        !newTicket.password ||
-        !newTicket.role
-      ) {
-        toast.error("All fields except profile picture are required");
-        return;
-      }
-
-      const formData = new FormData();
-      Object.keys(newTicket).forEach((key) => {
-        formData.append(key, newTicket[key]);
-      });
-
-      axios
-        .post("http://localhost:4000/dashboard/tickets/", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        })
-        .then((res) => {
-          setTicket([...users, res.data]);
-          toast.success("User added successfully");
-          setNewTicket({
-            event_name: "",
-            category: "",
-            genre: "",
-            artist: "",
-            price: "",
-            location: { venue: "", city: "", address: "" },
-            buyer: { name: "", email: "", phone: "" },
-            barcode: "",
-            event_date: "",
-            organizer: "",
-            event_information: "",
-            additional_info: {
-              age_restriction: "",
-              ticket_availability: "",
-              tickets_sold: "",
-              event_status: "",
-              event_type: "",
-              seating: { type: "", available_seats: "", seat_number: "" },
-              profilePicture: "",
-            },
-            profilePicture: "",
-          });
-        })
-        .catch((err) => {
-          setError("Error adding user. Please try again.");
-          toast.error("Error adding user. Please try again.");
-          console.log(err);
-        });
-    }
-  };
-
-  const handleDelete = (userId) => {
-    axios
-      .delete(`http://localhost:4000/dashboard/tickets//${userId}`)
-      .then((res) => {
-        setTicket(users.filter((user) => user._id !== userId));
-        toast.success("User deleted successfully");
-      })
-      .catch((err) => {
-        toast.error("Error deleting user. Please try again.");
-        console.log(err);
-      });
-  };
-
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const filteredUsers = Ticket.filter((user) => user.name);
-
   return (
-    <div className=" mb-8 flex flex-col gap-2 ">
-      <ToastContainer />
-      <div className="m-2">
-        <Card className="h-full w-full mb-6 ">
-          <CardHeader floated={false} shadow={false} className="rounded-none">
-            <div className="mb-8 flex items-center justify-between gap-8 ">
-              <div>
-                <Typography variant="h5" color="blue-gray">
-                  Users Management
-                </Typography>
-                <Typography color="gray" className="mt-1 font-normal">
-                  See information about all members
-                </Typography>
-              </div>
-              <div className="flex shrink-0 flex-col gap-2 sm:flex-row p-4">
-                <div className="flex flex-col items-center justify-between gap-4 md:flex-row "></div>
-              </div>
-            </div>
-          </CardHeader>
-          <CardBody className=" px-0">
-            <table className="mt-4 w-full min-w-max table-auto text-left">
-              <thead>
-                <tr>
-                  <th className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-500 p-4 transition-colors hover:bg-blue-gray-50 rounded">
-                    <Typography
-                      variant="h6"
-                      color="blue-gray"
-                      className="flex items-center justify-between gap-2 font-normal leading-none opacity-70 capitalize"
-                    >
-                      Add a new user <UserPlusIcon className="h-5 w-5" />
-                    </Typography>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="p-4">
-                    <form onSubmit={handleSubmit}>
-                      <div className="flex gap-4 p-2">
-                        <Input
-                          size="md"
-                          type="text"
-                          label="Event Name"
-                          name="event_name"
-                          value={newTicket.name}
-                          onChange={handleChange}
-                        />
-                        <Input
-                          size="md"
-                          type="text"
-                          label="Category"
-                          name="category"
-                          value={newTicket.category}
-                          onChange={handleChange}
-                        />
-
-                        <Input
-                          type="text"
-                          label="Genre"
-                          name="genre"
-                          value={newTicket.genre}
-                          onChange={handleChange}
-                          className="pr-20"
-                          containerProps={{
-                            className: "min-w-0",
-                          }}
-                        />
-                        <Input
-                          type="text"
-                          label="Artist"
-                          name="artist"
-                          value={newTicket.artist}
-                          onChange={handleChange}
-                          className="pr-20"
-                          containerProps={{
-                            className: "min-w-0",
-                          }}
-                        />
-                      </div>
-                      <div className="flex gap-4 p-2">
-                        <Input
-                          size="md"
-                          type="text"
-                          label="price"
-                          name="price"
-                          value={newTicket.price}
-                          onChange={handleChange}
-                        />
-                        <Input
-                          size="md"
-                          type="text"
-                          label="Venue"
-                          name="venue"
-                          value={newTicket.location.venue}
-                          onChange={handleChange}
-                        />
-
-                        <Input
-                          type="text"
-                          label="City"
-                          name="city"
-                          value={newTicket.location.city}
-                          onChange={handleChange}
-                          className="pr-20"
-                          containerProps={{
-                            className: "min-w-0",
-                          }}
-                        />
-                        <Input
-                          type="text"
-                          label="Address"
-                          name="address"
-                          value={newTicket.location.address}
-                          onChange={handleChange}
-                          className="pr-20"
-                          containerProps={{
-                            className: "min-w-0",
-                          }}
-                        />
-                      </div>
-                      <div className="flex gap-4 p-2">
-                        <Input
-                          size="md"
-                          type="text"
-                          label="Name"
-                          name="Name"
-                          value={newTicket.buyer.name}
-                          onChange={handleChange}
-                        />
-
-                        <Input
-                          type="email"
-                          label="Email"
-                          name=" email"
-                          value={newTicket.buyer.email}
-                          onChange={handleChange}
-                          className="pr-20"
-                          containerProps={{
-                            className: "min-w-0",
-                          }}
-                        />
-                        <Input
-                          size="md"
-                          type="text"
-                          label="Phone"
-                          name="phone"
-                          value={newTicket.buyer.phone}
-                          onChange={handleChange}
-                        />
-
-                        <Input
-                          type="text"
-                          label="Event Date"
-                          name="event_date"
-                          value={newTicket.event_date}
-                          onChange={handleChange}
-                          className="pr-20"
-                          containerProps={{
-                            className: "min-w-0",
-                          }}
-                        />
-                      </div>
-                      <div className="flex gap-4 p-2">
-                        <div className="flex-grow" style={{ flexBasis: "30%" }}>
-                          <Button
-                            type="submit"
-                            className="w-full flex items-center justify-center gap-2 "
-                          >
-                            {currentUser ? "Update user" : "Add user"}{" "}
-                            <UserPlusIcon className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-                      {error && (
-                        <div className="text-red-500 mt-2">{error}</div>
-                      )}
-                    </form>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </CardBody>
-        </Card>
-      </div>
-      <hr className="border-t-2 border-blue-gray-200 mt-4 mb-4" />
-      <div className="m-2">
-        <Card className="h-full w-full ">
-          <CardHeader floated={false} shadow={false} className="rounded-none ">
-            <div className="flex justify-between items-center">
-              <Typography variant="h5" color="blue-gray">
-                Users
-              </Typography>
-              <div className="w-72 mt-4">
+    <Card className="h-full w-full">
+      <CardHeader floated={false} shadow={false} className="rounded-none">
+        <div className="mb-8 flex items-center justify-between gap-8">
+          <div>
+            <Typography variant="h5" color="blue-gray">
+              Members list
+            </Typography>
+            <Typography color="gray" className="mt-1 font-normal">
+              See information about all members
+            </Typography>
+          </div>
+          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+            <Button variant="outlined" size="sm">
+              view all
+            </Button>
+            <Button className="flex items-center gap-3" size="sm">
+              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
+            </Button>
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+          <div className="w-full md:w-72">
+            <Input
+              label="Search"
+              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+            />
+          </div>
+        </div>
+        <tbody>
+          <tr>
+            <td className="p-4">
+              <div className="flex gap-4 p-2">
+                <Input type="text" size="md" label="Event Name" />
                 <Input
-                  label="Search"
-                  icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-                  value={searchTerm}
-                  onChange={handleSearchChange}
+                  type="text"
+                  label="Category"
+                  className="pr-20"
+                  containerProps={{
+                    className: "min-w-0",
+                  }}
+                />
+                <Input type="text" size="md" label="Genre" />
+                <Input type="text" size="md" label="Artist" />
+                <Input type="text" size="md" label="price" />
+                <Input type="text" size="md" label="Event Date" />
+              </div>
+              <div className="flex gap-4 p-2">
+                <Input type="text" size="md" label="Event Information" />
+                <Input size="md" type="text" label="Venue" name="venue" />
+                <Input type="text" size="md" label="City" />
+                <Input type="text" size="md" label="Address" />
+              </div>
+              <div className="flex gap-4 p-2">
+                <Input type="text" size="md" label="Organizer" />
+                <Input type="text" size="md" label="name" />
+                <Input type="text" size="md" label="email" />
+                <Input type="text" size="md" label="phone" />
+                <Input type="text" size="md" label="Barcode" />
+              </div>
+              <div>
+                {" "}
+                <div className="flex gap-4 p-2"></div>
+              </div>
+              <div className="flex gap-4 p-2">
+                <Input
+                  size="md"
+                  type="text"
+                  label="Age Restriction"
+                  name="age_restriction"
+                />
+                <Input
+                  type="email"
+                  label="Ticket Availability "
+                  name=" ticket_availability"
+                />
+                <Input
+                  size="md"
+                  type="text"
+                  label="Tickets Sold"
+                  name="tickets_sold"
+                />
+                <Input type="text" label="Event Status" name=" event_status" />
+                <Input
+                  size="md"
+                  type="text"
+                  label="Available Seats"
+                  name="available_seats"
+                />
+
+                <Input
+                  size="md"
+                  type="text"
+                  label="Seat Number"
+                  name="seat_number"
                 />
               </div>
-            </div>
-          </CardHeader>
-          <CardBody className=" px-0">
-            <table className="mt-4 w-full min-w-max table-auto text-left">
-              <thead>
-                <tr>
-                  {TABLE_HEAD.map((head, index) => (
-                    <th
-                      key={head}
-                      className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-500 p-4 transition-colors hover:bg-blue-gray-50"
-                    >
-                      <Typography
-                        variant="h6"
-                        color="blue-gray"
-                        className="flex items-center justify-between gap-2 font-normal leading-none opacity-70 capitalize"
-                      >
-                        {capitalizeFirstLetter(head)}
-                        {index !== TABLE_HEAD.length - 1 && (
-                          <ChevronUpDownIcon
-                            strokeWidth={2}
-                            className="h-4 w-4"
-                          />
-                        )}
-                      </Typography>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {filteredUsers.map(
-                  (
-                    { _id, profilePicture, name, email, role, createdAt },
-                    index
-                  ) => {
-                    const isLast = index === filteredUsers.length - 1;
-                    const classes = isLast
-                      ? "p-4"
-                      : "p-4 border-b border-blue-gray-50";
+              <div className="flex gap-4 p-2">
+                <div className="flex-grow" style={{ flexBasis: "70%" }}>
+                  <Input type="file" size="md" label="Profile" />
+                </div>
+                <div className="flex-grow" style={{ flexBasis: "30%" }}>
+                  <Button className="w-full flex items-center justify-center gap-2">
+                    Add user <UserPlusIcon className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </CardHeader>
+      <CardBody className="overflow-scroll px-0">
+        <table className="mt-4 w-full min-w-max table-auto text-left">
+          <thead>
+            <tr>
+              {TABLE_HEAD.map((head) => (
+                <th
+                  key={head}
+                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                >
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal leading-none opacity-70"
+                  >
+                    {head}
+                  </Typography>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {tickets.map(
+              (
+                {
+                  event_name,
+                  category,
+                  genre,
+                  artist,
+                  price,
+                  img,
+                  location: { venue, city, address },
+                  buyer: { name, email, phone },
+                  barcode,
+                  event_date,
+                  organizer,
+                  event_information,
+                  additional_info: {
+                    age_restriction,
+                    ticket_availability,
+                    tickets_sold,
+                    event_status,
+                    event_type,
+                    seating: { type, available_seats },
+                  },
+                },
+                index
+              ) => {
+                const isLast = index === tickets.length - 1;
+                const classes = isLast
+                  ? "p-4"
+                  : "p-4 border-b border-blue-gray-50";
 
-                    return (
-                      <tr key={_id}>
-                        <td className={classes}>
-                          <Avatar
-                            src={profilePicture}
-                            alt={name}
-                            size="sm"
-                            className="rounded-full border border-blue-gray-200 shadow-sm overflow-hidden w-12 h-12"
-                          />
-                        </td>
-                        <td className={classes}>
-                          <div className="flex flex-col">
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-semibold"
-                            >
-                              {capitalizeFirstLetter(name)}
-                            </Typography>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal opacity-70"
-                            >
-                              {email}
-                            </Typography>
-                          </div>
-                        </td>
-                        <td className={`${classes}`}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal uppercase opacity-70"
-                          >
-                            {role}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
+                return (
+                  <tr key={event_name}>
+                    {/* event_name */}
+                    <td className={classes}>
+                      <div className="flex items-center gap-3">
+                        <Avatar src={img} alt={event_name} size="sm" />
+                        <div className="flex flex-col">
                           <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {formatDate(createdAt)}
+                            {event_name}
                           </Typography>
-                        </td>
-                        <td className={classes}>
-                          <div className="flex items-center gap-2">
-                            <Tooltip content="Edit User">
-                              <IconButton
-                                variant="text"
-                                onClick={() =>
-                                  openEditModal({
-                                    _id,
-                                    name,
-                                    email,
-                                    role,
-                                    profilePicture,
-                                  })
-                                }
-                              >
-                                <PencilIcon className="h-4 w-4" />
-                              </IconButton>
-                            </Tooltip>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal opacity-70"
+                          >
+                            {artist}
+                          </Typography>
+                        </div>
+                      </div>
+                    </td>
+                    {/* category */}
+                    <td className={classes}>
+                      <div className="flex flex-col">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {category}
+                        </Typography>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal opacity-70"
+                        ></Typography>
+                      </div>
+                    </td>
+                    {/* genre */}
+                    <td className={classes}>
+                      <div className="w-max">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal opacity-70"
+                        >
+                          {genre}
+                        </Typography>
+                      </div>
+                    </td>
+                    {/* event_date */}
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {artist}
+                      </Typography>
+                    </td>
+                    {/* price */}
+                    <td className={classes}>
+                      <div className="w-max">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal opacity-70"
+                        >
+                          {price}
+                        </Typography>
+                      </div>
+                    </td>
+                    {/* event_date */}
+                    <td className={classes}>
+                      <div className="w-max">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal opacity-70"
+                        >
+                          {event_date}
+                        </Typography>
+                      </div>
+                    </td>
+                    {/* location */}
+                    <td className={classes}>
+                      <div className="w-max">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal opacity-70"
+                        >
+                          {venue}, {city}, {address}
+                        </Typography>
+                      </div>
+                    </td>
+                    {/* buyer */}
+                    <td className={classes}>
+                      <div className="w-max">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal opacity-70"
+                        >
+                          {" "}
+                          {name},{email},{phone}
+                        </Typography>
+                      </div>
+                    </td>
 
-                            <Tooltip content="Delete User">
-                              <IconButton
-                                variant="text"
-                                onClick={() => handleDelete(_id)}
-                              >
-                                <TrashIcon className="h-4 w-4" />
-                              </IconButton>
-                            </Tooltip>
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  }
-                )}
-              </tbody>
-            </table>
-          </CardBody>
-          <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-            <Button variant="outlined" size="sm">
-              Previous
-            </Button>
-            <div className="flex items-center gap-2">
-              <IconButton variant="outlined" size="sm">
-                1
-              </IconButton>
-              <IconButton variant="text" size="sm">
-                2
-              </IconButton>
-              <IconButton variant="text" size="sm">
-                3
-              </IconButton>
-              <IconButton variant="text" size="sm">
-                ...
-              </IconButton>
-              <IconButton variant="text" size="sm">
-                8
-              </IconButton>
-              <IconButton variant="text" size="sm">
-                9
-              </IconButton>
-              <IconButton variant="text" size="sm">
-                10
-              </IconButton>
-            </div>
-            <Button variant="outlined" size="sm">
-              Next
-            </Button>
-          </CardFooter>
-        </Card>
-      </div>
-      <Dialog open={isEditModalOpen} handler={closeEditModal}>
-        <DialogHeader>Edit User</DialogHeader>
-        <DialogBody>
-          <form onSubmit={handleSubmit}>
-            <div className="flex gap-4 p-2">
-              <Input
-                size="md"
-                label="Name"
-                name="name"
-                value={newTicket.name}
-                onChange={handleChange}
-              />
-              <Input
-                type="email"
-                label="Email Address"
-                name="email"
-                value={newTicket.email}
-                onChange={handleChange}
-                className="pr-20"
-                containerProps={{
-                  className: "min-w-0",
-                }}
-              />
-            </div>
-            <div className="flex gap-4 p-2">
-              <Input
-                type="password"
-                size="md"
-                label="Password"
-                name="password"
-                value={newTicket.password}
-                onChange={handleChange}
-              />
-              <Select
-                label="Select Role"
-                name="role"
-                value={newTicket.role}
-                onChange={handleSelectChange}
-              >
-                <Option value="admin">Admin</Option>
-                <Option value="organizer">Organizer</Option>
-                <Option value="customer">Customer</Option>
-              </Select>
-            </div>
-            <div className="flex gap-4 p-2">
-              <Input
-                type="file"
-                size="md"
-                label="Profile"
-                onChange={handleFileChange}
-              />
-            </div>
-            {error && <div className="text-red-500 mt-2">{error}</div>}
-          </form>
-        </DialogBody>
-        <DialogFooter>
-          <Button variant="text" color="red" onClick={closeEditModal}>
-            Cancel
+                    <td className={classes}>
+                      <Tooltip content="Edit User">
+                        <IconButton variant="text">
+                          <PencilIcon className="h-4 w-4" />
+                        </IconButton>
+                      </Tooltip>
+                    </td>
+                  </tr>
+                );
+              }
+            )}
+          </tbody>
+        </table>
+      </CardBody>
+      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+        <Typography variant="small" color="blue-gray" className="font-normal">
+          Page 1 of 10
+        </Typography>
+        <div className="flex gap-2">
+          <Button variant="outlined" size="sm">
+            Previous
           </Button>
-          <Button variant="gradient" color="green" onClick={handleSubmit}>
-            Save
+          <Button variant="outlined" size="sm">
+            Next
           </Button>
-        </DialogFooter>
-      </Dialog>
-    </div>
+        </div>
+      </CardFooter>
+    </Card>
   );
 }
-
-export default Tickets;
+export default MembersTable;

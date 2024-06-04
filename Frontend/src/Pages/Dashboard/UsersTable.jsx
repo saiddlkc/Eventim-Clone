@@ -26,45 +26,16 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const TABLE_HEAD = [
-  "Event Name",
-  "category",
-  "genre",
-  "artist",
-  "price",
-  "location",
-  "buyer",
-  "barcode",
-  "event_date",
-  "organizer",
-  "event_information",
-  "additional_info",
-  "profilePicture",
-];
+const TABLE_HEAD = ["Profile", "Name", "Role", "Employed", ""];
 
-export function Tickets() {
-  const [Ticket, setTicket] = useState([]);
-  const [newTicket, setNewTicket] = useState({
-    event_name: "",
-    category: "",
-    genre: "",
-    artist: "",
-    price: "",
-    location: { venue: "", city: "", address: "" },
-    buyer: { name: "", email: "", phone: "" },
-    barcode: "",
-    event_date: "",
-    organizer: "",
-    event_information: "",
-    additional_info: {
-      age_restriction: "",
-      ticket_availability: "",
-      tickets_sold: "",
-      event_status: "",
-      event_type: "",
-      seating: { type: "", available_seats: "", seat_number: "" },
-      profilePicture: "",
-    },
+export function SortableTable() {
+  const [users, setUsers] = useState([]);
+  const [newUser, setNewUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "",
+    profilePicture: "",
   });
   const [currentUser, setCurrentUser] = useState(null); // [1
   const [error, setError] = useState("");
@@ -72,17 +43,14 @@ export function Tickets() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
-    const fetchTickets = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:4000/dashboard/tickets/"
-        );
-        setTicket(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchTickets();
+    axios
+      .get("http://localhost:4000/dashboard/Users")
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   const capitalizeFirstLetter = (string) => {
@@ -91,15 +59,15 @@ export function Tickets() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewTicket((prev) => ({ ...prev, [name]: value }));
+    setNewUser((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSelectChange = (value) => {
-    setNewTicket((prev) => ({ ...prev, role: value }));
+    setNewUser((prev) => ({ ...prev, role: value }));
   };
 
   const handleFileChange = (e) => {
-    setNewTicket((prev) => ({ ...prev, profilePicture: e.target.files[0] }));
+    setNewUser((prev) => ({ ...prev, profilePicture: e.target.files[0] }));
   };
 
   const formatDate = (dateString) => {
@@ -107,36 +75,13 @@ export function Tickets() {
     return new Date(dateString).toLocaleDateString("en-GB", options);
   };
 
-  const openEditModal = (ticket) => {
-    setNewTicket({
-      event_name: ticket.event_name,
-      category: ticket.category,
-      genre: ticket.genre,
-      artist: ticket.artist,
-      price: ticket.price,
-      location: {
-        venue: ticket.vanue,
-        city: ticket.city,
-        address: ticket.address,
-      },
-      buyer: { name: ticket.name, email: ticket.email, phone: ticket.phone },
-      barcode: ticket.barcode,
-      event_date: ticket.event_date,
-      organizer: ticket.organizer,
-      event_information: ticket.event_information,
-      additional_info: {
-        age_restriction: ticket.age_restriction,
-        ticket_availability: ticket.ticket_availability,
-        tickets_sold: ticket.tickets_sold,
-        event_status: ticket.event_status,
-        event_type: ticket.event_type,
-        seating: {
-          type: ticket.type,
-          available_seats: ticket.available_seats,
-          seat_number: ticket.seat_number,
-        },
-      },
-      profilePicture: ticket.profilePicture,
+  const openEditModal = (user) => {
+    setNewUser({
+      name: user.name,
+      email: user.email,
+      password: "",
+      role: user.role,
+      profilePicture: user.profilePicture,
     });
     setCurrentUser(user);
     setIsEditModalOpen(true);
@@ -144,27 +89,11 @@ export function Tickets() {
 
   const closeEditModal = () => {
     setIsEditModalOpen(false);
-    setNewTicket({
-      event_name: "",
-      category: "",
-      genre: "",
-      artist: "",
-      price: "",
-      location: { venue: "", city: "", address: "" },
-      buyer: { name: "", email: "", phone: "" },
-      barcode: "",
-      event_date: "",
-      organizer: "",
-      event_information: "",
-      additional_info: {
-        age_restriction: "",
-        ticket_availability: "",
-        tickets_sold: "",
-        event_status: "",
-        event_type: "",
-        seating: { type: "", available_seats: "", seat_number: "" },
-        profilePicture: "",
-      },
+    setNewUser({
+      name: "",
+      email: "",
+      password: "",
+      role: "",
       profilePicture: "",
     });
     setCurrentUser(null);
@@ -177,23 +106,23 @@ export function Tickets() {
     if (currentUser) {
       // Update existing user
       const formData = new FormData();
-      Object.keys(newTicket).forEach((key) => {
-        if (newTicket[key] && newUnewTicketser[key] !== currentUser[key]) {
-          formData.append(key, newTicket[key]);
+      Object.keys(newUser).forEach((key) => {
+        if (newUser[key] && newUser[key] !== currentUser[key]) {
+          formData.append(key, newUser[key]);
         }
       });
 
       axios
         .put(
-          `http://localhost:4000/dashboard/tickets//${currentUser._id}`,
+          `http://localhost:4000/dashboard/users/${currentUser._id}`,
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
           }
         )
         .then((res) => {
-          setTicket(
-            Ticket.map((user) =>
+          setUsers(
+            users.map((user) =>
               user._id === currentUser._id ? res.data : user
             )
           );
@@ -208,48 +137,32 @@ export function Tickets() {
     } else {
       // Create new user
       if (
-        !newTicket.name ||
-        !newTicket.email ||
-        !newTicket.password ||
-        !newTicket.role
+        !newUser.name ||
+        !newUser.email ||
+        !newUser.password ||
+        !newUser.role
       ) {
         toast.error("All fields except profile picture are required");
         return;
       }
 
       const formData = new FormData();
-      Object.keys(newTicket).forEach((key) => {
-        formData.append(key, newTicket[key]);
+      Object.keys(newUser).forEach((key) => {
+        formData.append(key, newUser[key]);
       });
 
       axios
-        .post("http://localhost:4000/dashboard/tickets/", formData, {
+        .post("http://localhost:4000/dashboard/users", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((res) => {
-          setTicket([...users, res.data]);
+          setUsers([...users, res.data]);
           toast.success("User added successfully");
-          setNewTicket({
-            event_name: "",
-            category: "",
-            genre: "",
-            artist: "",
-            price: "",
-            location: { venue: "", city: "", address: "" },
-            buyer: { name: "", email: "", phone: "" },
-            barcode: "",
-            event_date: "",
-            organizer: "",
-            event_information: "",
-            additional_info: {
-              age_restriction: "",
-              ticket_availability: "",
-              tickets_sold: "",
-              event_status: "",
-              event_type: "",
-              seating: { type: "", available_seats: "", seat_number: "" },
-              profilePicture: "",
-            },
+          setNewUser({
+            name: "",
+            email: "",
+            password: "",
+            role: "",
             profilePicture: "",
           });
         })
@@ -263,9 +176,9 @@ export function Tickets() {
 
   const handleDelete = (userId) => {
     axios
-      .delete(`http://localhost:4000/dashboard/tickets//${userId}`)
+      .delete(`http://localhost:4000/dashboard/users/${userId}`)
       .then((res) => {
-        setTicket(users.filter((user) => user._id !== userId));
+        setUsers(users.filter((user) => user._id !== userId));
         toast.success("User deleted successfully");
       })
       .catch((err) => {
@@ -278,7 +191,9 @@ export function Tickets() {
     setSearchTerm(e.target.value);
   };
 
-  const filteredUsers = Ticket.filter((user) => user.name);
+  const filteredUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className=" mb-8 flex flex-col gap-2 ">
@@ -322,120 +237,16 @@ export function Tickets() {
                       <div className="flex gap-4 p-2">
                         <Input
                           size="md"
-                          type="text"
-                          label="Event Name"
-                          name="event_name"
-                          value={newTicket.name}
-                          onChange={handleChange}
-                        />
-                        <Input
-                          size="md"
-                          type="text"
-                          label="Category"
-                          name="category"
-                          value={newTicket.category}
-                          onChange={handleChange}
-                        />
-
-                        <Input
-                          type="text"
-                          label="Genre"
-                          name="genre"
-                          value={newTicket.genre}
-                          onChange={handleChange}
-                          className="pr-20"
-                          containerProps={{
-                            className: "min-w-0",
-                          }}
-                        />
-                        <Input
-                          type="text"
-                          label="Artist"
-                          name="artist"
-                          value={newTicket.artist}
-                          onChange={handleChange}
-                          className="pr-20"
-                          containerProps={{
-                            className: "min-w-0",
-                          }}
-                        />
-                      </div>
-                      <div className="flex gap-4 p-2">
-                        <Input
-                          size="md"
-                          type="text"
-                          label="price"
-                          name="price"
-                          value={newTicket.price}
-                          onChange={handleChange}
-                        />
-                        <Input
-                          size="md"
-                          type="text"
-                          label="Venue"
-                          name="venue"
-                          value={newTicket.location.venue}
-                          onChange={handleChange}
-                        />
-
-                        <Input
-                          type="text"
-                          label="City"
-                          name="city"
-                          value={newTicket.location.city}
-                          onChange={handleChange}
-                          className="pr-20"
-                          containerProps={{
-                            className: "min-w-0",
-                          }}
-                        />
-                        <Input
-                          type="text"
-                          label="Address"
-                          name="address"
-                          value={newTicket.location.address}
-                          onChange={handleChange}
-                          className="pr-20"
-                          containerProps={{
-                            className: "min-w-0",
-                          }}
-                        />
-                      </div>
-                      <div className="flex gap-4 p-2">
-                        <Input
-                          size="md"
-                          type="text"
                           label="Name"
-                          name="Name"
-                          value={newTicket.buyer.name}
+                          name="name"
+                          value={newUser.name}
                           onChange={handleChange}
                         />
-
                         <Input
                           type="email"
-                          label="Email"
-                          name=" email"
-                          value={newTicket.buyer.email}
-                          onChange={handleChange}
-                          className="pr-20"
-                          containerProps={{
-                            className: "min-w-0",
-                          }}
-                        />
-                        <Input
-                          size="md"
-                          type="text"
-                          label="Phone"
-                          name="phone"
-                          value={newTicket.buyer.phone}
-                          onChange={handleChange}
-                        />
-
-                        <Input
-                          type="text"
-                          label="Event Date"
-                          name="event_date"
-                          value={newTicket.event_date}
+                          label="Email Address"
+                          name="email"
+                          value={newUser.email}
                           onChange={handleChange}
                           className="pr-20"
                           containerProps={{
@@ -444,6 +255,35 @@ export function Tickets() {
                         />
                       </div>
                       <div className="flex gap-4 p-2">
+                        <Input
+                          type="password"
+                          size="md"
+                          label="Password"
+                          name="password"
+                          value={newUser.password}
+                          onChange={handleChange}
+                        />
+
+                        <Select
+                          label="Select Role"
+                          name="role"
+                          value={newUser.role}
+                          onChange={handleSelectChange}
+                        >
+                          <Option value="admin">Admin</Option>
+                          <Option value="organizer">Organizer</Option>
+                          <Option value="customer">Customer</Option>
+                        </Select>
+                      </div>
+                      <div className="flex gap-4 p-2">
+                        <div className="flex-grow" style={{ flexBasis: "70%" }}>
+                          <Input
+                            type="file"
+                            size="md"
+                            label="Profile"
+                            onChange={handleFileChange}
+                          />
+                        </div>
                         <div className="flex-grow" style={{ flexBasis: "30%" }}>
                           <Button
                             type="submit"
@@ -573,30 +413,11 @@ export function Tickets() {
                                 variant="text"
                                 onClick={() =>
                                   openEditModal({
-                                    event_name,
-                                    category,
-                                    genre,
-                                    artist,
-                                    price,
-                                    location: { venue, city, address },
-                                    buyer,
-                                    barcode,
-                                    event_date,
-                                    organizer,
-                                    event_information,
-                                    additional_info: {
-                                      age_restriction,
-                                      ticket_availability,
-                                      tickets_sold,
-                                      event_status,
-                                      event_type,
-                                      seating: {
-                                        type,
-                                        available_seats,
-                                        seat_number,
-                                      },
-                                    },
-                                    profilePicture: ticket.profilePicture,
+                                    _id,
+                                    name,
+                                    email,
+                                    role,
+                                    profilePicture,
                                   })
                                 }
                               >
@@ -661,120 +482,16 @@ export function Tickets() {
             <div className="flex gap-4 p-2">
               <Input
                 size="md"
-                type="text"
-                label="Event Name"
-                name="event_name"
-                value={newTicket.name}
-                onChange={handleChange}
-              />
-              <Input
-                size="md"
-                type="text"
-                label="Category"
-                name="category"
-                value={newTicket.category}
-                onChange={handleChange}
-              />
-
-              <Input
-                type="text"
-                label="Genre"
-                name="genre"
-                value={newTicket.genre}
-                onChange={handleChange}
-                className="pr-20"
-                containerProps={{
-                  className: "min-w-0",
-                }}
-              />
-              <Input
-                type="text"
-                label="Artist"
-                name="artist"
-                value={newTicket.artist}
-                onChange={handleChange}
-                className="pr-20"
-                containerProps={{
-                  className: "min-w-0",
-                }}
-              />
-            </div>
-            <div className="flex gap-4 p-2">
-              <Input
-                size="md"
-                type="text"
-                label="price"
-                name="price"
-                value={newTicket.price}
-                onChange={handleChange}
-              />
-              <Input
-                size="md"
-                type="text"
-                label="Venue"
-                name="venue"
-                value={newTicket.location.venue}
-                onChange={handleChange}
-              />
-
-              <Input
-                type="text"
-                label="City"
-                name="city"
-                value={newTicket.location.city}
-                onChange={handleChange}
-                className="pr-20"
-                containerProps={{
-                  className: "min-w-0",
-                }}
-              />
-              <Input
-                type="text"
-                label="Address"
-                name="address"
-                value={newTicket.location.address}
-                onChange={handleChange}
-                className="pr-20"
-                containerProps={{
-                  className: "min-w-0",
-                }}
-              />
-            </div>
-            <div className="flex gap-4 p-2">
-              <Input
-                size="md"
-                type="text"
                 label="Name"
-                name="Name"
-                value={newTicket.buyer.name}
+                name="name"
+                value={newUser.name}
                 onChange={handleChange}
               />
-
               <Input
                 type="email"
-                label="Email"
-                name=" email"
-                value={newTicket.buyer.email}
-                onChange={handleChange}
-                className="pr-20"
-                containerProps={{
-                  className: "min-w-0",
-                }}
-              />
-              <Input
-                size="md"
-                type="text"
-                label="Phone"
-                name="phone"
-                value={newTicket.buyer.phone}
-                onChange={handleChange}
-              />
-
-              <Input
-                type="text"
-                label="Event Date"
-                name="event_date"
-                value={newTicket.event_date}
+                label="Email Address"
+                name="email"
+                value={newUser.email}
                 onChange={handleChange}
                 className="pr-20"
                 containerProps={{
@@ -783,15 +500,32 @@ export function Tickets() {
               />
             </div>
             <div className="flex gap-4 p-2">
-              <div className="flex-grow" style={{ flexBasis: "30%" }}>
-                <Button
-                  type="submit"
-                  className="w-full flex items-center justify-center gap-2 "
-                >
-                  {currentUser ? "Update user" : "Add user"}{" "}
-                  <UserPlusIcon className="h-4 w-4" />
-                </Button>
-              </div>
+              <Input
+                type="password"
+                size="md"
+                label="Password"
+                name="password"
+                value={newUser.password}
+                onChange={handleChange}
+              />
+              <Select
+                label="Select Role"
+                name="role"
+                value={newUser.role}
+                onChange={handleSelectChange}
+              >
+                <Option value="admin">Admin</Option>
+                <Option value="organizer">Organizer</Option>
+                <Option value="customer">Customer</Option>
+              </Select>
+            </div>
+            <div className="flex gap-4 p-2">
+              <Input
+                type="file"
+                size="md"
+                label="Profile"
+                onChange={handleFileChange}
+              />
             </div>
             {error && <div className="text-red-500 mt-2">{error}</div>}
           </form>
@@ -809,4 +543,4 @@ export function Tickets() {
   );
 }
 
-export default Tickets;
+export default SortableTable;
