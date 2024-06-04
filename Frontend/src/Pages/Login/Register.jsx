@@ -215,7 +215,7 @@ export function SignUp() {
           className="text-center text-blue-gray-500 font-medium mt-4"
         >
           Sie haben bereits ein Konto?
-          <Link to="/" className="text-gray-900 ml-1">
+          <Link to="/login" className="text-gray-900 ml-1">
             Sign in
           </Link>
         </Typography>

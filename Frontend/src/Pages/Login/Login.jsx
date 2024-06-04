@@ -1,96 +1,102 @@
-import React, { useState } from 'react';
-import { Card, Input, Checkbox, Button, Typography } from '@material-tailwind/react';
-import axios from 'axios';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+import {
+  Input,
+  Button,
+  Typography,
+} from "@material-tailwind/react";
+import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import logo from "../../assets/img/logo-transparent-png.png";
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!email || !password) {
-      setError('Both fields must be filled');
-      return;
-    }
-    console.log('Email:', email); // E-Mail in der Konsole anzeigen
-    console.log('Password:', password);
-    try {
-      const response = await axios.post('http://localhost:4000/auth/login', { email, password });
-      const { token, user } = response.data;
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
-      window.location.href = '/dashboard'; // Redirect to the dashboard
-    } catch (error) {
-      setError('Invalid email or password');
-    }
+export function Login() {
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: "",
+  });
+
+
+  const navigate = useNavigate();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCredentials((prev) => ({ ...prev, [name]: value }));
   };
 
-  const googleAuth = () => {
-    window.open('http://localhost:4000/auth/google', '_self');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!credentials.email || !credentials.password) {
+      toast.error("Both email and password are required");
+      return;
+    }
+
+    axios
+      .post("http://localhost:4000/auth/login", credentials)
+      .then((res ) => {
+        toast.success("Login successful!");
+        console.log(res.data);
+        navigate("/");
+      })
+      .catch((err) => {
+        toast.error("Error logging in. Please try again.");
+        console.log(err);
+        
+      });
   };
 
   return (
-    <Card color="transparent" shadow={false} className="m-14">
-      <Typography variant="h4" color="blue-gray">
-        Sign In
-      </Typography>
-      <Typography color="gray" className="mt-1 font-normal">
-        Enter your details to sign in.
-      </Typography>
-      <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={handleSubmit}>
-        <div className="mb-1 flex flex-col gap-6">
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Your Email
-          </Typography>
-          <Input
-            size="lg"
-            placeholder="name@mail.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-          />
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Password
-          </Typography>
-          <Input
-            type="password"
-            size="lg"
-            placeholder="********"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-          />
+    <section className="m-24 flex justify-center align-center">
+      <ToastContainer />
+      <div className="w-full lg:w-3/5 flex flex-col items-center justify-center">
+        <div className="justify-center">
+          <img src={logo} alt="logo" className="h-48" />
         </div>
-        {error && (
-          <Typography color="red" className="mt-1 font-normal">
-            {error}
+        <div className="text-center">
+          <Typography variant="h2" className="font-bold mb-4">
+            Login
           </Typography>
-        )}
-        <Checkbox
-          label={
-            <Typography
-              variant="small"
-              color="gray"
-              className="flex items-center font-normal"
+          <Typography
+            variant="paragraph"
+            color="blue-gray"
+            className="text-lg font-normal"
+          >
+            Sign in to access all the features.
+          </Typography>
+        </div>
+        <form
+          className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2"
+          onSubmit={handleSubmit}
+        >
+          <div className="flex flex-col gap-6">
+            <Input
+              type="email"
+              label="Email Address"
+              name="email"
+              value={credentials.email}
+              onChange={handleChange}
+            />
+            <Input
+              type="password"
+              size="md"
+              label="Password"
+              name="password"
+              value={credentials.password}
+              onChange={handleChange}
+            />
+            <Button
+              type="submit"
+              className="w-full flex items-center justify-center gap-2"
             >
-              I agree to the
-              <a
-                href="#"
-                className="font-medium transition-colors hover:text-gray-900"
-              >
-                &nbsp;Terms and Conditions
-              </a>
-            </Typography>
-          }
-          containerProps={{ className: '-ml-2.5' }}
-        />
-        <div className="space-y-4 mt-8">
+              Login
+            </Button>
+            <div className="space-y-4">
           <Button
             size="lg"
-            color="grey"
+            color=""
             className="flex items-center gap-2 justify-center shadow-md"
-            onClick={googleAuth}
             fullWidth
           >
             <svg
@@ -131,19 +137,21 @@ const Login = () => {
             </svg>
             <span>Sign in With Google</span>
           </Button>
-          <Button className="mt-6" type="submit" fullWidth>
-            Sign In
-          </Button>
         </div>
-        <Typography color="gray" className="mt-4 text-center font-normal">
-          Don't have an account?{' '}
-          <a href="#" className="font-medium text-gray-900">
+          </div>
+        </form>
+        <Typography
+          variant="paragraph"
+          className="text-center text-blue-gray-500 font-medium mt-4"
+        >
+          Don't have an account yet?{" "}
+          <Link to="/sign-up" className="text-gray-900 ml-1">
             Sign Up
-          </a>
+          </Link>
         </Typography>
-      </form>
-    </Card>
+      </div>
+    </section>
   );
-};
+}
 
 export default Login;

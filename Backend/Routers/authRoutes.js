@@ -5,7 +5,7 @@ const Users = require("../Models/usersSchema");
 
 const router = express.Router();
 
-router.get("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -15,7 +15,6 @@ router.get("/login", async (req, res) => {
       return res.status(400).json({ error: "Invalid credentials" });
     }
 
-    // Überprüfe das Passwort (ohne Hashing)
     if (password !== user.password) {
       return res.status(400).json({ error: "Invalid credentials" });
     }
