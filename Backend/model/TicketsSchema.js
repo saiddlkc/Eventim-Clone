@@ -72,6 +72,7 @@ const TicketsSchema = new Schema({
     seating: {
       type: { type: String, required: true },
       available_seats: { type: Number },
+      seat_number: { type: Number },
     },
   },
 });

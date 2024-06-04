@@ -4,10 +4,10 @@
 // import GetEvent from "./components/GetEvent";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-// import Tickets from "./Pages/Dashboard/Tickets";
+import Tickets from "./Pages/Dashboard/Tickets";
 // import Add from "./Pages/Dashboard/Add";
 import Update from "./Pages/Dashboard/Update";
-import Seats from "./components/seats/Seats";
+import StadiumSeating from "./components/stadion-seating/StadiumSeating";
 
 function App() {
   return (
@@ -15,8 +15,8 @@ function App() {
       {/* <Navbar /> */}
       <Routes>
         <Route path="/" element={<Tickets />} />
-        <Route path="/add" element={<Add />} />
-        <Route path="/seats" element={<Seats />} />
+        {/* <Route path="/add" element={<Add />} /> */}
+        <Route path="/seats" element={<StadiumSeating />} />
         {/* <Route path="/update/:id" element={<Update />} />  */}
         {/* <Route path="Register" element={<Register />} />
           <Route path="Login" element={<Login />} /> */}

@@ -28,7 +28,7 @@ const PostTickets = async (req, res) => {
       tickets_sold,
       event_status,
       event_type,
-      seating: { type, available_seats },
+      seating: { type, available_seats, seat_number },
     },
   } = req.body;
   try {
@@ -50,7 +50,7 @@ const PostTickets = async (req, res) => {
         tickets_sold,
         event_status,
         event_type,
-        seating: { type, available_seats },
+        seating: { type, available_seats, seat_number },
       },
     });
     res.status(200).json(tickets);
@@ -92,7 +92,7 @@ const UpdateTicketsID = async (req, res) => {
       tickets_sold,
       event_status,
       event_type,
-      seating: { type, available_seats },
+      seating: { type, available_seats, seat_number },
     },
   } = req.body;
   try {
@@ -114,7 +114,7 @@ const UpdateTicketsID = async (req, res) => {
         tickets_sold,
         event_status,
         event_type,
-        seating: { type, available_seats },
+        seating: { type, available_seats, seat_number },
       },
     });
     if (!tickets) {
