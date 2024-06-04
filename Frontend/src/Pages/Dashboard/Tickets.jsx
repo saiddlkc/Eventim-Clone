@@ -124,20 +124,20 @@ export function MembersTable() {
                   </Button>
                 </div>
               </div>
-            </td>
-          </tr>
-        </tbody>
-      </CardHeader>
-      <CardBody className="overflow-scroll px-0">
-        <table className="mt-4 w-full min-w-max table-auto text-left">
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head) => (
-                <th
-                  key={head}
-                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
-                >
-                  <Typography
+                  </td>
+                </tr>
+              </tbody>
+          </CardHeader>
+          <CardBody className=" px-0">
+            <table className="mt-4 w-full min-w-max table-auto text-left">
+              <thead>
+                <tr>
+                  {TABLE_HEAD.map((head, index) => (
+                    <th
+                      key={head}
+                      className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-500 p-4 transition-colors hover:bg-blue-gray-50"
+                    >
+                      <Typography
                     variant="small"
                     color="blue-gray"
                     className="font-normal leading-none opacity-70"
