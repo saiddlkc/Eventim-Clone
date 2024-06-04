@@ -4,17 +4,15 @@ import {
   List,
   ListItem,
   ListItemPrefix,
-  ListItemSuffix,
-  Chip,
 } from "@material-tailwind/react";
 import {
   PresentationChartBarIcon,
-  Cog6ToothIcon,
-  InboxIcon,
   PowerIcon,
+  UserCircleIcon,
 } from "@heroicons/react/24/solid";
 import { FaUsers, FaCalendarAlt, FaTicketAlt } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
+import logo from "../../assets/img/logo-transparent-png.png";
 
 export default function Sidebar() {
   const location = useLocation();
@@ -22,9 +20,9 @@ export default function Sidebar() {
   return (
     <div className="fixed top-0 left-0 h-full w-64 p-4 shadow-xl shadow-blue-gray-900/5 bg-gray-300">
       <div className="mb-2 p-4">
-        <Typography variant="h4" color="blue-gray">
-          Logo
-        </Typography>
+        <Link to="/">
+          <img src={logo} alt="logo" />
+        </Link>
       </div>
       <List>
         <Link to="/">
@@ -59,7 +57,14 @@ export default function Sidebar() {
             Tickets
           </ListItem>
         </Link>
-
+        <Link to="/profile">
+          <ListItem selected={location.pathname === "/profile"}>
+            <ListItemPrefix>
+              <UserCircleIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Profile
+          </ListItem>
+        </Link>
         <ListItem>
           <ListItemPrefix>
             <PowerIcon className="h-5 w-5" />
