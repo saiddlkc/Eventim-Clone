@@ -135,7 +135,7 @@ export function SortableTable() {
                 <tr>
                   <th className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-500 p-4 transition-colors hover:bg-blue-gray-50 rounded">
                     <Typography
-                      variant="h6"
+                      variant="h2"
                       color="blue-gray"
                       className="flex items-center justify-between gap-2 font-normal leading-none opacity-70 capitalize"
                     >
