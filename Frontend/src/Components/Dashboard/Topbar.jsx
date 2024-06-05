@@ -1,21 +1,6 @@
-// src/components/TopBar.jsx
-
-// const TopBar = () => {
-//   return (
-//     <div className="bg-gray-900 text-white flex justify-between items-center p-4 shadow-md ">
-//       <h2 className="text-2xl font-bold">Dashboard</h2>
-//       <div className="flex items-center">
-//         <span className='mr-2'>Username</span>
-//         <img src="https://via.placeholder.com/40" alt="Profile" className="w-10 h-10 rounded-full mr-2" />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default TopBar;
 import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import {
-  Navbar,
   Typography,
   Button,
   Menu,
@@ -26,34 +11,38 @@ import {
 } from "@material-tailwind/react";
 import {
   UserCircleIcon,
-  Cog6ToothIcon,
   InboxArrowDownIcon,
-  LifebuoyIcon,
   PowerIcon,
   ChevronDownIcon,
+  HomeIcon,
 } from "@heroicons/react/24/solid";
-import { useLocation } from "react-router-dom";
 
 const profileMenuItems = [
   {
+    label: "Home",
+    icon: HomeIcon,
+    to: "/",
+  },
+  {
     label: "My Profile",
     icon: UserCircleIcon,
+    to: "/profile?tab=app",
   },
   {
     label: "Edit Profile",
-    icon: Cog6ToothIcon,
+    icon: UserCircleIcon,
+    to: "/profile?tab=settings",
   },
+
   {
     label: "Inbox",
     icon: InboxArrowDownIcon,
-  },
-  {
-    label: "Help",
-    icon: LifebuoyIcon,
+    to: "/profile?tab=message",
   },
   {
     label: "Sign Out",
     icon: PowerIcon,
+    to: "/",
   },
 ];
 
@@ -86,31 +75,32 @@ function ProfileMenu() {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
+        {profileMenuItems.map(({ label, icon, to }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
-            <MenuItem
-              key={label}
-              onClick={closeMenu}
-              className={`flex items-center gap-2 rounded ${
-                isLastItem
-                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                  : ""
-              }`}
-            >
-              {React.createElement(icon, {
-                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
-                strokeWidth: 2,
-              })}
-              <Typography
-                as="span"
-                variant="small"
-                className="font-normal"
-                color={isLastItem ? "red" : "inherit"}
+            <Link to={to} key={label}>
+              <MenuItem
+                onClick={closeMenu}
+                className={`flex items-center gap-2 rounded ${
+                  isLastItem
+                    ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                    : ""
+                }`}
               >
-                {label}
-              </Typography>
-            </MenuItem>
+                {React.createElement(icon, {
+                  className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
+                  strokeWidth: 2,
+                })}
+                <Typography
+                  as="span"
+                  variant="small"
+                  className="font-normal"
+                  color={isLastItem ? "red" : "inherit"}
+                >
+                  {label}
+                </Typography>
+              </MenuItem>
+            </Link>
           );
         })}
       </MenuList>
@@ -123,7 +113,7 @@ export default function Topbar() {
 
   return (
     <div className="flex justify-between items-center p-4">
-      <div className="fixed top-0 right-0 left-64 mx-3  p-3 z-10 bg-gray-300 rounded-xl ">
+      <div className="fixed top-0 right-0 left-64 mx-3 p-3 z-10 bg-gray-300 rounded-xl ">
         <div className="flex justify-between items-center">
           <Typography
             as="span"

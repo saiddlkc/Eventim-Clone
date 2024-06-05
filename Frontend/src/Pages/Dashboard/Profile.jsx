@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import {
   Card,
@@ -23,7 +24,10 @@ import {
 } from "@heroicons/react/24/solid";
 
 export function Profile() {
-  const [activeTab, setActiveTab] = useState("app");
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const initialTab = query.get("tab") || "app";
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [users, setUsers] = useState([]);
 
   const TABLE_HEAD = ["User", "Subject", "Message"];
@@ -66,6 +70,14 @@ export function Profile() {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    const tab = query.get("tab");
+    if (tab) {
+      setActiveTab(tab);
+    }
+  }, [location]);
 
   const user = users[0]; // Get the first user
 
