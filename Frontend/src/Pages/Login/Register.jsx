@@ -15,6 +15,8 @@ export function SignUp() {
     profilePicture: null,
   });
 
+  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewUser((prev) => ({ ...prev, [name]: value }));
@@ -138,7 +140,7 @@ export function SignUp() {
         <div className="space-y-4 mt-8">
           <Button
             size="lg"
-            color="white"
+            color="black"
             className="flex items-center gap-2 justify-center shadow-md"
             fullWidth
           >
@@ -186,7 +188,7 @@ export function SignUp() {
           className="text-center text-blue-gray-500 font-medium mt-4"
         >
           Sie haben bereits ein Konto?
-          <Link to="/" className="text-gray-900 ml-1">
+          <Link to="/login" className="text-gray-900 ml-1">
             Sign in
           </Link>
         </Typography>

@@ -1,5 +1,15 @@
 {
     "recommendations": [
-        "esbenp.prettier-vscode"
-    ]
+        "esbenp.prettier-vscode",
+    
+     ],
+    // "tailwindCSS.includeLanguages": {
+    //     "html": "html",
+    //     "javascript": "javascript",
+    //     "css": "css"
+    // },
+    // "editor.quickSuggestions": {
+    //     "strings": true
+    // }
+    
 }
