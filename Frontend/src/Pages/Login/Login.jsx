@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+// import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { Input, Button, Typography } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -42,32 +42,32 @@ export function Login() {
       });
   };
 
-  const handleGoogleSuccess = (response) => {
-    console.log(response);
+  // const handleGoogleSuccess = (response) => {
+  //   console.log(response);
 
-    axios
-      .post("http://localhost:4000/auth/google", {
-        token: response.credential,
-      })
-      .then((res) => {
-        toast.success("Login with Google successful!");
-        console.log(res.data);
-        navigate("/");
-        localStorage.setItem("token", res.data.token);
-      })
-      .catch((err) => {
-        toast.error("Error logging in with Google. Please try again.");
-        console.log(err);
-      });
-  };
+  //   axios
+  //     .post("http://localhost:4000/auth/google", {
+  //       token: response.credential,
+  //     })
+  //     .then((res) => {
+  //       toast.success("Login with Google successful!");
+  //       console.log(res.data);
+  //       navigate("/");
+  //       localStorage.setItem("token", res.data.token);
+  //     })
+  //     .catch((err) => {
+  //       toast.error("Error logging in with Google. Please try again.");
+  //       console.log(err);
+  //     });
+  // };
 
-  const handleGoogleFailure = (error) => {
-    toast.error("Google Sign In was unsuccessful. Try again later.");
-    console.log(error);
-  };
+  // const handleGoogleFailure = (error) => {
+  //   toast.error("Google Sign In was unsuccessful. Try again later.");
+  //   console.log(error);
+  // };
 
   return (
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+    // <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
       <section className="m-24 flex justify-center align-center">
         <ToastContainer />
         <div className="w-full lg:w-3/5 flex flex-col items-center justify-center">
@@ -112,13 +112,13 @@ export function Login() {
               >
                 Login
               </Button>
-              <div className="space-y-4">
+              {/* <div className="space-y-4">
                 <GoogleLogin
                   onSuccess={handleGoogleSuccess}
                   onFailure={handleGoogleFailure}
                   useOneTap
                 />
-              </div>
+              </div> */}
             </div>
           </form>
           <Typography
@@ -132,7 +132,7 @@ export function Login() {
           </Typography>
         </div>
       </section>
-    </GoogleOAuthProvider>
+    // </GoogleOAuthProvider>
   );
 }
 
