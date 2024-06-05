@@ -196,7 +196,7 @@ const Statistics = () => {
 
       <div className="m-1">
         <div className="h-64 w-full mb-4 mt-24">
-          <CardHeader floated={false} className="rounded-none"></CardHeader>
+          {/* <CardHeader floated={false} className="rounded-none"></CardHeader> */}
           <CardBody className="px-0 mt-2 ">
             <div className="rounded p-4 overflow-auto h-96">
               <Typography variant="h6" color="black" className="mb-1">

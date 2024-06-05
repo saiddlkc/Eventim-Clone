@@ -35,12 +35,12 @@ mongoose
     console.log(error);
   });
 
-app.get("/api/daten", async (req, res) => {
-  try {
-    const daten = await Daten.find();
-    res.status(200).json(daten);
-  } catch (err) {
-    console.error("Fehler beim Abrufen der Daten:", err);
-    res.status(500).json({ error: "Interner Serverfehler" });
-  }
-});
+// app.get("/api/daten", async (req, res) => {
+//   try {
+//     const daten = await Daten.find();
+//     res.status(200).json(daten);
+//   } catch (err) {
+//     console.error("Fehler beim Abrufen der Daten:", err);
+//     res.status(500).json({ error: "Interner Serverfehler" });
+//   }
+// });

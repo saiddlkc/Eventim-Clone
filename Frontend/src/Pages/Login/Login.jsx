@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 // import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { Input, Button, Typography } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -68,70 +68,70 @@ export function Login() {
 
   return (
     // <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-      <section className="m-24 flex justify-center align-center">
-        <ToastContainer />
-        <div className="w-full lg:w-3/5 flex flex-col items-center justify-center">
-          <div className="justify-center">
-            <img src={logo} alt="logo" className="h-48" />
-          </div>
-          <div className="text-center">
-            <Typography variant="h2" className="font-bold mb-4">
-              Login
-            </Typography>
-            <Typography
-              variant="paragraph"
-              color="blue-gray"
-              className="text-lg font-normal"
-            >
-              Sign in to access all the features.
-            </Typography>
-          </div>
-          <form
-            className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2"
-            onSubmit={handleSubmit}
+    <section className="m-24 flex justify-center align-center">
+      <ToastContainer />
+      <div className="w-full lg:w-3/5 flex flex-col items-center justify-center">
+        <div className="justify-center">
+          <img src={logo} alt="logo" className="h-48" />
+        </div>
+        <div className="text-center">
+          <Typography variant="h2" className="font-bold mb-4">
+            Login
+          </Typography>
+          <Typography
+            variant="paragraph"
+            color="blue-gray"
+            className="text-lg font-normal"
           >
-            <div className="flex flex-col gap-6">
-              <Input
-                type="email"
-                label="Email Address"
-                name="email"
-                value={credentials.email}
-                onChange={handleChange}
-              />
-              <Input
-                type="password"
-                size="md"
-                label="Password"
-                name="password"
-                value={credentials.password}
-                onChange={handleChange}
-              />
-              <Button
-                type="submit"
-                className="w-full flex items-center justify-center gap-2"
-              >
-                Login
-              </Button>
-              {/* <div className="space-y-4">
+            Sign in to access all the features.
+          </Typography>
+        </div>
+        <form
+          className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2"
+          onSubmit={handleSubmit}
+        >
+          <div className="flex flex-col gap-6">
+            <Input
+              type="email"
+              label="Email Address"
+              name="email"
+              value={credentials.email}
+              onChange={handleChange}
+            />
+            <Input
+              type="password"
+              size="md"
+              label="Password"
+              name="password"
+              value={credentials.password}
+              onChange={handleChange}
+            />
+            <Button
+              type="submit"
+              className="w-full flex items-center justify-center gap-2"
+            >
+              Login
+            </Button>
+            {/* <div className="space-y-4">
                 <GoogleLogin
                   onSuccess={handleGoogleSuccess}
                   onFailure={handleGoogleFailure}
                   useOneTap
                 />
               </div> */}
-            </div>
-          </form>
-          <Typography
-            variant="paragraph"
-            className="text-center text-blue-gray-500 font-medium mt-4"
-          >
-            Don't have an account yet?{" "}
-            <Link to="/sign-up" className="text-gray-900 ml-1">
-              Sign Up
-            </Link>
-          </Typography>
-        </div>
-      </section>
+          </div>
+        </form>
+        <Typography
+          variant="paragraph"
+          className="text-center text-blue-gray-500 font-medium mt-4"
+        >
+          Don't have an account yet?{" "}
+          <Link to="/sign-up" className="text-gray-900 ml-1">
+            Sign Up
+          </Link>
+        </Typography>
+      </div>
+    </section>
     // </GoogleOAuthProvider>
   );
 }
