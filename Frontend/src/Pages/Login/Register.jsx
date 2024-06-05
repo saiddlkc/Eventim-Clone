@@ -22,6 +22,8 @@ export function SignUp() {
     profilePicture: null,
   });
 
+  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewUser((prev) => ({ ...prev, [name]: value }));
@@ -167,7 +169,7 @@ export function SignUp() {
         <div className="space-y-4 mt-8">
           <Button
             size="lg"
-            color="white"
+            color=""
             className="flex items-center gap-2 justify-center shadow-md"
             fullWidth
           >
