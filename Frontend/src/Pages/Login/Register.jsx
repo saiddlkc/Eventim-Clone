@@ -1,12 +1,5 @@
-import React, { useState } from "react";
-import {
-  Input,
-  Checkbox,
-  Button,
-  Typography,
-  Select,
-  Option,
-} from "@material-tailwind/react";
+import { useState } from "react";
+import { Input, Checkbox, Button, Typography } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,7 +11,7 @@ export function SignUp() {
     name: "",
     email: "",
     password: "",
-    role: "",
+    role: "" || "customer",
     profilePicture: null,
   });
 
@@ -27,14 +20,6 @@ export function SignUp() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewUser((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSelectChange = (value) => {
-    setNewUser((prev) => ({ ...prev, role: value }));
-  };
-
-  const handleFileChange = (e) => {
-    setNewUser((prev) => ({ ...prev, profilePicture: e.target.files[0] }));
   };
 
   const handleSubmit = (e) => {
@@ -55,13 +40,13 @@ export function SignUp() {
       .post("http://localhost:4000/dashboard/users", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
-      .then((res) => {
+      .then(() => {
         toast.success("Registration successful!");
         setNewUser({
           name: "",
           email: "",
           password: "",
-          role: "",
+          role: "" || "customer",
           profilePicture: null,
         });
       })
@@ -76,7 +61,9 @@ export function SignUp() {
       <ToastContainer />
       <div className="w-full lg:w-3/5 flex flex-col items-center justify-center">
         <div className="justify-center">
-          <img src={logo} alt="logo" className="h-48" />
+          <Link to={"/"}>
+            <img src={logo} alt="logo" className="h-48" />
+          </Link>
         </div>
         <div className="text-center">
           <Typography variant="h2" className="font-bold mb-4">
@@ -123,22 +110,6 @@ export function SignUp() {
               name="password"
               value={newUser.password}
               onChange={handleChange}
-            />
-            <Select
-              label="Select Role"
-              name="role"
-              value={newUser.role}
-              onChange={handleSelectChange}
-            >
-              <Option value="admin">Admin</Option>
-              <Option value="organizer">Organizer</Option>
-              <Option value="customer">Customer</Option>
-            </Select>
-            <Input
-              type="file"
-              size="md"
-              label="Profile"
-              onChange={handleFileChange}
             />
             <Checkbox
               label={

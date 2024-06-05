@@ -1,6 +1,7 @@
 const Users = require("../Models/usersSchema");
 const multer = require("multer");
 const path = require("path");
+const bcrypt = require("bcrypt");
 
 // Multer setup for file upload
 const storage = multer.diskStorage({
@@ -33,7 +34,14 @@ exports.createUser = async (req, res) => {
           .status(400)
           .json({ error: "All fields except profile picture are required" });
       }
-      const user = new Users({ name, email, password, role, profilePicture });
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const user = new Users({
+        name,
+        email,
+        password: hashedPassword,
+        role,
+        profilePicture,
+      });
       await user.save();
       res.status(201).json(user);
     } catch (error) {
@@ -88,7 +96,10 @@ exports.updateUser = async (req, res) => {
       }
       if (name) user.name = name;
       if (email) user.email = email;
-      if (password) user.password = password;
+      if (password) {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        user.password = hashedPassword;
+      }
       if (role) user.role = role;
       if (profilePicture) user.profilePicture = profilePicture;
       await user.save();
