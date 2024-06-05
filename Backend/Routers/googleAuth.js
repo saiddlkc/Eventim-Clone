@@ -22,5 +22,5 @@ router.post("/google", async (req, res) => {
     res.status(401).send("Invalid Google token");
   }
 });
-
+// Durmus hier wirst du lesen, dass wir den Google Token überprüfen und dann einen JWT-Token zurückgeben.
 module.exports = router;

@@ -66,8 +66,6 @@ export function Login() {
     console.log(error);
   };
 
-  console.log("Google Client ID:", import.meta.env.VITE_GOOGLE_CLIENT_ID);
-
   return (
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
       <section className="m-24 flex justify-center align-center">
