@@ -7,11 +7,13 @@ const client = new OAuth2Client(process.env.VITE_GOOGLE_CLIENT_ID);
 
 router.post("/google", async (req, res) => {
   const { token } = req.body;
+  console.log(token);
   try {
     const ticket = await client.verifyIdToken({
       idToken: token,
       audience: process.env.VITE_GOOGLE_CLIENT_ID,
     });
+    console.log(ticket);
     const payload = ticket.getPayload();
     const userid = payload["sub"];
     // Überprüfe den Benutzer in deiner Datenbank und erstelle eine Session oder einen JWT-Token
