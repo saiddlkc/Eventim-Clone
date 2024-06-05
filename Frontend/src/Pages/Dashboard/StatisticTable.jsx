@@ -20,7 +20,10 @@ import {
   Typography,
   Table,
 } from "@material-tailwind/react";
-import { FaUser, FaCalendarAlt, FaMoneyBillAlt } from "react-icons/fa";
+
+import LineChart from "../../Components/Charts.js/LineChart";
+import PieChart from "../../Components/Charts.js/PieChart";
+import BarChart from "../../Components/Charts.js/BarChart";
 
 ChartJS.register(
   CategoryScale,
@@ -117,70 +120,16 @@ const Statistics = () => {
     maintainAspectRatio: false,
   };
 
-  // const activityData = [
-  //   { id: 1, date: "2024-06-01", action: "Ticket erstellt", user: "Admin" },
-  //   {
-  //     id: 2,
-  //     date: "2024-06-02",
-  //     action: "Veranstaltung gelöscht",
-  //     user: "Admin",
-  //   },
-  //   {
-  //     id: 3,
-  //     date: "2024-06-03",
-  //     action: "Nutzerkonto gesperrt",
-  //     user: "Admin",
-  //   },
-  //   { id: 4, date: "2024-06-04", action: "Ticket aktualisiert", user: "Admin" },
-  //   {
-  //     id: 5,
-  //     date: "2024-06-05",
-  //     action: "Veranstaltung erstellt",
-  //     user: "Admin",
-  //   },
-  // ];
-
   return (
-    <div className="mb-32 flex flex-col gap-12 m-2">
-      <div className="m-1 flex justify-evenly">
-        <div className="w-48 p-3">
-          <div className="">
-            <div className="h-48  bg-blue-200 hover:bg-blue-300 transition duration-300 flex flex-col items-center justify-center border-black border-2">
-              <div className="rounded-full bg-white p-4 border-black border-2">
-                <FaUser size={24} className="text-blue-500" />
-              </div>
-              <Typography variant="h2" color="black">
-                {stats.users}
-              </Typography>
-            </div>
-          </div>
-        </div>
-
-        <div className="w-48 mt-4 sm:mt-0 p-3">
-          <div className="h-48  bg-gray-500 hover:bg-gray-700 transition duration-300 flex flex-col  items-center justify-center border-black border-2">
-            <div className="rounded-full bg-white p-4 border-black border-2">
-              <FaCalendarAlt size={24} className="text-black" />
-            </div>
-            <Typography variant="h2" color="black">
-              {stats.events}
-            </Typography>
-          </div>
-        </div>
-
-        <div className="w-48 mt-4 sm:mt-0 p-3">
-          <div className="h-48  bg-green-200 hover:bg-green-300 transition duration-300 flex  flex-col  items-center justify-center border-black border-2">
-            <div className="rounded-full bg-white p-4 border-black border-2">
-              <FaMoneyBillAlt size={24} className="text-green-500 " />
-            </div>
-            <Typography variant="h2" color="black">
-              {stats.revenue + "€"}
-            </Typography>
-          </div>
-        </div>
+    <div className="mb-32 flex flex-col gap-12 m-2 ">
+      <div className="m-1 flex justify-evenly ">
+        <LineChart />
+        <PieChart />
+        <BarChart />
       </div>
 
       <div className="m-1">
-        <div className="h-64 w-full mb-4">
+        <div className="h-64 w-full ">
           <CardBody className="px-0 ">
             <div className="p-4 rounded overflow-auto h-96">
               <Typography variant="h6" color="black" className="mb-1">
