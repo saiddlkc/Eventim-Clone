@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import { PencilIcon, TrashIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   CardHeader,
@@ -16,8 +16,10 @@ import {
   IconButton,
   Tooltip,
 } from "@material-tailwind/react";
+import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 const TABS = [
   {
     label: "All",
@@ -43,7 +45,6 @@ const TABLE_HEAD = [
   "location",
   "buyer",
   "barcode",
-
   "organizer",
   "event_information",
   "additional_info",
@@ -75,6 +76,21 @@ export function MembersTable() {
     };
     fetchTickets();
   }, []);
+
+  const handleDelete = async (ticketsID) => {
+    try {
+      const res = await axios.delete(
+        `http://localhost:4000/dashboard/tickets/${ticketsID}`
+      );
+      setTickets(res.data.tickets.filter((ticket) => ticket._id !== ticketsID));
+      toast.success("User deleted successfully");
+      console.log("Deleting ticket with ID:", ticketsID);
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+      toast.error("Error deleting user. Please try again.");
+    }
+  };
 
   return (
     <Card className="h-full w-full">
@@ -354,8 +370,21 @@ export function MembersTable() {
 
                     <td className={classes}>
                       <Tooltip content="Edit User">
-                        <IconButton variant="text">
-                          <PencilIcon className="h-4 w-4" />
+                        <Link to={`./update/${tickets._id}`}>
+                          <IconButton variant="text">
+                            <PencilIcon className="h-4 w-4" />
+                          </IconButton>
+                        </Link>
+                      </Tooltip>
+                    </td>
+
+                    <td className={classes}>
+                      <Tooltip content="Delete User">
+                        <IconButton
+                          variant="text"
+                          onClick={() => handleDelete(tickets._id)}
+                        >
+                          <TrashIcon className="h-4 w-4 text-red-500" />
                         </IconButton>
                       </Tooltip>
                     </td>

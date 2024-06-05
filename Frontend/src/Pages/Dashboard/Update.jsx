@@ -28,7 +28,7 @@ const Add = () => {
     }
   };
 
-  console.log(books);
+  console.log(event);
   return (
     <div
       className="form"
