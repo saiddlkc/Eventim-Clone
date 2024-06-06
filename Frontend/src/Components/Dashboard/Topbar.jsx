@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Typography,
   Button,
@@ -34,7 +34,6 @@ const profileMenuItems = [
     icon: UserCircleIcon,
     to: "/profile?tab=settings",
   },
-
   {
     label: "Inbox",
     icon: InboxArrowDownIcon,
@@ -43,14 +42,29 @@ const profileMenuItems = [
   {
     label: "Sign Out",
     icon: PowerIcon,
-    to: "/",
+    action: "logout",
+    to: "/login",
   },
 ];
+
 function ProfileMenu() {
-  const { user } = useAuthContext();
+  const { user, dispatch } = useAuthContext();
+  const navigate = useNavigate();
+
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const closeMenu = () => setIsMenuOpen(false);
+
+  const handleMenuItemClick = (action, to) => {
+    if (action === "logout") {
+      dispatch({ type: "LOGOUT" });
+      localStorage.removeItem("user");
+      navigate(to);
+    } else {
+      navigate(to);
+    }
+    closeMenu();
+  };
 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -65,7 +79,7 @@ function ProfileMenu() {
             size="sm"
             alt="tania andrew"
             className="border border-gray-900 p-0.5"
-            src={user.profilePicture}
+            src={user && user.profilePicture}
           />
           <ChevronDownIcon
             strokeWidth={2.5}
@@ -76,32 +90,31 @@ function ProfileMenu() {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon, to }, key) => {
+        {profileMenuItems.map(({ label, icon, to, action }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
-            <Link to={to} key={label}>
-              <MenuItem
-                onClick={closeMenu}
-                className={`flex items-center gap-2 rounded ${
-                  isLastItem
-                    ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                    : ""
-                }`}
+            <MenuItem
+              key={label}
+              onClick={() => handleMenuItemClick(action, to)}
+              className={`flex items-center gap-2 rounded ${
+                isLastItem
+                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                  : ""
+              }`}
+            >
+              {React.createElement(icon, {
+                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
+                strokeWidth: 2,
+              })}
+              <Typography
+                as="span"
+                variant="small"
+                className="font-normal"
+                color={isLastItem ? "red" : "inherit"}
               >
-                {React.createElement(icon, {
-                  className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
-                  strokeWidth: 2,
-                })}
-                <Typography
-                  as="span"
-                  variant="small"
-                  className="font-normal"
-                  color={isLastItem ? "red" : "inherit"}
-                >
-                  {label}
-                </Typography>
-              </MenuItem>
-            </Link>
+                {label}
+              </Typography>
+            </MenuItem>
           );
         })}
       </MenuList>
