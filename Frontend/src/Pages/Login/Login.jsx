@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { json, useNavigate } from "react-router-dom";
-// import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import { Link, useNavigate } from "react-router-dom";
 import { Input, Button, Typography } from "@material-tailwind/react";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -20,6 +17,7 @@ export function Login() {
 
   const { dispatch } = useAuthContext();
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCredentials((prev) => ({ ...prev, [name]: value }));
@@ -33,16 +31,12 @@ export function Login() {
       return;
     }
 
-    const formData = new FormData();
-    Object.keys(credentials).forEach((key) => {
-      formData.append(key, credentials[key]);
-    });
-
     axios
       .post("http://localhost:4000/auth/login", credentials)
       .then((res) => {
         toast.success("Login successful!");
-        localStorage.setItem("user", res.data.token);
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data));
         dispatch({ type: "LOGIN", payload: res.data });
         navigate("/");
       })
@@ -52,32 +46,7 @@ export function Login() {
       });
   };
 
-  // const handleGoogleSuccess = (response) => {
-  //   console.log(response);
-
-  //   axios
-  //     .post("http://localhost:4000/auth/google", {
-  //       token: response.credential,
-  //     })
-  //     .then((res) => {
-  //       toast.success("Login with Google successful!");
-  //       console.log(res.data);
-  //       navigate("/");
-  //       localStorage.setItem("token", res.data.token);
-  //     })
-  //     .catch((err) => {
-  //       toast.error("Error logging in with Google. Please try again.");
-  //       console.log(err);
-  //     });
-  // };
-
-  // const handleGoogleFailure = (error) => {
-  //   toast.error("Google Sign In was unsuccessful. Try again later.");
-  //   console.log(error);
-  // };
-
   return (
-    // <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
     <section className="m-24 flex justify-center align-center">
       <ToastContainer />
       <div className="w-full lg:w-3/5 flex flex-col items-center justify-center">
@@ -122,13 +91,6 @@ export function Login() {
             >
               Login
             </Button>
-            {/* <div className="space-y-4">
-                <GoogleLogin
-                  onSuccess={handleGoogleSuccess}
-                  onFailure={handleGoogleFailure}
-                  useOneTap
-                />
-              </div> */}
           </div>
         </form>
         <Typography
@@ -142,7 +104,6 @@ export function Login() {
         </Typography>
       </div>
     </section>
-    // </GoogleOAuthProvider>
   );
 }
 
