@@ -11,11 +11,22 @@ import {
   UserCircleIcon,
 } from "@heroicons/react/24/solid";
 import { FaUsers, FaCalendarAlt, FaTicketAlt } from "react-icons/fa";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/img/logo-transparent-png.png";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function Sidebar() {
   const location = useLocation();
+  const { dispatch } = useAuthContext();
+  const navigate = useNavigate();
+
+  const HandleLogout = () => {
+    // Dispatch logout action
+    dispatch({ type: "LOGOUT" });
+    // Clear user data from localStorage if needed
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
 
   return (
     <div className="fixed top-0 left-0 h-full w-64 p-4 shadow-xl shadow-blue-gray-900/5 bg-gray-300">
@@ -65,7 +76,7 @@ export default function Sidebar() {
             Profile
           </ListItem>
         </Link>
-        <ListItem>
+        <ListItem onClick={HandleLogout}>
           <ListItemPrefix>
             <PowerIcon className="h-5 w-5" />
           </ListItemPrefix>

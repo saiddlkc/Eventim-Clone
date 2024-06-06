@@ -22,6 +22,7 @@ import {
   Cog6ToothIcon,
   UserPlusIcon,
 } from "@heroicons/react/24/solid";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 export function Profile() {
   const location = useLocation();
@@ -79,7 +80,7 @@ export function Profile() {
     }
   }, [location]);
 
-  const user = users[0]; // Get the first user
+  const { user } = useAuthContext();
 
   return (
     <>
