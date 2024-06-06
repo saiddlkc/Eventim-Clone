@@ -58,7 +58,7 @@ export default function PieChart() {
             color="gray"
             className="max-w-sm font-normal"
           >
-            Diese Grafik zeigt die am meisten verkauften Eventkategorien.
+            die am meisten verkauften Eventkategorien.
           </Typography>
         </div>
       </CardHeader>

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -23,7 +24,15 @@ router.post("/login", async (req, res) => {
       expiresIn: "1h",
     });
 
-    res.status(200).json({ email, token });
+    res
+      .status(200)
+      .json({
+        email,
+        token,
+        profilePicture: user.profilePicture,
+        name: user.name,
+        role: user.role,
+      });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

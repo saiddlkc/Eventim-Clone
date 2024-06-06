@@ -16,6 +16,7 @@ import {
   ChevronDownIcon,
   HomeIcon,
 } from "@heroicons/react/24/solid";
+import { useAuthContext } from "../../hooks/useAuthContext.jsx";
 
 const profileMenuItems = [
   {
@@ -45,8 +46,8 @@ const profileMenuItems = [
     to: "/",
   },
 ];
-
 function ProfileMenu() {
+  const { user } = useAuthContext();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const closeMenu = () => setIsMenuOpen(false);
@@ -64,7 +65,7 @@ function ProfileMenu() {
             size="sm"
             alt="tania andrew"
             className="border border-gray-900 p-0.5"
-            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+            src={user.profilePicture}
           />
           <ChevronDownIcon
             strokeWidth={2.5}
@@ -110,7 +111,7 @@ function ProfileMenu() {
 
 export default function Topbar() {
   const location = useLocation();
-
+  const { user } = useAuthContext();
   return (
     <div className="flex justify-between items-center p-4">
       <div className="fixed top-0 right-0 left-64 mx-3 p-3 z-10 bg-gray-300 rounded-xl ">
@@ -124,6 +125,7 @@ export default function Topbar() {
               ? "Dashboard"
               : location.pathname.slice(1).charAt(0).toUpperCase() +
                 location.pathname.slice(2)}
+            {user ? <p>Welcome, {user.name}!</p> : <p>Please log in.</p>}
           </Typography>
           <ProfileMenu />
         </div>
