@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
-// import ticketsRoutes from "./router/ticketsRoutes.js";
+import ticketsRoutes from "./route/RouteTicket.js";
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -18,7 +18,7 @@ MongoDb().catch((e) => {
 });
 
 // Routen
-// app.use("/dashboard/tickets", ticketsRoutes);
+app.use("/dashboard", ticketsRoutes);
 // Starten des Servers
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

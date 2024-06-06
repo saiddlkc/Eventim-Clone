@@ -3,6 +3,7 @@ import express from "express";
 import bodyParser from "body-parser";
 
 const route = express.Router();
+route.use(bodyParser.json());
 route
   .get("/", async (req, res) => {
     try {
@@ -29,3 +30,5 @@ route
       res.status(400).json(error);
     }
   });
+
+export default route;

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const { model, Schema } = mongoose();
+const { model, Schema } = mongoose;
 
 const eventSchema = new Schema({
   title: {
