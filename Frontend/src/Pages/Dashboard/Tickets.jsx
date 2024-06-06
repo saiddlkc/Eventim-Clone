@@ -42,11 +42,11 @@ const TABLE_HEAD = [
   "artist",
   "price",
   "event_date",
-  "location",
+
   "buyer",
   "barcode",
   "organizer",
-  "event_information",
+  "Event iIformation",
   "additional_info",
   "age_restriction",
   "ticket_availability",
@@ -62,10 +62,32 @@ const TABLE_HEAD = [
 
 export function MembersTable() {
   const [tickets, setTickets] = useState([]);
+  const [formData, setFormData] = useState({
+    event_name: "",
+    category: "",
+    genre: "",
+    artist: "",
+    price: "",
+    buyer: { name: "", email: "", phone: "" },
+    barcode: "",
+    event_date: "",
+    organizer: "",
+    event_information: "",
+    additional_info: {
+      age_restriction: "",
+      ticket_availability: "",
+      tickets_sold: "",
+      event_status: "",
+      event_type: "",
+      seating: { type: "", available_seats: "", seat_number: "" },
+    },
+    profilePicture: "",
+    profile: "",
+  });
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await axios(
+        const response = await axios.get(
           "http://localhost:4000/dashboard/tickets/"
         );
         setTickets(response.data);
@@ -76,6 +98,34 @@ export function MembersTable() {
     };
     fetchTickets();
   }, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:4000/dashboard/tickets", formData);
+      toast.success("ticket added successfully");
+      console.log(formData);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    // setTickets((prev) => ({ ...prev, [name.name]: value.value }));
+    setFormData({ ...formData, [name]: value });
+    console.log(formData);
+  };
+  const handleNestedChange = (e, parentKey) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [parentKey]: {
+        ...formData[parentKey],
+        [name]: value,
+      },
+    });
+    console.log(formData);
+  };
 
   const handleDelete = async (ticketsID) => {
     try {
@@ -83,12 +133,12 @@ export function MembersTable() {
         `http://localhost:4000/dashboard/tickets/${ticketsID}`
       );
       setTickets(res.data.tickets.filter((ticket) => ticket._id !== ticketsID));
-      toast.success("User deleted successfully");
+      toast.success("ticket deleted successfully");
       console.log("Deleting ticket with ID:", ticketsID);
       console.log(res.data);
     } catch (error) {
       console.error(error);
-      toast.error("Error deleting user. Please try again.");
+      toast.error("Error deleting ticket. Please try again.");
     }
   };
 
@@ -98,10 +148,10 @@ export function MembersTable() {
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Members list
+              Tickets List
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
-              See information about all members
+              See information about all Tickets
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
@@ -109,7 +159,7 @@ export function MembersTable() {
               view all
             </Button>
             <Button className="flex items-center gap-3" size="sm">
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
+              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add ticket
             </Button>
           </div>
         </div>
@@ -124,81 +174,162 @@ export function MembersTable() {
         <tbody>
           <tr>
             <td className="p-4">
-              <div className="flex gap-4 p-2">
-                <Input type="text" size="md" label="Event Name" />
-                <Input
-                  type="text"
-                  label="Category"
-                  className="pr-20"
-                  containerProps={{
-                    className: "min-w-0",
-                  }}
-                />
-                <Input type="text" size="md" label="Genre" />
-                <Input type="text" size="md" label="Artist" />
-                <Input type="text" size="md" label="price" />
-                <Input type="text" size="md" label="Event Date" />
-              </div>
-              <div className="flex gap-4 p-2">
-                <Input type="text" size="md" label="Event Information" />
-                <Input size="md" type="text" label="Venue" name="venue" />
-                <Input type="text" size="md" label="City" />
-                <Input type="text" size="md" label="Address" />
-              </div>
-              <div className="flex gap-4 p-2">
-                <Input type="text" size="md" label="Organizer" />
-                <Input type="text" size="md" label="name" />
-                <Input type="text" size="md" label="email" />
-                <Input type="text" size="md" label="phone" />
-                <Input type="text" size="md" label="Barcode" />
-              </div>
-              <div>
-                {" "}
-                <div className="flex gap-4 p-2"></div>
-              </div>
-              <div className="flex gap-4 p-2">
-                <Input
-                  size="md"
-                  type="text"
-                  label="Age Restriction"
-                  name="age_restriction"
-                />
-                <Input
-                  type="email"
-                  label="Ticket Availability "
-                  name=" ticket_availability"
-                />
-                <Input
-                  size="md"
-                  type="text"
-                  label="Tickets Sold"
-                  name="tickets_sold"
-                />
-                <Input type="text" label="Event Status" name=" event_status" />
-                <Input
-                  size="md"
-                  type="text"
-                  label="Available Seats"
-                  name="available_seats"
-                />
+              <form onSubmit={handleSubmit}>
+                <div className="flex gap-4 p-2">
+                  <Input
+                    type="text"
+                    size="md"
+                    label="Event Name"
+                    name="event_name"
+                    onChange={handleChange}
+                  />
+                  <Input
+                    type="text"
+                    label="Category"
+                    className="pr-20"
+                    containerProps={{
+                      className: "min-w-0",
+                    }}
+                    name="category"
+                    onChange={handleChange}
+                  />
+                  <Input type="text" size="md" label="Genre" name="genre" />
+                  <Input type="text" size="md" label="Artist" name="artist" />
+                  <Input type="text" size="md" label="Price" name="price" />
+                </div>
+                <div className="flex gap-4 p-2">
+                  {" "}
+                  <Input
+                    type="text"
+                    size="md"
+                    label="Event Date"
+                    name="event_date"
+                    onChange={handleChange}
+                  />
+                  <Input
+                    type="text"
+                    size="md"
+                    label="Event Information"
+                    name="event_information"
+                    onChange={handleChange}
+                  />{" "}
+                  <Input
+                    type="text"
+                    size="md"
+                    label="Organizer"
+                    name="organizer"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="flex gap-4 p-2">
+                  <Input
+                    type="text"
+                    size="md"
+                    label="Name"
+                    name="name"
+                    onChange={(e) => handleNestedChange(e, "buyer")}
+                  />
 
-                <Input
-                  size="md"
-                  type="text"
-                  label="Seat Number"
-                  name="seat_number"
-                />
-              </div>
-              <div className="flex gap-4 p-2">
-                <div className="flex-grow" style={{ flexBasis: "70%" }}>
-                  <Input type="file" size="md" label="Profile" />
+                  <Input
+                    type="text"
+                    size="md"
+                    label="Email"
+                    name="email"
+                    onChange={(e) => handleNestedChange(e, "buyer")}
+                  />
+                  <Input
+                    type="text"
+                    size="md"
+                    label="Phone"
+                    name="phone"
+                    onChange={(e) => handleNestedChange(e, "buyer")}
+                  />
+                  <Input
+                    type="text"
+                    size="md"
+                    label="Event Type"
+                    name="event_type"
+                    onChange={(e) => handleNestedChange(e, "additional_info")}
+                  />
+                  <Input
+                    type="text"
+                    size="md"
+                    label="Barcode"
+                    name="barcode"
+                    onChange={handleChange}
+                  />
                 </div>
-                <div className="flex-grow" style={{ flexBasis: "30%" }}>
-                  <Button className="w-full flex items-center justify-center gap-2">
-                    Add user <UserPlusIcon className="h-4 w-4" />
-                  </Button>
+
+                <div className="flex gap-4 p-2">
+                  <Input
+                    size="md"
+                    type="text"
+                    label="Age Restriction"
+                    name="age_restriction"
+                    onChange={(e) => handleNestedChange(e, "additional_info")}
+                  />
+                  <Input
+                    type="text"
+                    label="Ticket Availability "
+                    name=" ticket_availability"
+                    onChange={handleChange}
+                  />
+                  <Input
+                    size="md"
+                    type="text"
+                    label="Type"
+                    name="type"
+                    onChange={(e) => handleNestedChange(e, "seating")}
+                  />
+                  <Input
+                    type="text"
+                    size="md"
+                    label="Barcode"
+                    name="barcode"
+                    onChange={handleChange}
+                  />
+                  <Input
+                    type="text"
+                    label="Event Status"
+                    name="event_status"
+                    onChange={(e) => handleNestedChange(e, "additional_info")}
+                  />
+                  <Input
+                    size="md"
+                    type="text"
+                    label="Available Seats"
+                    name="available_seats"
+                    onChange={(e) => handleNestedChange(e, "seating")}
+                  />
+
+                  <Input
+                    size="md"
+                    type="text"
+                    label="Seat Number"
+                    name="seat_number"
+                    onChange={(e) => handleNestedChange(e, "seating")}
+                  />
                 </div>
-              </div>
+                <div className="flex gap-4 p-2">
+                  <div className="flex-grow" style={{ flexBasis: "70%" }}>
+                    <Input
+                      type="file"
+                      size="md"
+                      label="Profile"
+                      name="profile"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="flex-grow" style={{ flexBasis: "30%" }}>
+                    <Button
+                      type="submit"
+                      className="w-full flex items-center justify-center gap-2"
+                    >
+                      Add ticket
+                    </Button>
+                  </div>
+                </div>
+              </form>
             </td>
           </tr>
         </tbody>
@@ -233,7 +364,9 @@ export function MembersTable() {
                   artist,
                   price,
                   img,
-                  location: { venue, city, address },
+                  // venue,
+                  // city,
+                  // address,
                   buyer: { name, email, phone },
                   barcode,
                   event_date,
@@ -343,7 +476,7 @@ export function MembersTable() {
                       </div>
                     </td>
                     {/* location */}
-                    <td className={classes}>
+                    {/* <td className={classes}>
                       <div className="w-max">
                         <Typography
                           variant="small"
@@ -353,7 +486,7 @@ export function MembersTable() {
                           {venue}, {city}, {address}
                         </Typography>
                       </div>
-                    </td>
+                    </td> */}
                     {/* buyer */}
                     <td className={classes}>
                       <div className="w-max">
@@ -369,7 +502,7 @@ export function MembersTable() {
                     </td>
 
                     <td className={classes}>
-                      <Tooltip content="Edit User">
+                      <Tooltip content="Update ticket">
                         <Link to={`./update/${tickets._id}`}>
                           <IconButton variant="text">
                             <PencilIcon className="h-4 w-4" />
@@ -379,7 +512,7 @@ export function MembersTable() {
                     </td>
 
                     <td className={classes}>
-                      <Tooltip content="Delete User">
+                      <Tooltip content="Delete ticket">
                         <IconButton
                           variant="text"
                           onClick={() => handleDelete(tickets._id)}

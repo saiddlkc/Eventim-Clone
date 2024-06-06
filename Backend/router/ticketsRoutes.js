@@ -1,19 +1,26 @@
 import express from "express";
-import bodyParser from "body-parser";
+const router = express.Router();
 import {
-  GetTeckets,
-  PostTickets,
-  GetTicketsID,
-  UpdateTicketsID,
-  DeleteTicketsID,
+  getAllEvents,
+  getEventById,
+  createEvent,
+  updateEvent,
+  deleteEvent,
 } from "../controller/ticketsController.js";
-const ticketsRoutes = express.Router();
-ticketsRoutes.use(bodyParser.json());
 
-ticketsRoutes.get("/", GetTeckets).post("/", PostTickets);
+// Route to get all events
+router.get("/", getAllEvents);
 
-ticketsRoutes
-  .get("/:id", GetTicketsID)
-  .patch("/:id", UpdateTicketsID)
-  .delete("/:id", DeleteTicketsID);
-export default ticketsRoutes;
+// Route to get a single event by ID
+router.get("/:id", getEventById);
+
+// Route to create a new event
+router.post("/", createEvent);
+
+// Route to update an existing event by ID
+router.put("/:id", updateEvent);
+
+// Route to delete an event by ID
+router.delete("/:id", deleteEvent);
+
+export default router;

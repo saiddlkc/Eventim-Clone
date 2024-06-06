@@ -3,28 +3,17 @@ import moment from "moment-timezone";
 const { Schema, model } = mongoose;
 
 const TicketsSchema = new Schema({
-  event_name: { type: String, required: true },
+  event_name: { type: String },
   category: {
     type: String,
     enum: ["Music", "Theater", "Sports", "Comedy", "Conference"],
-    required: true,
   },
   genre: {
     type: String,
     enum: ["Classical", "Jazz", "Rock", "Pop", "Opera", "Hip Hop"],
-    required: true,
   },
-  artist: { type: String, required: true },
-  price: { type: String, required: true },
-  location: {
-    venue: { type: String, required: true },
-    city: {
-      type: String,
-      enum: ["Berlin", "Munich", "Hamburg", "Cologne", "Frankfurt"],
-      required: true,
-    },
-    address: { type: String, required: true },
-  },
+  artist: { type: String },
+  price: { type: String },
   purchaseDate: {
     type: Date,
     default: Date.now,
@@ -32,11 +21,9 @@ const TicketsSchema = new Schema({
   buyer: {
     name: {
       type: String,
-      required: true,
     },
     email: {
       type: String,
-      required: true,
     },
     phone: {
       type: String,
@@ -45,7 +32,7 @@ const TicketsSchema = new Schema({
   },
   barcode: {
     type: String,
-    required: true,
+
     unique: true,
   },
   event_date: {
@@ -57,20 +44,19 @@ const TicketsSchema = new Schema({
   },
   creatItDate: { type: Date, default: Date.now },
   updateItDate: { type: Date, default: Date.now },
-  organizer: { type: String, required: true },
-  event_information: { type: String, required: true },
+  organizer: { type: String },
+  event_information: { type: String },
   additional_info: {
-    age_restriction: { type: String, required: true },
-    ticket_availability: { type: Number, required: true },
-    tickets_sold: { type: Number, required: true },
+    age_restriction: { type: String },
+    ticket_availability: { type: Number },
+    tickets_sold: { type: Number },
     event_status: {
       type: String,
       enum: ["Active", "Sold Out", "Cancelled"],
-      required: true,
     },
-    event_type: { type: String, required: true },
+    event_type: { type: String },
     seating: {
-      type: { type: String, required: true },
+      type: { type: String },
       available_seats: { type: Number },
       seat_number: { type: Number },
     },
