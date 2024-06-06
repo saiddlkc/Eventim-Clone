@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 // import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { Input, Button, Typography } from "@material-tailwind/react";
 
@@ -7,13 +8,17 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import logo from "../../assets/img/logo-transparent-png.png";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 export function Login() {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
+    role: "" || "customer",
+    ProfilePicture: null,
   });
 
+  const { dispatch } = useAuthContext();
   const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,13 +33,18 @@ export function Login() {
       return;
     }
 
+    const formData = new FormData();
+    Object.keys(credentials).forEach((key) => {
+      formData.append(key, credentials[key]);
+    });
+
     axios
       .post("http://localhost:4000/auth/login", credentials)
       .then((res) => {
         toast.success("Login successful!");
-        console.log(res.data);
+        localStorage.setItem("user", res.data.token);
+        dispatch({ type: "LOGIN", payload: res.data });
         navigate("/");
-        localStorage.setItem("token", res.data.token);
       })
       .catch((err) => {
         toast.error("Error logging in. Please try again.");
