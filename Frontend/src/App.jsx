@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import "./App.css";
-import Tickets from "./pages/Tickets";
+import Tickets from "./pages/Tickets/Tickets";
 
 function App() {
   const [count, setCount] = useState(0);
