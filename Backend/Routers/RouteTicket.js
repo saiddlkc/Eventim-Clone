@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 const route = express.Router();
 route.use(bodyParser.json());
 route
-  .get("/", async (req, res) => {
+  .get("/ticket", async (req, res) => {
     try {
       const tickets = await Ticktes.find();
       res.status(200).json(tickets);
@@ -13,7 +13,7 @@ route
       res.status(400).json(error);
     }
   })
-  .post("/", async (req, res) => {
+  .post("/ticket", async (req, res) => {
     const { title, description, date, location, attendees, createdAt } =
       req.body;
     try {

@@ -1,5 +1,5 @@
 import React from "react";
-import "../pages/Tickets/styles.css";
+
 const AddTable = ({ addTicketsData, handleAddChange, handleCancelClick }) => {
   return (
     <tr>
