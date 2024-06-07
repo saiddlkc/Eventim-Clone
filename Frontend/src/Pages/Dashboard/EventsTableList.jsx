@@ -32,6 +32,7 @@ const EventsTableList = () => {
     beschreibung: "",
     startDatum: "",
     endDatum: "",
+    bild: "",
     ort: {
       adresse: "",
       stadt: "",
@@ -116,6 +117,7 @@ const EventsTableList = () => {
         case "beschreibung":
         case "startDatum":
         case "endDatum":
+        case "bild":
           newEvent[name] = value;
           break;
         case "adresse":
@@ -152,6 +154,7 @@ const EventsTableList = () => {
           beschreibung: "",
           startDatum: "",
           endDatum: "",
+          bild: "",
           ort: {
             adresse: "",
             stadt: "",
@@ -234,6 +237,13 @@ const EventsTableList = () => {
                   name="beschreibung"
                   placeholder="Description"
                   value={newEvent.beschreibung}
+                  onChange={handleNewEventChange}
+                />
+                <Input
+                  type="text"
+                  name="bild"
+                  placeholder="Image URL"
+                  value={newEvent.bild}
                   onChange={handleNewEventChange}
                 />
                 <Input
