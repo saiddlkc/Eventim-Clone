@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import logo from "../../assets/img/logo-transparent-png.png";
+import { useNavigate } from "react-router-dom";
 
 export function SignUp() {
   const [newUser, setNewUser] = useState({
@@ -14,8 +15,7 @@ export function SignUp() {
     role: "" || "customer",
     profilePicture: null,
   });
-
-  
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,6 +49,7 @@ export function SignUp() {
           role: "" || "customer",
           profilePicture: null,
         });
+        navigate("/login");
       })
       .catch((err) => {
         toast.error("Error registering user. Please try again.");
@@ -81,9 +82,6 @@ export function SignUp() {
           className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2"
           onSubmit={handleSubmit}
         >
-          <Typography variant="h6" color="blue-gray" className="mb-6">
-            Deine persönlichen Angaben
-          </Typography>
           <div className="flex flex-col gap-6">
             <Input
               size="lg"
