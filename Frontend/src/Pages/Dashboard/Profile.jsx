@@ -23,6 +23,7 @@ import {
   UserPlusIcon,
 } from "@heroicons/react/24/solid";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { ToastContainer, toast } from "react-toastify";
 
 export function Profile() {
   const location = useLocation();
@@ -31,7 +32,7 @@ export function Profile() {
   const [activeTab, setActiveTab] = useState(initialTab);
   const [users, setUsers] = useState([]);
 
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [TABLE_ROWS, setTableRows] = useState([]);
@@ -39,13 +40,35 @@ export function Profile() {
 
   const TABLE_HEAD = ["User", "Subject", "Message"];
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/dashboard/contact")
+      .then((res) => {
+        setTableRows(res.data.reverse());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // const handleDelete = async (id) => {
+  //   try {
+  //     await axios.delete(`http://localhost:4000/dashboard/contact/${id}`);
+  //     setTableRows((prevRows) => prevRows.filter((row) => row._id !== id));
+  //     toast.success("Message deleted!");
+  //   } catch (err) {
+  //     console.log(err);
+  //     toast.error("Failed to delete message.");
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await axios.post(
         "http://localhost:4000/dashboard/contact",
-        { name, subject, message },
+        { email, subject, message },
         {
           headers: {
             "Content-Type": "application/json",
@@ -53,39 +76,45 @@ export function Profile() {
         }
       );
 
-      if (response.status === 200) {
-        const newMessage = { user: name, subject, message };
-        setTableRows([...TABLE_ROWS, newMessage]);
-        setName("");
+      if (response.status === 201) {
+        const newMessage = { email, subject, message };
+        setTableRows((prevRows) => [...prevRows, newMessage]);
+        setEmail("");
         setSubject("");
         setMessage("");
-        alert("Message sent!");
+        toast.success("Message sent!");
       }
     } catch (err) {
       setError("Failed to send message. Please try again.");
       console.log(err);
-      alert("Failed to send message.");
+      toast.error("Failed to send message.");
     }
   };
+  const handleDelete = async (emailToDelete) => {
+    try {
+      // Annahme: Du hast die ID des Kontakts über die E-Mail-Adresse erhalten
+      const contact = TABLE_ROWS.find((row) => row.email === emailToDelete);
+      if (!contact) {
+        // Kontakt nicht gefunden
+        toast.error("Contact not found.");
+        return;
+      }
 
-  const TABLE_ROWSS = [
-    {
-      user: "Alexa Liras",
-      subject: "Ticket #445",
-      message: "I need help with my account",
-    },
-  ];
+      // Verwende die ID, um den Kontakt zu löschen
+      await axios.delete(
+        `http://localhost:4000/dashboard/contact/${contact._id}`
+      );
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/dashboard/Users")
-      .then((res) => {
-        setUsers(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+      // Aktualisiere die lokale State-Variable
+      setTableRows((prevRows) =>
+        prevRows.filter((row) => row._id !== contact._id)
+      );
+      toast.success("Ticket wurde gelöscht!");
+    } catch (err) {
+      console.log(err);
+      toast.error("Failed to delete contact.");
+    }
+  };
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
@@ -99,6 +128,7 @@ export function Profile() {
 
   return (
     <>
+      <ToastContainer />
       <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover	bg-center">
         <div className="absolute inset-0 h-full w-full bg-gray-900/75" />
       </div>
@@ -280,22 +310,22 @@ export function Profile() {
                         </tr>
                       </thead>
                       <tbody>
-                        {TABLE_ROWSS.map(
-                          ({ user, subject, message }, index) => {
-                            const isLast = index === TABLE_ROWSS.length - 1;
+                        {TABLE_ROWS.map(
+                          ({ email, subject, message }, index) => {
+                            const isLast = index === TABLE_ROWS.length - 1;
                             const classes = isLast
                               ? "p-4"
                               : "p-4 border-b border-blue-gray-50";
 
                             return (
-                              <tr key={user}>
+                              <tr key={email}>
                                 <td className={classes}>
                                   <Typography
                                     variant="small"
                                     color="blue-gray"
                                     className="font-normal"
                                   >
-                                    {user}
+                                    {email}
                                   </Typography>
                                 </td>
                                 <td className={`${classes} bg-blue-gray-50/50`}>
@@ -307,7 +337,7 @@ export function Profile() {
                                     {subject}
                                   </Typography>
                                 </td>
-                                <td className={classes}>
+                                <td className={`${classes} w-96`}>
                                   <Typography
                                     variant="small"
                                     color="blue-gray"
@@ -319,6 +349,15 @@ export function Profile() {
                                 <td
                                   className={`${classes} bg-blue-gray-50/50`}
                                 ></td>
+                                <td className={classes}>
+                                  <Button
+                                    color="red"
+                                    size="regular"
+                                    onClick={() => handleDelete(email)}
+                                  >
+                                    Delete
+                                  </Button>
+                                </td>
                               </tr>
                             );
                           }
@@ -342,8 +381,8 @@ export function Profile() {
                         label="Email"
                         size="md"
                         placeholder="Type your Email"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                       />
                     </div>
