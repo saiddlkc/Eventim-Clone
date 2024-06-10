@@ -1,7 +1,6 @@
 const express = require("express");
 const userRouter = express.Router();
 const userController = require("../Controllers/userController");
-
 // const { checkRole } = require("../Controllers/authController");
 
 userRouter.post("/users", userController.createUser);
