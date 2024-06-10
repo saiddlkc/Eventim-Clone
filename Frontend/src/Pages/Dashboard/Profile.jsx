@@ -31,32 +31,47 @@ export function Profile() {
   const [activeTab, setActiveTab] = useState(initialTab);
   const [users, setUsers] = useState([]);
 
+  const [name, setName] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [TABLE_ROWS, setTableRows] = useState([]);
+  const [error, setError] = useState("");
+
   const TABLE_HEAD = ["User", "Subject", "Message"];
 
-  const TABLE_ROWS = [
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/dashboard/contact",
+        { name, subject, message },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        const newMessage = { user: name, subject, message };
+        setTableRows([...TABLE_ROWS, newMessage]);
+        setName("");
+        setSubject("");
+        setMessage("");
+        alert("Message sent!");
+      }
+    } catch (err) {
+      setError("Failed to send message. Please try again.");
+      console.log(err);
+      alert("Failed to send message.");
+    }
+  };
+
+  const TABLE_ROWSS = [
     {
       user: "Alexa Liras",
       subject: "Ticket #445",
-      message: "I need help with my account",
-    },
-    {
-      user: "Alexa Liras",
-      subject: "Ticket #446",
-      message: "I need help with my account",
-    },
-    {
-      user: "Alexa Liras",
-      subject: "Ticket #447",
-      message: "I need help with my account",
-    },
-    {
-      user: "Alexa Liras",
-      subject: "Ticket #448",
-      message: "I need help with my account",
-    },
-    {
-      user: "Alexa Liras",
-      subject: "Ticket #449",
       message: "I need help with my account",
     },
   ];
@@ -265,47 +280,49 @@ export function Profile() {
                         </tr>
                       </thead>
                       <tbody>
-                        {TABLE_ROWS.map(({ user, subject, message }, index) => {
-                          const isLast = index === TABLE_ROWS.length - 1;
-                          const classes = isLast
-                            ? "p-4"
-                            : "p-4 border-b border-blue-gray-50";
+                        {TABLE_ROWSS.map(
+                          ({ user, subject, message }, index) => {
+                            const isLast = index === TABLE_ROWSS.length - 1;
+                            const classes = isLast
+                              ? "p-4"
+                              : "p-4 border-b border-blue-gray-50";
 
-                          return (
-                            <tr key={user}>
-                              <td className={classes}>
-                                <Typography
-                                  variant="small"
-                                  color="blue-gray"
-                                  className="font-normal"
-                                >
-                                  {user}
-                                </Typography>
-                              </td>
-                              <td className={`${classes} bg-blue-gray-50/50`}>
-                                <Typography
-                                  variant="small"
-                                  color="blue-gray"
-                                  className="font-normal"
-                                >
-                                  {subject}
-                                </Typography>
-                              </td>
-                              <td className={classes}>
-                                <Typography
-                                  variant="small"
-                                  color="blue-gray"
-                                  className="font-normal"
-                                >
-                                  {message}
-                                </Typography>
-                              </td>
-                              <td
-                                className={`${classes} bg-blue-gray-50/50`}
-                              ></td>
-                            </tr>
-                          );
-                        })}
+                            return (
+                              <tr key={user}>
+                                <td className={classes}>
+                                  <Typography
+                                    variant="small"
+                                    color="blue-gray"
+                                    className="font-normal"
+                                  >
+                                    {user}
+                                  </Typography>
+                                </td>
+                                <td className={`${classes} bg-blue-gray-50/50`}>
+                                  <Typography
+                                    variant="small"
+                                    color="blue-gray"
+                                    className="font-normal"
+                                  >
+                                    {subject}
+                                  </Typography>
+                                </td>
+                                <td className={classes}>
+                                  <Typography
+                                    variant="small"
+                                    color="blue-gray"
+                                    className="font-normal"
+                                  >
+                                    {message}
+                                  </Typography>
+                                </td>
+                                <td
+                                  className={`${classes} bg-blue-gray-50/50`}
+                                ></td>
+                              </tr>
+                            );
+                          }
+                        )}
                       </tbody>
                     </table>
                   </div>
@@ -318,30 +335,45 @@ export function Profile() {
                   </Typography>
                 </CardHeader>
                 <CardBody>
-                  <div className="flex gap-4 m-3">
-                    <Input
-                      type="text"
-                      label="Name"
-                      size="md"
-                      placeholder="Type the subject"
-                    />
-                  </div>
-                  <div className="flex gap-4 m-3">
-                    <Input
-                      type="text"
-                      label="Subject"
-                      size="md"
-                      placeholder="Type the subject"
-                    />
-                  </div>
-                  <div className="flex gap-4 m-3">
-                    <Textarea label="Message" size="md" rows={6} />
-                  </div>
-                  <div className="flex gap-4 m-3">
-                    <Button color="gray" size="regular">
-                      Send
-                    </Button>
-                  </div>
+                  <form onSubmit={handleSubmit}>
+                    <div className="flex gap-4 m-3">
+                      <Input
+                        type="text"
+                        label="Email"
+                        size="md"
+                        placeholder="Type your Email"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="flex gap-4 m-3">
+                      <Input
+                        type="text"
+                        label="Subject"
+                        size="md"
+                        placeholder="Type the subject"
+                        value={subject}
+                        onChange={(e) => setSubject(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="flex gap-4 m-3">
+                      <Textarea
+                        label="Message"
+                        size="md"
+                        rows={6}
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="flex gap-4 m-3">
+                      <Button color="gray" size="regular" type="submit">
+                        Send
+                      </Button>
+                    </div>
+                  </form>
                 </CardBody>
               </Card>
             </div>
