@@ -1,34 +1,20 @@
-import Ticktes from "../model/Tickets.js";
-import express from "express";
-import bodyParser from "body-parser";
+const express = require("express");
+const bodyParser = require("body-parser");
+const {
+  GetTicket,
+  PostTickets,
+  GetOne,
+  updateTickets,
+  deleteTicket,
+} = require("../Controllers/TicketsController");
 
 const route = express.Router();
 route.use(bodyParser.json());
-route
-  .get("/ticket", async (req, res) => {
-    try {
-      const tickets = await Ticktes.find();
-      res.status(200).json(tickets);
-    } catch (error) {
-      res.status(400).json(error);
-    }
-  })
-  .post("/ticket", async (req, res) => {
-    const { title, description, date, location, attendees, createdAt } =
-      req.body;
-    try {
-      const tickets = await Ticktes.create({
-        title,
-        description,
-        date,
-        location,
-        attendees,
-        createdAt,
-      });
-      res.status(200).json(tickets);
-    } catch (error) {
-      res.status(400).json(error);
-    }
-  });
+route.get("/tickets", GetTicket).post("/tickets", PostTickets);
 
-export default route;
+route
+  .get("/tickets/:id", GetOne)
+  .patch("/tickets/:id", updateTickets)
+  .delete("/tickets/:id", deleteTicket);
+
+module.exports = route;

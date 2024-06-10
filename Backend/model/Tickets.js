@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const { model, Schema } = mongoose;
 
 const eventSchema = new Schema({
@@ -25,4 +25,4 @@ const eventSchema = new Schema({
 });
 
 const Ticktes = model("Ticktes", eventSchema);
-export default Ticktes;
+module.exports = Ticktes;

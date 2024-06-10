@@ -7,6 +7,7 @@ import EventsTableList from "./Pages/Dashboard/EventsTableList";
 import SignUp from "./Pages/Login/Register";
 import AdminLayout from "./Layout/AdminLayout";
 import Login from "./Pages/Login/Login";
+import "./App.css";
 
 function App() {
   return (
