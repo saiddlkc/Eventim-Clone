@@ -3,7 +3,6 @@ import {
   MagnifyingGlassIcon,
   ChevronUpDownIcon,
 } from "@heroicons/react/24/outline";
-import { UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   CardHeader,
@@ -15,7 +14,14 @@ import {
   Avatar,
   Select,
   Option,
+  IconButton,
+  Tooltip,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
 } from "@material-tailwind/react";
+import { PencilIcon, TrashIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -31,12 +37,14 @@ export function SortableTable() {
     role: "",
     profilePicture: "",
   });
+  const [currentUser, setCurrentUser] = useState(null); // [1
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/dashboard/users")
+      .get("http://localhost:4000/dashboard/Users")
       .then((res) => {
         setUsers(res.data);
       })
@@ -62,41 +70,119 @@ export function SortableTable() {
     setNewUser((prev) => ({ ...prev, profilePicture: e.target.files[0] }));
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+    return new Date(dateString).toLocaleDateString("en-GB", options);
+  };
+
+  const openEditModal = (user) => {
+    setNewUser({
+      name: user.name,
+      email: user.email,
+      password: "",
+      role: user.role,
+      profilePicture: user.profilePicture,
+    });
+    setCurrentUser(user);
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+    setNewUser({
+      name: "",
+      email: "",
+      password: "",
+      role: "",
+      profilePicture: "",
+    });
+    setCurrentUser(null);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
 
-    // Basic validation
-    if (!newUser.name || !newUser.email || !newUser.password || !newUser.role) {
-      toast.error("All fields except profile picture are required");
-      return;
-    }
+    if (currentUser) {
+      // Update existing user
+      const formData = new FormData();
+      Object.keys(newUser).forEach((key) => {
+        if (newUser[key] && newUser[key] !== currentUser[key]) {
+          formData.append(key, newUser[key]);
+        }
+      });
 
-    const formData = new FormData();
-    Object.keys(newUser).forEach((key) => {
-      formData.append(key, newUser[key]);
-    });
-
-    axios
-      .post("http://localhost:4000/dashboard/users", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        setUsers([...users, res.data]);
-        setNewUser({
-          name: "",
-          email: "",
-          password: "",
-          role: "",
-          profilePicture: "",
+      axios
+        .put(
+          `http://localhost:4000/dashboard/users/${currentUser._id}`,
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        )
+        .then((res) => {
+          setUsers(
+            users.map((user) =>
+              user._id === currentUser._id ? res.data : user
+            )
+          );
+          toast.success("User updated successfully");
+          closeEditModal();
+        })
+        .catch((err) => {
+          setError("Error updating user. Please try again.");
+          toast.error("Error updating user. Please try again.");
+          console.log(err);
         });
-        toast.success("User added successfully");
+    } else {
+      // Create new user
+      if (
+        !newUser.name ||
+        !newUser.email ||
+        !newUser.password ||
+        !newUser.role
+      ) {
+        toast.error("All fields except profile picture are required");
+        return;
+      }
+
+      const formData = new FormData();
+      Object.keys(newUser).forEach((key) => {
+        formData.append(key, newUser[key]);
+      });
+
+      axios
+        .post("http://localhost:4000/dashboard/users", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then((res) => {
+          setUsers([...users, res.data]);
+          toast.success("User added successfully");
+          setNewUser({
+            name: "",
+            email: "",
+            password: "",
+            role: "",
+            profilePicture: "",
+          });
+        })
+        .catch((err) => {
+          setError("Error adding user. Please try again.");
+          toast.error("Error adding user. Please try again.");
+          console.log(err);
+        });
+    }
+  };
+
+  const handleDelete = (userId) => {
+    axios
+      .delete(`http://localhost:4000/dashboard/users/${userId}`)
+      .then((res) => {
+        setUsers(users.filter((user) => user._id !== userId));
+        toast.success("User deleted successfully");
       })
       .catch((err) => {
-        setError("Error adding user. Please try again.");
-        toast.error("Error adding user. Please try again.");
+        toast.error("Error deleting user. Please try again.");
         console.log(err);
       });
   };
@@ -110,12 +196,12 @@ export function SortableTable() {
   );
 
   return (
-    <div className="mt-12 mb-8 flex flex-col gap-12 m-2">
+    <div className=" mb-8 flex flex-col gap-2 ">
       <ToastContainer />
-      <div className="m-4">
-        <Card className="h-full w-full mb-6 bg-blue-gray-100">
+      <div className="m-2">
+        <Card className="h-full w-full mb-6 ">
           <CardHeader floated={false} shadow={false} className="rounded-none">
-            <div className="mb-8 flex items-center justify-between gap-8 bg-blue-gray-100">
+            <div className="mb-8 flex items-center justify-between gap-8 ">
               <div>
                 <Typography variant="h5" color="blue-gray">
                   Users Management
@@ -129,7 +215,7 @@ export function SortableTable() {
               </div>
             </div>
           </CardHeader>
-          <CardBody className="overflow-scroll px-0">
+          <CardBody className=" px-0">
             <table className="mt-4 w-full min-w-max table-auto text-left">
               <thead>
                 <tr>
@@ -203,7 +289,8 @@ export function SortableTable() {
                             type="submit"
                             className="w-full flex items-center justify-center gap-2 "
                           >
-                            Add user <UserPlusIcon className="h-4 w-4" />
+                            {currentUser ? "Update user" : "Add user"}{" "}
+                            <UserPlusIcon className="h-4 w-4" />
                           </Button>
                         </div>
                       </div>
@@ -218,18 +305,15 @@ export function SortableTable() {
           </CardBody>
         </Card>
       </div>
-      <div className="m-4">
-        <Card className="h-full w-full bg-blue-gray-100">
-          <CardHeader
-            floated={false}
-            shadow={false}
-            className="rounded-none bg-blue-gray-100"
-          >
+      <hr className="border-t-2 border-blue-gray-200 mt-4 mb-4" />
+      <div className="m-2">
+        <Card className="h-full w-full ">
+          <CardHeader floated={false} shadow={false} className="rounded-none ">
             <div className="flex justify-between items-center">
               <Typography variant="h5" color="blue-gray">
                 Users
               </Typography>
-              <div className="w-72 m-3">
+              <div className="w-72 mt-4">
                 <Input
                   label="Search"
                   icon={<MagnifyingGlassIcon className="h-5 w-5" />}
@@ -239,7 +323,7 @@ export function SortableTable() {
               </div>
             </div>
           </CardHeader>
-          <CardBody className="overflow-scroll px-0">
+          <CardBody className=" px-0">
             <table className="mt-4 w-full min-w-max table-auto text-left">
               <thead>
                 <tr>
@@ -319,19 +403,37 @@ export function SortableTable() {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {new Date(createdAt).toLocaleDateString()}
+                            {formatDate(createdAt)}
                           </Typography>
                         </td>
-                        <td className={`${classes}`}>
-                          <Typography
-                            as="a"
-                            href="#"
-                            variant="small"
-                            color="blue-gray"
-                            className="font-medium"
-                          >
-                            Edit
-                          </Typography>
+                        <td className={classes}>
+                          <div className="flex items-center gap-2">
+                            <Tooltip content="Edit User">
+                              <IconButton
+                                variant="text"
+                                onClick={() =>
+                                  openEditModal({
+                                    _id,
+                                    name,
+                                    email,
+                                    role,
+                                    profilePicture,
+                                  })
+                                }
+                              >
+                                <PencilIcon className="h-4 w-4" />
+                              </IconButton>
+                            </Tooltip>
+
+                            <Tooltip content="Delete User">
+                              <IconButton
+                                variant="text"
+                                onClick={() => handleDelete(_id)}
+                              >
+                                <TrashIcon className="h-4 w-4" />
+                              </IconButton>
+                            </Tooltip>
+                          </div>
                         </td>
                       </tr>
                     );
@@ -341,24 +443,102 @@ export function SortableTable() {
             </table>
           </CardBody>
           <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-            <Typography
-              variant="small"
-              color="blue-gray"
-              className="font-normal"
-            >
-              Page 1 of 5
-            </Typography>
-            <div className="flex gap-2">
-              <Button variant="outlined" size="sm">
-                Previous
-              </Button>
-              <Button variant="outlined" size="sm">
-                Next
-              </Button>
+            <Button variant="outlined" size="sm">
+              Previous
+            </Button>
+            <div className="flex items-center gap-2">
+              <IconButton variant="outlined" size="sm">
+                1
+              </IconButton>
+              <IconButton variant="text" size="sm">
+                2
+              </IconButton>
+              <IconButton variant="text" size="sm">
+                3
+              </IconButton>
+              <IconButton variant="text" size="sm">
+                ...
+              </IconButton>
+              <IconButton variant="text" size="sm">
+                8
+              </IconButton>
+              <IconButton variant="text" size="sm">
+                9
+              </IconButton>
+              <IconButton variant="text" size="sm">
+                10
+              </IconButton>
             </div>
+            <Button variant="outlined" size="sm">
+              Next
+            </Button>
           </CardFooter>
         </Card>
       </div>
+      <Dialog open={isEditModalOpen} handler={closeEditModal}>
+        <DialogHeader>Edit User</DialogHeader>
+        <DialogBody>
+          <form onSubmit={handleSubmit}>
+            <div className="flex gap-4 p-2">
+              <Input
+                size="md"
+                label="Name"
+                name="name"
+                value={newUser.name}
+                onChange={handleChange}
+              />
+              <Input
+                type="email"
+                label="Email Address"
+                name="email"
+                value={newUser.email}
+                onChange={handleChange}
+                className="pr-20"
+                containerProps={{
+                  className: "min-w-0",
+                }}
+              />
+            </div>
+            <div className="flex gap-4 p-2">
+              <Input
+                type="password"
+                size="md"
+                label="Password"
+                name="password"
+                value={newUser.password}
+                onChange={handleChange}
+              />
+              <Select
+                label="Select Role"
+                name="role"
+                value={newUser.role}
+                onChange={handleSelectChange}
+              >
+                <Option value="admin">Admin</Option>
+                <Option value="organizer">Organizer</Option>
+                <Option value="customer">Customer</Option>
+              </Select>
+            </div>
+            <div className="flex gap-4 p-2">
+              <Input
+                type="file"
+                size="md"
+                label="Profile"
+                onChange={handleFileChange}
+              />
+            </div>
+            {error && <div className="text-red-500 mt-2">{error}</div>}
+          </form>
+        </DialogBody>
+        <DialogFooter>
+          <Button variant="text" color="red" onClick={closeEditModal}>
+            Cancel
+          </Button>
+          <Button variant="gradient" color="green" onClick={handleSubmit}>
+            Save
+          </Button>
+        </DialogFooter>
+      </Dialog>
     </div>
   );
 }

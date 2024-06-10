@@ -1,48 +1,88 @@
-// src/components/Sidebar.jsx
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FaHome, FaUsers, FaCalendarAlt, FaTicketAlt, FaSignOutAlt } from 'react-icons/fa';
+import {
+  Card,
+  Typography,
+  List,
+  ListItem,
+  ListItemPrefix,
+} from "@material-tailwind/react";
+import {
+  PresentationChartBarIcon,
+  PowerIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/solid";
+import { FaUsers, FaCalendarAlt, FaTicketAlt } from "react-icons/fa";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import logo from "../../assets/img/logo-transparent-png.png";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
-const Sidebar = () => {
+export default function Sidebar() {
+  const location = useLocation();
+  const { dispatch } = useAuthContext();
+  const navigate = useNavigate();
+
+  const HandleLogout = () => {
+    // Dispatch logout action
+    dispatch({ type: "LOGOUT" });
+    // Clear user data from localStorage if needed
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
+
   return (
-    <div className="w-54 bg-gray-900 text-white flex flex-col max-h-screen">
-      <div className="p-6 mt-4">
-        <span className="text-xl font-semibold">LOGO</span>
+    <div className="fixed top-0 left-0 h-full w-64 p-4 shadow-xl shadow-blue-gray-900/5 bg-gray-300">
+      <div className="mb-2 p-4">
+        <Link to="/">
+          <img src={logo} alt="logo" />
+        </Link>
       </div>
-      <ul>
-        <li className="mb-4">
-          <Link to="/" className="text-white hover:bg-gray-300 p-3 flex items-center rounded">
-            <FaHome className="h-6 w-6 mr-2" />
-            <span className="p-2">Home</span>
-          </Link>
-        </li>
-        <li className="mb-4">
-          <Link to="/users" className="text-white hover:bg-gray-700 p-3 flex items-center rounded">
-            <FaUsers className="h-6 w-6 mr-2" />
-            <span className="p-2">Users</span>
-          </Link>
-        </li>
-        <li className="mb-4">
-          <Link to="/events" className="text-white hover:bg-gray-700 p-3 flex items-center rounded">
-            <FaCalendarAlt className="h-6 w-6 mr-2" />
-            <span className="p-2">Events</span>
-          </Link>
-        </li>
-        <li className="mb-4">
-          <Link to="/tickets" className="text-white hover:bg-gray-700 p-3 flex items-center rounded">
-            <FaTicketAlt className="h-6 w-6 mr-2" />
-            <span className=" p-2">Tickets</span>
-          </Link>
-        </li>
-        <li className="mb-4">
-          <Link to="/logout" className="text-white hover:bg-gray-700 p-3 flex items-center rounded">
-            <FaSignOutAlt className="h-6 w-6 mr-2" />
-            <span className="p-2">Logout</span>
-          </Link>
-        </li>
-      </ul>
+      <List>
+        <Link to="/">
+          <ListItem selected={location.pathname === "/"}>
+            <ListItemPrefix>
+              <PresentationChartBarIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Dashboard
+          </ListItem>
+        </Link>
+        <Link to="/users">
+          <ListItem selected={location.pathname === "/users"}>
+            <ListItemPrefix>
+              <FaUsers className="h-5 w-5" />
+            </ListItemPrefix>
+            Users
+          </ListItem>
+        </Link>
+        <Link to="/events">
+          <ListItem selected={location.pathname === "/events"}>
+            <ListItemPrefix>
+              <FaCalendarAlt className="h-5 w-5" />
+            </ListItemPrefix>
+            Events
+          </ListItem>
+        </Link>
+        <Link to="/tickets">
+          <ListItem selected={location.pathname === "/tickets"}>
+            <ListItemPrefix>
+              <FaTicketAlt className="h-5 w-5" />
+            </ListItemPrefix>
+            Tickets
+          </ListItem>
+        </Link>
+        <Link to="/profile">
+          <ListItem selected={location.pathname === "/profile"}>
+            <ListItemPrefix>
+              <UserCircleIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Profile
+          </ListItem>
+        </Link>
+        <ListItem onClick={HandleLogout}>
+          <ListItemPrefix>
+            <PowerIcon className="h-5 w-5" />
+          </ListItemPrefix>
+          Log Out
+        </ListItem>
+      </List>
     </div>
   );
-};
-
-export default Sidebar;
+}

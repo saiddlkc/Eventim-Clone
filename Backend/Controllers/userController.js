@@ -1,6 +1,7 @@
 const Users = require("../Models/usersSchema");
 const multer = require("multer");
 const path = require("path");
+const bcrypt = require("bcrypt");
 
 // Multer setup for file upload
 const storage = multer.diskStorage({
@@ -33,7 +34,14 @@ exports.createUser = async (req, res) => {
           .status(400)
           .json({ error: "All fields except profile picture are required" });
       }
-      const user = new Users({ name, email, password, role, profilePicture });
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const user = new Users({
+        name,
+        email,
+        password: hashedPassword,
+        role,
+        profilePicture,
+      });
       await user.save();
       res.status(201).json(user);
     } catch (error) {
@@ -73,17 +81,33 @@ exports.getUser = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
-  try {
-    const user = await Users.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+  upload(req, res, async function (err) {
+    if (err) {
+      return res.status(400).json({ error: err.message });
     }
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
+
+    const { name, email, password, role } = req.body;
+    let profilePicture = req.file ? req.file.path : "";
+
+    try {
+      const user = await Users.findById(req.params.id);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      if (name) user.name = name;
+      if (email) user.email = email;
+      if (password) {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        user.password = hashedPassword;
+      }
+      if (role) user.role = role;
+      if (profilePicture) user.profilePicture = profilePicture;
+      await user.save();
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(404).json({ message: error.message });
+    }
+  });
 };
 
 exports.deleteUser = async (req, res) => {
