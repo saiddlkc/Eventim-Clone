@@ -38,7 +38,12 @@ export function Login() {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data));
         dispatch({ type: "LOGIN", payload: res.data });
-        navigate("/");
+
+        if (res.data.role === "admin") {
+          navigate("/");
+        } else {
+          navigate("/customer-dashboard");
+        }
       })
       .catch((err) => {
         toast.error("Error logging in. Please try again.");
