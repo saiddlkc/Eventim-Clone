@@ -189,11 +189,7 @@ const EventsTableList = () => {
   ];
 
   return (
-<<<<<<< HEAD
     <div className="mt-4 w-full min-w-max table-auto text-left">
-=======
-    <div className="mb-8 flex flex-col gap-2 ">
->>>>>>> origin/durmus
       <ToastContainer />
       <div className="mt-4">
         <Card className="h-full w-full bg-blue-gray-100">
