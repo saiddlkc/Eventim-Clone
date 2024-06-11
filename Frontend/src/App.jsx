@@ -7,12 +7,14 @@ import EventsTableList from "./Pages/Dashboard/EventsTableList";
 import SignUp from "./Pages/Login/Register";
 import AdminLayout from "./Layout/AdminLayout";
 import Login from "./Pages/Login/Login";
+import EventsPage from "./Pages/ShowPage/EventsPage";
 
 function App() {
   return (
     <Routes>
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/event" element={<EventsPage />} />
       <Route element={<AdminLayout />}>
         <Route index element={<Statistics />} />
         <Route path="/users" element={<UsersTable />} />
