@@ -51,17 +51,6 @@ export function Profile() {
       });
   }, []);
 
-  // const handleDelete = async (id) => {
-  //   try {
-  //     await axios.delete(`http://localhost:4000/dashboard/contact/${id}`);
-  //     setTableRows((prevRows) => prevRows.filter((row) => row._id !== id));
-  //     toast.success("Message deleted!");
-  //   } catch (err) {
-  //     console.log(err);
-  //     toast.error("Failed to delete message.");
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -77,8 +66,8 @@ export function Profile() {
       );
 
       if (response.status === 201) {
-        const newMessage = { email, subject, message };
-        setTableRows((prevRows) => [...prevRows, newMessage]);
+        const newMessage = response.data; // Verwende die gesamte Antwort, die die ID enthalten sollte
+        setTableRows((prevRows) => [newMessage, ...prevRows]);
         setEmail("");
         setSubject("");
         setMessage("");
@@ -92,20 +81,18 @@ export function Profile() {
   };
   const handleDelete = async (emailToDelete) => {
     try {
-      // Annahme: Du hast die ID des Kontakts über die E-Mail-Adresse erhalten
       const contact = TABLE_ROWS.find((row) => row.email === emailToDelete);
       if (!contact) {
-        // Kontakt nicht gefunden
         toast.error("Contact not found.");
         return;
       }
 
-      // Verwende die ID, um den Kontakt zu löschen
+      console.log("Contact ID to delete:", contact._id);
+
       await axios.delete(
         `http://localhost:4000/dashboard/contact/${contact._id}`
       );
 
-      // Aktualisiere die lokale State-Variable
       setTableRows((prevRows) =>
         prevRows.filter((row) => row._id !== contact._id)
       );
