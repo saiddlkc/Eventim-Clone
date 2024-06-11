@@ -38,7 +38,7 @@ export function Profile() {
   const [TABLE_ROWS, setTableRows] = useState([]);
   const [error, setError] = useState("");
 
-  const TABLE_HEAD = ["User", "Subject", "Message"];
+  const TABLE_HEAD = ["Email", "Subject", "Message"];
 
   useEffect(() => {
     axios
@@ -71,7 +71,9 @@ export function Profile() {
         setEmail("");
         setSubject("");
         setMessage("");
-        toast.success("Message sent!");
+        toast.success(
+          "Ticket wurde gesendet!, Wir werden dir per Email antworten"
+        );
       }
     } catch (err) {
       setError("Failed to send message. Please try again.");
@@ -324,7 +326,7 @@ export function Profile() {
                                     {subject}
                                   </Typography>
                                 </td>
-                                <td className={`${classes} w-96`}>
+                                <td className={`${classes} w-32`}>
                                   <Typography
                                     variant="small"
                                     color="blue-gray"
