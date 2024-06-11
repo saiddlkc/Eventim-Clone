@@ -10,6 +10,7 @@ import Login from "./Pages/Login/Login";
 import ProfileLayout from "./Layout/ProfileLayout";
 import PrivateRoute from "./Components/Dashboard/PrivateRoute";
 import AdminRoute from "./Components/Dashboard/AdminRoute";
+import Inbox from "./Pages/Dashboard/Inbox";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path="/users" element={<UsersTable />} />
         <Route path="/tickets" element={<TicketTable />} />
         <Route path="/events" element={<EventsTableList />} />
+        <Route path="/inbox" element={<Inbox />} />
         <Route path="/profile" element={<Profile />} />
       </Route>
     </Routes>

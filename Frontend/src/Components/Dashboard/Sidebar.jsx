@@ -1,14 +1,15 @@
 import {
-  Card,
-  Typography,
   List,
   ListItem,
   ListItemPrefix,
+  ListItemSuffix,
+  Chip,
 } from "@material-tailwind/react";
 import {
   PresentationChartBarIcon,
   PowerIcon,
   UserCircleIcon,
+  InboxIcon,
 } from "@heroicons/react/24/solid";
 import { FaUsers, FaCalendarAlt, FaTicketAlt } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -66,6 +67,23 @@ export default function Sidebar() {
               <FaTicketAlt className="h-5 w-5" />
             </ListItemPrefix>
             Tickets
+          </ListItem>
+        </Link>
+        <Link to="/inbox">
+          <ListItem>
+            <ListItemPrefix>
+              <InboxIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Inbox
+            <ListItemSuffix>
+              <Chip
+                value="4"
+                size="sm"
+                variant="ghost"
+                color="blue-gray"
+                className="rounded-full"
+              />
+            </ListItemSuffix>
           </ListItem>
         </Link>
         <Link to="/profile">
