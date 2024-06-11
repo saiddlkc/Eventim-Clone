@@ -71,9 +71,7 @@ export function Profile() {
         setEmail("");
         setSubject("");
         setMessage("");
-        toast.success(
-          "Ticket wurde gesendet!, Wir werden dir per Email antworten"
-        );
+        toast.success("dein Ticket wurde erfolgreich abgesendet!");
       }
     } catch (err) {
       setError("Failed to send message. Please try again.");
@@ -166,7 +164,7 @@ export function Profile() {
                       onClick={() => setActiveTab("message")}
                     >
                       <ChatBubbleLeftEllipsisIcon className="-mt-0.5 mr-2 inline-block h-5 w-5" />
-                      Message
+                      Contact
                     </Tab>
                     <Tab
                       value="settings"
@@ -183,51 +181,8 @@ export function Profile() {
 
           {activeTab === "app" && (
             <>
-              <div className="gird-cols-1 mb-12 grid gap-24 px-4 lg:grid-cols-2 xl:grid-cols-2">
-                <div className="border bg-blue-gray-50 p-8">
-                  <Typography variant="h6" color="blue-gray" className="mb-3">
-                    Platform Settings
-                  </Typography>
-                  <ul className="flex flex-col gap-4">
-                    <li className="flex items-center justify-between">
-                      <Typography>Email me when someone follows me</Typography>
-                      <Switch defaultChecked />
-                    </li>
-                    <li className="flex items-center justify-between">
-                      <Typography>
-                        Email me when someone answers on my post
-                      </Typography>
-                      <Switch />
-                    </li>
-                    <li className="flex items-center justify-between">
-                      <Typography>Email me when someone mentions me</Typography>
-                      <Switch defaultChecked />
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="border bg-blue-gray-50 p-8">
-                  <Typography variant="h6" color="blue-gray" className="mb-3">
-                    Application Settings
-                  </Typography>
-                  <ul className="flex flex-col gap-4">
-                    <li className="flex items-center justify-between">
-                      <Typography>New launches and projects</Typography>
-                      <Switch defaultChecked />
-                    </li>
-                    <li className="flex items-center justify-between">
-                      <Typography>Monthly product updates</Typography>
-                      <Switch />
-                    </li>
-                    <li className="flex items-center justify-between">
-                      <Typography>Subscribe to newsletter</Typography>
-                      <Switch defaultChecked />
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="px-4 pb-4">
-                <Typography variant="h6" color="blue-gray" className="mb-2">
+              <div className="px-4 pb-4 border-t-2">
+                <Typography variant="h6" color="blue-gray" className="mt-6">
                   My Tickets
                 </Typography>
                 <Typography
@@ -236,7 +191,61 @@ export function Profile() {
                 >
                   You have 3 tickets
                 </Typography>
-                <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4">
+                <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4 ">
+                  <div>
+                    <Card className="mt-6 w-96">
+                      <CardHeader color="blue-gray" className="relative h-56">
+                        <img
+                          src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
+                          alt="card-image"
+                        />
+                      </CardHeader>
+                      <CardBody>
+                        <Typography
+                          variant="h5"
+                          color="blue-gray"
+                          className="mb-2"
+                        >
+                          UI/UX Review Check
+                        </Typography>
+                        <Typography>
+                          The place is close to Barceloneta Beach and bus stop
+                          just 2 min by walk and near to &quot;Naviglio&quot;
+                          where you can enjoy the main night life in Barcelona.
+                        </Typography>
+                      </CardBody>
+                      <CardFooter className="pt-0">
+                        <Button>Read More</Button>
+                      </CardFooter>
+                    </Card>
+                  </div>
+                  <div>
+                    <Card className="mt-6 w-96">
+                      <CardHeader color="blue-gray" className="relative h-56">
+                        <img
+                          src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
+                          alt="card-image"
+                        />
+                      </CardHeader>
+                      <CardBody>
+                        <Typography
+                          variant="h5"
+                          color="blue-gray"
+                          className="mb-2"
+                        >
+                          UI/UX Review Check
+                        </Typography>
+                        <Typography>
+                          The place is close to Barceloneta Beach and bus stop
+                          just 2 min by walk and near to &quot;Naviglio&quot;
+                          where you can enjoy the main night life in Barcelona.
+                        </Typography>
+                      </CardBody>
+                      <CardFooter className="pt-0">
+                        <Button>Read More</Button>
+                      </CardFooter>
+                    </Card>
+                  </div>
                   <div>
                     <Card className="mt-6 w-96">
                       <CardHeader color="blue-gray" className="relative h-56">
@@ -273,96 +282,21 @@ export function Profile() {
             <div className="p-8 flex">
               <Card className="border bg-blue-gray-50 mx-3 w-full">
                 <CardHeader color="blue-gray">
-                  <Typography variant="h6" color="white" className="p-2">
-                    Inbox
+                  <Typography
+                    variant="h6"
+                    color="white"
+                    className="p-2 text-center"
+                  >
+                    Unser Kontakt Formular für jede Art von Anfrage
                   </Typography>
                 </CardHeader>
                 <CardBody>
-                  <div className="flex gap-4 m-1">
-                    <table className="w-full min-w-max table-auto text-left">
-                      <thead>
-                        <tr>
-                          {TABLE_HEAD.map((head) => (
-                            <th
-                              key={head}
-                              className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
-                            >
-                              <Typography
-                                variant="small"
-                                color="blue-gray"
-                                className="font-normal leading-none opacity-70"
-                              >
-                                {head}
-                              </Typography>
-                            </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {TABLE_ROWS.map(
-                          ({ email, subject, message }, index) => {
-                            const isLast = index === TABLE_ROWS.length - 1;
-                            const classes = isLast
-                              ? "p-4"
-                              : "p-4 border-b border-blue-gray-50";
-
-                            return (
-                              <tr key={email}>
-                                <td className={classes}>
-                                  <Typography
-                                    variant="small"
-                                    color="blue-gray"
-                                    className="font-normal"
-                                  >
-                                    {email}
-                                  </Typography>
-                                </td>
-                                <td className={`${classes} bg-blue-gray-50/50`}>
-                                  <Typography
-                                    variant="small"
-                                    color="blue-gray"
-                                    className="font-normal"
-                                  >
-                                    {subject}
-                                  </Typography>
-                                </td>
-                                <td className={`${classes} w-32`}>
-                                  <Typography
-                                    variant="small"
-                                    color="blue-gray"
-                                    className="font-normal"
-                                  >
-                                    {message}
-                                  </Typography>
-                                </td>
-                                <td
-                                  className={`${classes} bg-blue-gray-50/50`}
-                                ></td>
-                                <td className={classes}>
-                                  <Button
-                                    color="red"
-                                    size="regular"
-                                    onClick={() => handleDelete(email)}
-                                  >
-                                    Delete
-                                  </Button>
-                                </td>
-                              </tr>
-                            );
-                          }
-                        )}
-                      </tbody>
-                    </table>
+                  <div className="gap-4 m-3">
+                    <p className="text-black">
+                      Wir werden dir per Email antworten. Falls eine Ticket ID
+                      vorhanden ist gib sie bitte im Betreff ein.
+                    </p>
                   </div>
-                </CardBody>
-              </Card>
-              <Card className="border bg-blue-gray-50 mx-3">
-                <CardHeader color="blue-gray">
-                  <Typography variant="h6" color="white" className="p-2">
-                    Message
-                  </Typography>
-                </CardHeader>
-                <CardBody>
                   <form onSubmit={handleSubmit}>
                     <div className="flex gap-4 m-3">
                       <Input
@@ -375,12 +309,13 @@ export function Profile() {
                         required
                       />
                     </div>
+
                     <div className="flex gap-4 m-3">
                       <Input
                         type="text"
-                        label="Subject"
+                        label="Betreff"
                         size="md"
-                        placeholder="Type the subject"
+                        placeholder="Betreff"
                         value={subject}
                         onChange={(e) => setSubject(e.target.value)}
                         required
@@ -408,60 +343,48 @@ export function Profile() {
           )}
 
           {activeTab === "settings" && (
-            <div className="p-8">
-              <table className="w-full">
-                <tbody>
-                  <tr>
-                    <td className="p-4">
-                      <form>
-                        <div className="flex gap-4 p-2">
-                          <Input size="md" label="Name" name="name" />
-                        </div>
-                        <div className="flex gap-4 p-2">
-                          <Input
-                            type="email"
-                            label="Email Address"
-                            name="email"
-                            className="pr-20"
-                            containerProps={{
-                              className: "min-w-0",
-                            }}
-                          />
-                        </div>
-                        <div className="flex gap-4 p-2">
-                          <Input
-                            type="password"
-                            size="md"
-                            label="Password"
-                            name="password"
-                          />
-                        </div>
-                        <div className="flex gap-4 p-2">
-                          <div
-                            className="flex-grow"
-                            style={{ flexBasis: "70%" }}
-                          >
-                            <Input type="file" size="md" label="Profile" />
-                          </div>
-                          <div
-                            className="flex-grow"
-                            style={{ flexBasis: "30%" }}
-                          >
-                            <Button
-                              type="submit"
-                              className="w-full flex items-center justify-center gap-2 "
-                            >
-                              {" "}
-                              Edit Profile
-                              <UserPlusIcon className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </div>
-                      </form>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <div className="gird-cols-1 mb-12 grid gap-24 px-4 lg:grid-cols-2 xl:grid-cols-2">
+              <div className="border bg-blue-gray-50 p-8">
+                <Typography variant="h6" color="blue-gray" className="mb-3">
+                  Platform Settings
+                </Typography>
+                <ul className="flex flex-col gap-4">
+                  <li className="flex items-center justify-between">
+                    <Typography>Email me when someone follows me</Typography>
+                    <Switch defaultChecked />
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <Typography>
+                      Email me when someone answers on my post
+                    </Typography>
+                    <Switch />
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <Typography>Email me when someone mentions me</Typography>
+                    <Switch defaultChecked />
+                  </li>
+                </ul>
+              </div>
+
+              <div className="border bg-blue-gray-50 p-8">
+                <Typography variant="h6" color="blue-gray" className="mb-3">
+                  Application Settings
+                </Typography>
+                <ul className="flex flex-col gap-4">
+                  <li className="flex items-center justify-between">
+                    <Typography>New launches and projects</Typography>
+                    <Switch defaultChecked />
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <Typography>Monthly product updates</Typography>
+                    <Switch />
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <Typography>Subscribe to newsletter</Typography>
+                    <Switch defaultChecked />
+                  </li>
+                </ul>
+              </div>
             </div>
           )}
         </CardBody>
