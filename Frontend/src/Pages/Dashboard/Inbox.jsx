@@ -12,13 +12,13 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Inbox = () => {
   const [TABLE_ROWS, setTableRows] = useState([]);
+  const [doneRows, setDoneRows] = useState([]); // Zustand für erledigte Zeilen
   const TABLE_HEAD = ["ID", "From", "Subject", "Message", "Actions"];
 
   useEffect(() => {
     axios
       .get("http://localhost:4000/dashboard/contact")
       .then((res) => {
-        console.log(res.data);
         setTableRows(res.data.reverse());
       })
       .catch((err) => {
@@ -39,6 +39,10 @@ const Inbox = () => {
       console.log(err);
       toast.error("Failed to delete contact.");
     }
+  };
+
+  const handleDone = (idToDone) => {
+    setDoneRows((prevDoneRows) => [...prevDoneRows, idToDone]);
   };
 
   return (
@@ -78,10 +82,15 @@ const Inbox = () => {
                   const classes = isLast
                     ? "p-4"
                     : "p-4 border-b border-blue-gray-50";
+                  const isDone = doneRows.includes(_id);
+                  const rowClass = isDone ? "bg-green-100" : "";
 
                   return (
-                    <tr key={_id} className="border-2 border-white">
-                      <td className={`${classes} w-52 border-2 border-white`}>
+                    <tr
+                      key={_id}
+                      className={`${rowClass} border-2 border-white`}
+                    >
+                      <td className={`${classes} w-20 border-2 border-white`}>
                         <Typography
                           variant="small"
                           color="blue-gray"
@@ -99,9 +108,7 @@ const Inbox = () => {
                           {email}
                         </Typography>
                       </td>
-                      <td
-                        className={`${classes} bg-blue-gray-50/50 w-52 border-2 border-white`}
-                      >
+                      <td className={`${classes}  w-52 border-2 border-white`}>
                         <Typography
                           variant="small"
                           color="blue-gray"
@@ -110,7 +117,7 @@ const Inbox = () => {
                           {subject}
                         </Typography>
                       </td>
-                      <td className={`${classes} border-2 border-white w-72`}>
+                      <td className={`${classes} border-2 border-white w-96`}>
                         <Typography
                           variant="small"
                           color="blue-gray"
@@ -119,13 +126,22 @@ const Inbox = () => {
                           {message}
                         </Typography>
                       </td>
-                      <td className={classes}>
+                      <td className={`${classes} border-2 border-white w-20`}>
                         <Button
                           color="red"
-                          size="regular"
+                          size="sm"
                           onClick={() => handleDelete(_id)}
                         >
                           Delete
+                        </Button>
+                      </td>
+                      <td className={`${classes} border-2 border-white w-20`}>
+                        <Button
+                          color="green"
+                          size="sm"
+                          onClick={() => handleDone(_id)}
+                        >
+                          Done
                         </Button>
                       </td>
                     </tr>

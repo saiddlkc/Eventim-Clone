@@ -38,6 +38,8 @@ export function Profile() {
   const [TABLE_ROWS, setTableRows] = useState([]);
   const [error, setError] = useState("");
 
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   const TABLE_HEAD = ["Email", "Subject", "Message"];
 
   useEffect(() => {
@@ -343,7 +345,7 @@ export function Profile() {
           )}
 
           {activeTab === "settings" && (
-            <div className="gird-cols-1 mb-12 grid gap-24 px-4 lg:grid-cols-2 xl:grid-cols-2">
+            <div className="grid-cols-1 mb-12 grid gap-24 px-4 lg:grid-cols-2 xl:grid-cols-2">
               <div className="border bg-blue-gray-50 p-8">
                 <Typography variant="h6" color="blue-gray" className="mb-3">
                   Platform Settings
@@ -365,7 +367,6 @@ export function Profile() {
                   </li>
                 </ul>
               </div>
-
               <div className="border bg-blue-gray-50 p-8">
                 <Typography variant="h6" color="blue-gray" className="mb-3">
                   Application Settings
@@ -384,6 +385,84 @@ export function Profile() {
                     <Switch defaultChecked />
                   </li>
                 </ul>
+              </div>
+              <div className="border bg-blue-gray-50 p-8">
+                <Typography variant="h6" color="blue-gray" className="mb-3">
+                  Privacy Settings
+                </Typography>
+                <ul className="flex flex-col gap-4">
+                  <li className="flex items-center justify-between">
+                    <Typography>Make my profile private</Typography>
+                    <Switch />
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <Typography>
+                      Allow search engines to index my profile
+                    </Typography>
+                    <Switch />
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <Typography>Show my online status</Typography>
+                    <Switch defaultChecked />
+                  </li>
+                </ul>
+              </div>
+              <div className="border bg-blue-gray-50 p-8">
+                <Typography variant="h6" color="blue-gray" className="mb-3">
+                  Account Settings
+                </Typography>
+                <ul className="flex flex-col gap-4">
+                  <li className="flex items-center justify-between">
+                    <Typography>
+                      Receive account activity notifications
+                    </Typography>
+                    <Switch />
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <Typography>Language preference</Typography>
+                    <select className="border rounded p-2">
+                      <option>English</option>
+                      <option>German</option>
+                      <option>Spanish</option>
+                      <option>French</option>
+                    </select>
+                  </li>
+                  <Button
+                    onClick={() => setIsDialogOpen(true)}
+                    className="select-none rounded-lg bg-gradient-to-tr bg-red-700 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                  >
+                    Account löschen
+                  </Button>
+                </ul>
+
+                {isDialogOpen && (
+                  <div
+                    className="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity duration-300"
+                    onClick={() => setIsDialogOpen(false)}
+                  >
+                    <div
+                      className="relative m-4 w-2/5 min-w-[40%] max-w-[40%] rounded-lg bg-white font-sans text-base font-light leading-relaxed text-blue-gray-500 antialiased shadow-2xl"
+                      onClick={(e) => e.stopPropagation()} // Prevents closing the dialog when clicking inside the dialog
+                    >
+                      <div className="flex items-center p-4 font-sans text-2xl antialiased font-semibold leading-snug shrink-0 text-blue-gray-900">
+                        It's not so easy my Friend.
+                      </div>
+                      <div className="relative p-4 font-sans text-base antialiased font-light leading-relaxed border-t border-b border-t-blue-gray-100 border-b-blue-gray-100 text-blue-gray-500">
+                        Um deinen Account zu löschen, musst du uns eine
+                        Nachricht über das Kontaktformular schicken, damit wir
+                        prüfen können, ob du der Besitzer des Accounts bist.
+                      </div>
+                      <div className="flex flex-wrap items-center justify-end p-4 shrink-0 text-blue-gray-500">
+                        <Button
+                          onClick={() => setIsDialogOpen(false)}
+                          className="middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        >
+                          Verstanden
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
