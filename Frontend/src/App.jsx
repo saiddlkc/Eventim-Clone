@@ -15,11 +15,11 @@ function App() {
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
       <Route path="/event" element={<EventsPage />} />
+      <Route path="/events" element={<EventsTableList />} />
       <Route element={<AdminLayout />}>
         <Route index element={<Statistics />} />
         <Route path="/users" element={<UsersTable />} />
         <Route path="/tickets" element={<TicketTable />} />
-        <Route path="/events" element={<EventsTableList />} />
         <Route path="/profile" element={<Profile />} />
       </Route>
     </Routes>
