@@ -189,10 +189,10 @@ const EventsTableList = () => {
   ];
 
   return (
-    <div className="mt-4 w-full min-w-max table-auto text-left">
+    <div className="mt-4  table-auto text-left">
       <ToastContainer />
       <div className="mt-4">
-        <Card className="h-full w-full bg-blue-gray-100">
+        <Card className="h-full w-full bg-blue-gray-100 p-3">
           <CardHeader
             floated={false}
             shadow={false}
@@ -202,13 +202,13 @@ const EventsTableList = () => {
               <Typography
                 variant="4"
                 color="blue-gray"
-                className="flex items-center justify-between gap-2 font-normal leading-none opacity-70 capitalize"
+                className="flex items-center justify-between gap-2  font-normal leading-none  capitalize"
               >
                 Add New Event
               </Typography>
               <Button
                 variant="solid"
-                color="blue"
+                color="black"
                 onClick={() => setShowNewEventForm(!showNewEventForm)}
               >
                 {showNewEventForm ? "Hide Form" : "Show Form"}
@@ -221,88 +221,101 @@ const EventsTableList = () => {
                 <Input
                   type="text"
                   name="titel"
-                  placeholder="Title"
+                  label="Title"
                   value={newEvent.titel}
                   onChange={handleNewEventChange}
+                  color="black"
+                  className=" bg-gray-50"
                 />
                 <Input
                   type="text"
                   name="kategorie"
-                  placeholder="Category"
+                  label="Category"
                   value={newEvent.kategorie}
                   onChange={handleNewEventChange}
+                  className=" bg-gray-50"
                 />
                 <Input
                   type="text"
                   name="beschreibung"
-                  placeholder="Description"
+                  label="Description"
                   value={newEvent.beschreibung}
                   onChange={handleNewEventChange}
+                  className=" bg-gray-50"
                 />
                 <Input
                   type="text"
                   name="bild"
-                  placeholder="Image URL"
+                  label="Image URL"
                   value={newEvent.bild}
                   onChange={handleNewEventChange}
+                  className=" bg-gray-50"
                 />
                 <Input
                   type="date"
                   name="startDatum"
-                  placeholder="Start Date"
+                  label="Start Date"
                   value={newEvent.startDatum}
                   onChange={handleNewEventChange}
+                  className=" bg-gray-50"
                 />
                 <Input
                   type="date"
                   name="endDatum"
-                  placeholder="End Date"
+                  label="End Date"
                   value={newEvent.endDatum}
                   onChange={handleNewEventChange}
+                  className=" bg-gray-50"
                 />
                 <Input
                   type="text"
                   name="adresse"
-                  placeholder="Address"
+                  label="Address"
                   value={newEvent.ort.adresse}
                   onChange={handleNewEventChange}
+                  className=" bg-gray-50"
                 />
                 <Input
                   type="text"
                   name="stadt"
-                  placeholder="City"
+                  label="City"
                   value={newEvent.ort.stadt}
                   onChange={handleNewEventChange}
+                  className=" bg-gray-50"
                 />
                 <Input
                   type="text"
                   name="bundesland"
-                  placeholder="State"
+                  label="State"
                   value={newEvent.ort.bundesland}
                   onChange={handleNewEventChange}
+                  className=" bg-gray-50"
                 />
                 <Input
                   type="text"
                   name="land"
-                  placeholder="Country"
+                  label="Country"
                   value={newEvent.ort.land}
                   onChange={handleNewEventChange}
+                  className=" bg-gray-50"
                 />
                 <Input
                   type="text"
                   name="veranstalterName"
-                  placeholder="Organizer Name"
+                  label="Organizer Name"
                   value={newEvent.veranstalter.name}
                   onChange={handleNewEventChange}
+                  className=" bg-gray-50"
                 />
                 <Input
                   type="email"
                   name="kontaktEmail"
-                  placeholder="Organizer Email"
+                  label="Organizer Email"
                   value={newEvent.veranstalter.kontakt.email}
                   onChange={handleNewEventChange}
+                  className=" bg-gray-50"
                 />
-                <Button variant="solid" color="blue" onClick={handleAddEvent}>
+                <Button variant="solid" color="black" onClick={handleAddEvent}>
                   Add Event
                 </Button>
               </div>
