@@ -11,12 +11,14 @@ import ProfileLayout from "./Layout/ProfileLayout";
 import PrivateRoute from "./Components/Dashboard/PrivateRoute";
 import AdminRoute from "./Components/Dashboard/AdminRoute";
 import Inbox from "./Pages/Dashboard/Inbox";
+import HomePage from "./Pages/Home/HomePage";
 
 function App() {
   return (
     <Routes>
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/" element={<HomePage />} />
       <Route
         path="/customer-dashboard"
         element={
