@@ -24,7 +24,7 @@ const profileMenuItems = [
   {
     label: "Home",
     icon: HomeIcon,
-    to: "/customer-dashboard",
+    to: "/",
   },
   {
     label: "My Profile",
