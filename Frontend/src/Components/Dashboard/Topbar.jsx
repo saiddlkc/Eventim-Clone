@@ -25,7 +25,7 @@ const profileMenuItems = [
     to: "/",
   },
   {
-    label: "My Profile",
+    label: "My Tickets",
     icon: UserCircleIcon,
     to: "/admin/profile?tab=app",
   },

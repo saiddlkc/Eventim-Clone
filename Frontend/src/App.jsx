@@ -12,6 +12,7 @@ import PrivateRoute from "./Components/Dashboard/PrivateRoute";
 import AdminRoute from "./Components/Dashboard/AdminRoute";
 import Inbox from "./Pages/Dashboard/Inbox";
 import HomePage from "./Pages/Home/HomePage";
+import EventsPage from "./Pages/ShowPage/EventsPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<HomePage />} />
+      <Route path="/home" element={<EventsPage />} />
       <Route
         path="/customer-dashboard"
         element={
