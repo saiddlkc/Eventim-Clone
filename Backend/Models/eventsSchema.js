@@ -26,7 +26,7 @@ const eventSchema = new mongoose.Schema({
     },
   ],
   kategorie: { type: String },
-  bild: { type: String },
+  bild: String,
   tickets: [
     {
       typ: { type: String },

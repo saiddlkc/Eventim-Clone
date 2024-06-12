@@ -32,6 +32,7 @@ const EventsTableList = () => {
     beschreibung: "",
     startDatum: "",
     endDatum: "",
+    bild: "",
     ort: {
       adresse: "",
       stadt: "",
@@ -62,9 +63,11 @@ const EventsTableList = () => {
       .delete(`http://localhost:4000/dashboard/event/${eventId}`)
       .then(() => {
         setEvents(events.filter((event) => event._id !== eventId));
+        toast.success("Event added successfully");
       })
       .catch((err) => {
         console.error("Error deleting event:", err);
+        toast.error("Error adding event");
       });
   };
 
@@ -84,14 +87,17 @@ const EventsTableList = () => {
           events.map((event) => (event._id === editEventId ? res.data : event))
         );
         setEditEventId(null);
+        toast.success("Event added successfully");
       })
       .catch((err) => {
         console.error("Error updating event:", err);
+        toast.error("Error Update event");
       });
   };
 
   const handleCancel = () => {
     setEditEventId(null);
+    toast.error("Error Update event");
   };
 
   const handleChange = (e) => {
@@ -111,6 +117,7 @@ const EventsTableList = () => {
         case "beschreibung":
         case "startDatum":
         case "endDatum":
+        case "bild":
           newEvent[name] = value;
           break;
         case "adresse":
@@ -147,6 +154,7 @@ const EventsTableList = () => {
           beschreibung: "",
           startDatum: "",
           endDatum: "",
+          bild: "",
           ort: {
             adresse: "",
             stadt: "",
@@ -181,9 +189,9 @@ const EventsTableList = () => {
   ];
 
   return (
-    <div className="mb-8 flex flex-col gap-2 ">
+    <div className="mt-4 w-full min-w-max table-auto text-left">
       <ToastContainer />
-      <div className="m-4">
+      <div className="mt-4">
         <Card className="h-full w-full bg-blue-gray-100">
           <CardHeader
             floated={false}
@@ -191,7 +199,11 @@ const EventsTableList = () => {
             className="rounded-none bg-blue-gray-100"
           >
             <div className="flex justify-between items-center">
-              <Typography variant="h5" color="blue-gray">
+              <Typography
+                variant="4"
+                color="blue-gray"
+                className="flex items-center justify-between gap-2 font-normal leading-none opacity-70 capitalize"
+              >
                 Add New Event
               </Typography>
               <Button
@@ -225,6 +237,13 @@ const EventsTableList = () => {
                   name="beschreibung"
                   placeholder="Description"
                   value={newEvent.beschreibung}
+                  onChange={handleNewEventChange}
+                />
+                <Input
+                  type="text"
+                  name="bild"
+                  placeholder="Image URL"
+                  value={newEvent.bild}
                   onChange={handleNewEventChange}
                 />
                 <Input
@@ -570,6 +589,7 @@ const EventsTableList = () => {
               <Button variant="outlined" size="sm">
                 Previous
               </Button>
+
               <Button variant="outlined" size="sm">
                 Next
               </Button>
