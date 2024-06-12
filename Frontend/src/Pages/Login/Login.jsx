@@ -42,7 +42,7 @@ export function Login() {
 
         setTimeout(() => {
           if (res.data.role === "admin") {
-            navigate("/");
+            navigate("/admin");
           } else {
             navigate("/customer-dashboard");
           }

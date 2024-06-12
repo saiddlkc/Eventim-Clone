@@ -37,40 +37,40 @@ export default function Sidebar() {
         </Link>
       </div>
       <List>
-        <Link to="/">
-          <ListItem selected={location.pathname === "/"}>
+        <Link to="/admin">
+          <ListItem selected={location.pathname === "/admin"}>
             <ListItemPrefix>
               <PresentationChartBarIcon className="h-5 w-5" />
             </ListItemPrefix>
             Dashboard
           </ListItem>
         </Link>
-        <Link to="/users">
-          <ListItem selected={location.pathname === "/users"}>
+        <Link to="/admin/users">
+          <ListItem selected={location.pathname === "/admin/users"}>
             <ListItemPrefix>
               <FaUsers className="h-5 w-5" />
             </ListItemPrefix>
             Users
           </ListItem>
         </Link>
-        <Link to="/events">
-          <ListItem selected={location.pathname === "/events"}>
+        <Link to="/admin/events">
+          <ListItem selected={location.pathname === "/admin/events"}>
             <ListItemPrefix>
               <FaCalendarAlt className="h-5 w-5" />
             </ListItemPrefix>
             Events
           </ListItem>
         </Link>
-        <Link to="/tickets">
-          <ListItem selected={location.pathname === "/tickets"}>
+        <Link to="/admin/tickets">
+          <ListItem selected={location.pathname === "/admin/tickets"}>
             <ListItemPrefix>
               <FaTicketAlt className="h-5 w-5" />
             </ListItemPrefix>
             Tickets
           </ListItem>
         </Link>
-        <Link to="/inbox">
-          <ListItem>
+        <Link to="/admin/inbox">
+          <ListItem selected={location.pathname === "/admin/inbox"}>
             <ListItemPrefix>
               <InboxIcon className="h-5 w-5" />
             </ListItemPrefix>
@@ -86,8 +86,8 @@ export default function Sidebar() {
             </ListItemSuffix>
           </ListItem>
         </Link>
-        <Link to="/profile">
-          <ListItem selected={location.pathname === "/profile"}>
+        <Link to="/admin/profile">
+          <ListItem selected={location.pathname === "/admin/profile"}>
             <ListItemPrefix>
               <UserCircleIcon className="h-5 w-5" />
             </ListItemPrefix>

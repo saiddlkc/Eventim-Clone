@@ -28,19 +28,19 @@ function App() {
         <Route index element={<Profile />} />
       </Route>
       <Route
-        path="/"
+        path="/admin"
         element={
           <AdminRoute>
             <AdminLayout />
           </AdminRoute>
         }
       >
-        <Route index element={<Statistics />} />
-        <Route path="/users" element={<UsersTable />} />
-        <Route path="/tickets" element={<TicketTable />} />
-        <Route path="/events" element={<EventsTableList />} />
-        <Route path="/inbox" element={<Inbox />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/admin" element={<Statistics />} />
+        <Route path="/admin/users" element={<UsersTable />} />
+        <Route path="/admin/tickets" element={<TicketTable />} />
+        <Route path="/admin/events" element={<EventsTableList />} />
+        <Route path="/admin/inbox" element={<Inbox />} />
+        <Route path="/admin/profile" element={<Profile />} />
       </Route>
     </Routes>
   );
