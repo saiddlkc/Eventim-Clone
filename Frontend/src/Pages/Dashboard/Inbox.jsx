@@ -19,7 +19,6 @@ const Inbox = () => {
     axios
       .get("http://localhost:4000/dashboard/contact")
       .then((res) => {
-        console.log(res.data);
         setTableRows(res.data.reverse());
       })
       .catch((err) => {
@@ -83,8 +82,8 @@ const Inbox = () => {
                   const classes = isLast
                     ? "p-4"
                     : "p-4 border-b border-blue-gray-50";
-                  const isDone = doneRows.includes(_id); // Überprüfe, ob die Zeile erledigt ist
-                  const rowClass = isDone ? "bg-green-100" : ""; // Füge eine Klasse hinzu, wenn die Zeile erledigt ist
+                  const isDone = doneRows.includes(_id);
+                  const rowClass = isDone ? "bg-green-100" : "";
 
                   return (
                     <tr
@@ -130,7 +129,7 @@ const Inbox = () => {
                       <td className={`${classes} border-2 border-white w-20`}>
                         <Button
                           color="red"
-                          size="regular"
+                          size="sm"
                           onClick={() => handleDelete(_id)}
                         >
                           Delete
@@ -139,7 +138,7 @@ const Inbox = () => {
                       <td className={`${classes} border-2 border-white w-20`}>
                         <Button
                           color="green"
-                          size="regular"
+                          size="sm"
                           onClick={() => handleDone(_id)}
                         >
                           Done
