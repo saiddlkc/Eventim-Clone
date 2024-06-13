@@ -4,7 +4,7 @@ import { Input, Button, Typography } from "@material-tailwind/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import logo from "../../assets/img/logo-transparent-png.png";
+import logo from "../../assets/img/eventhub-logo.png";
 import login from "../../assets/img/login.jpg";
 import { useAuthContext } from "../../hooks/useAuthContext";
 

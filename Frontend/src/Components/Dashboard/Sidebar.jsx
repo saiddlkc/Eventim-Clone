@@ -13,7 +13,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { FaUsers, FaCalendarAlt, FaTicketAlt } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import logo from "../../assets/img/logo-transparent-png.png";
+import logo from "../../assets/img/eventhub-logo.png";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function Sidebar() {

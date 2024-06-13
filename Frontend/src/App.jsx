@@ -13,14 +13,17 @@ import AdminRoute from "./Components/Dashboard/AdminRoute";
 import Inbox from "./Pages/Dashboard/Inbox";
 import HomePage from "./Pages/Home/HomePage";
 import EventsPage from "./Pages/ShowPage/EventsPage";
+import HomeLayout from "./Layout/HomeLayout";
 
 function App() {
   return (
     <Routes>
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/" element={<HomePage />} />
-      <Route path="/home" element={<EventsPage />} />
+      <Route path="/" element={<HomeLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="/categories" element={<EventsPage />} />
+      </Route>
       <Route
         path="/customer-dashboard"
         element={
