@@ -132,7 +132,7 @@ function NavListMenu() {
           <Link to={"/categories"}>
             <Typography as="div" variant="small" className="font-medium">
               <ListItem
-                className="flex items-center gap-2 py-2 pr-4 font-medium text-gray-900"
+                className="flex items-center gap-2 py-2 pr-4 font-medium text-gray-900 text-xl"
                 selected={isMenuOpen || isMobileMenuOpen}
                 onClick={() => setIsMobileMenuOpen((cur) => !cur)}
               >
@@ -211,7 +211,7 @@ function AllCities() {
         <MenuHandler>
           <Typography as="div" variant="small" className="font-medium">
             <ListItem
-              className="flex items-center gap-2 py-2 pr-4 font-medium text-gray-900"
+              className="flex items-center gap-2 py-2 pr-4 font-medium text-gray-900 text-xl"
               selected={isMenuOpen || isMobileMenuOpen}
               onClick={() => setIsMobileMenuOpen((cur) => !cur)}
             >
@@ -254,7 +254,9 @@ function NavList() {
         color="blue-gray"
         className="font-medium"
       >
-        <ListItem className="flex items-center gap-2 py-2 pr-4">Home</ListItem>
+        <ListItem className="flex items-center gap-2 py-2 pr-4 text-xl">
+          Home
+        </ListItem>
       </Typography>
       <NavListMenu />
       <AllCities />
@@ -265,7 +267,7 @@ function NavList() {
         color="blue-gray"
         className="font-medium"
       >
-        <ListItem className="flex items-center gap-2 py-2 pr-4">
+        <ListItem className="flex items-center gap-2 py-2 pr-4 text-xl">
           Contact Us
         </ListItem>
       </Typography>
@@ -276,7 +278,7 @@ function NavList() {
         color="blue-gray"
         className="font-medium"
       >
-        <ListItem className="flex items-center gap-2 py-2 pr-4">
+        <ListItem className="flex items-center gap-2 py-2 pr-4 text-xl">
           About Us
         </ListItem>
       </Typography>
@@ -285,7 +287,7 @@ function NavList() {
           type="search"
           color="black"
           label="Type here..."
-          className="pr-20"
+          className="pr-20 "
           containerProps={{
             className: "min-w-[300px]",
           }}
@@ -293,7 +295,7 @@ function NavList() {
         <Button
           size="sm"
           color="black"
-          className="!absolute right-1 top-1 rounded"
+          className="!absolute right-1 top-1 rounded bg-[#f76b1b]"
         >
           Search
         </Button>
@@ -418,7 +420,7 @@ export function NavbarWithMegaMenu() {
   }, []);
 
   return (
-    <Navbar className="mx-auto max-w-full px-6 py-2 ">
+    <Navbar className="sticky top-0 z-50 mx-auto max-w-full px-6 py-2 bg-[#b5e2fa]">
       <div className="flex items-center justify-between text-blue-gray-900">
         <Link to={"/"}>
           <img src={logo} alt="logo" className="h-16" />
@@ -476,7 +478,7 @@ export function NavbarWithMegaMenu() {
                   </Button>
                 </Link>
               </div>
-              <div className="w-full">
+              <div className="w-full ">
                 <Link to={"/sign-up"}>
                   <Button variant="gradient" size="sm" fullWidth>
                     Sign In
