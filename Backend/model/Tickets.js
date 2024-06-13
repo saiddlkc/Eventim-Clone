@@ -1,28 +1,82 @@
 const mongoose = require("mongoose");
-const { model, Schema } = mongoose;
 
-const eventSchema = new Schema({
+const ticketSchema = new mongoose.Schema({
   title: {
     type: String,
+    required: true,
   },
   description: {
     type: String,
+    required: true,
+  },
+  location: {
+    venueName: {
+      type: String,
+      required: true,
+    },
+    addressLine1: {
+      type: String,
+      required: true,
+    },
+    state: String,
+    postalCode: {
+      type: String,
+      required: true,
+    },
+    country: {
+      type: String,
+      required: true,
+    },
   },
   date: {
     type: Date,
+    required: true,
   },
-  location: {
+  startTime: {
     type: String,
+    required: true,
   },
-  attendees: {
+  endTime: {
+    type: String,
+    required: true,
+  },
+  organizer: {
+    type: String,
+    required: true,
+  },
+  price: {
     type: Number,
-    default: 0,
+    required: true,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+  currency: {
+    type: String,
+    required: true,
+  },
+  ticketType: {
+    type: String,
+    required: true,
+  },
+  quantityAvailable: {
+    type: Number,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
+  },
+  qrCode: {
+    type: String,
+    unique: true,
+  },
+  additionalInfo: {
+    ageRestriction: String,
+    dressCode: String,
+    accessibilityInfo: String,
+    parkingInfo: String,
+    contactInfo: String,
   },
 });
 
-const Ticktes = model("Ticktes", eventSchema);
-module.exports = Ticktes;
+const Tickets = mongoose.model("Tickets", ticketSchema);
+
+module.exports = Tickets;

@@ -1,87 +1,76 @@
-const Tickets = require("../model/Tickets");
+// const Ticket = require('../models/ticket');
+// const QRCode = require('qrcode');
 
-const GetTicket = async (req, res) => {
-  try {
-    const tickets = await Tickets.find();
-    res.status(200).json(tickets);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+// // Get all tickets
+// const GetTicket = async (req, res) => {
+//   try {
+//     const tickets = await Ticket.find();
+//     res.status(200).json(tickets);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
 
-const PostTickets = async (req, res) => {
-  const { title, description, date, location, attendees, createdAt } = req.body;
-  try {
-    const tickets = await Tickets.create({
-      title,
-      description,
-      date,
-      location,
-      attendees,
-      createdAt,
-    });
-    res.status(201).json(tickets); // 201 status code for resource creation
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+// // Create a new ticket
+// const PostTickets = async (req, res) => {
+//   const { title, description, location, attendees, price, eventDate, organizer, genre } = req.body;
 
-const GetOne = async (req, res) => {
-  try {
-    const ticketsID = req.params.id;
-    const result = await Tickets.findById(ticketsID); // Corrected to use Tickets model
-    if (!result) {
-      return res.status(404).send("Ticket doesn't exist");
-    }
-    res.status(200).json(result);
-  } catch (error) {
-    res.status(404).send("Ticket doesn't exist");
-  }
-};
+//   try {
+//     // Generate QR Code
+//     const ticketData = { title, description, location, attendees, price, eventDate, organizer, genre };
+//     const qrCodeUrl = await QRCode.toDataURL(JSON.stringify(ticketData));
 
-const updateTickets = async (req, res) => {
-  try {
-    const ticketsID = req.params.id;
-    const { title, description, date, location, attendees, createdAt } =
-      req.body;
-    const result = await Tickets.findByIdAndUpdate(
-      ticketsID,
-      {
-        title,
-        description,
-        date,
-        location,
-        attendees,
-        createdAt,
-      },
-      { new: true } // To return the updated document
-    );
-    if (!result) {
-      return res.status(404).send("Ticket doesn't exist");
-    }
-    res.status(200).json(result);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+//     const newTicket = new Ticket({ ...ticketData, qrCode: qrCodeUrl });
+//     await newTicket.save();
+//     res.status(201).json(newTicket);
+//   } catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// };
 
-const deleteTicket = async (req, res) => {
-  try {
-    const ticketsID = req.params.id;
-    const result = await Tickets.findByIdAndDelete(ticketsID);
-    if (!result) {
-      return res.status(404).send("Ticket doesn't exist");
-    }
-    res.status(200).send(`Deleted successfully: ${ticketsID}`);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+// // Get one ticket by ID
+// const GetOne = async (req, res) => {
+//   try {
+//     const ticket = await Ticket.findById(req.params.id);
+//     if (!ticket) return res.status(404).json({ message: 'Ticket not found' });
+//     res.status(200).json(ticket);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
 
-module.exports = {
-  GetTicket,
-  PostTickets,
-  GetOne,
-  updateTickets,
-  deleteTicket,
-};
+// // Update a ticket by ID
+// const updateTickets = async (req, res) => {
+//   const { title, description, location, attendees, price, eventDate, organizer, genre } = req.body;
+
+//   try {
+//     const ticket = await Ticket.findById(req.params.id);
+//     if (!ticket) return res.status(404).json({ message: 'Ticket not found' });
+
+//     const updatedData = { title, description, location, attendees, price, eventDate, organizer, genre };
+
+//     // Generate new QR Code if data changes
+//     const qrCodeUrl = await QRCode.toDataURL(JSON.stringify(updatedData));
+//     ticket.set({ ...updatedData, qrCode: qrCodeUrl });
+
+//     await ticket.save();
+//     res.status(200).json(ticket);
+//   } catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// };
+
+// // Delete a ticket by ID
+// const deleteTicket = async (req, res) => {
+//   try {
+//     const ticket = await Ticket.findById(req.params.id);
+//     if (!ticket) return res.status(404).json({ message: 'Ticket not found' });
+
+//     await ticket.remove();
+//     res.status(200).json({ message: 'Ticket deleted successfully' });
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
+// module.exports = { GetTicket, PostTickets, GetOne, updateTickets, deleteTicket };
