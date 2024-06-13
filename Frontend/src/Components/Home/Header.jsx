@@ -420,7 +420,7 @@ export function NavbarWithMegaMenu() {
   }, []);
 
   return (
-    <Navbar className="sticky top-0 z-50 mx-auto max-w-full px-6 py-2 bg-[#b5e2fa]">
+    <Navbar className="sticky top-0 z-50 mx-auto max-w-full px-6 py-2 ">
       <div className="flex items-center justify-between text-blue-gray-900">
         <Link to={"/"}>
           <img src={logo} alt="logo" className="h-16" />
