@@ -25,17 +25,16 @@ import {
   ShoppingCartIcon,
   BellIcon,
 } from "@heroicons/react/24/outline";
+import { BsBuildings, BsBuildingFill } from "react-icons/bs";
+import { PiBuildingApartmentFill, PiBuildingsFill } from "react-icons/pi";
+// eslint-disable-next-line no-unused-vars
+import { RiBuilding3Fill } from "react-icons/ri";
 import {
-  Bars4Icon,
-  GlobeAmericasIcon,
-  NewspaperIcon,
-  PhoneIcon,
-  RectangleGroupIcon,
-  SquaresPlusIcon,
-  SunIcon,
-  TagIcon,
-  UserGroupIcon,
-} from "@heroicons/react/24/solid";
+  FaBuildingWheat,
+  FaBuildingLock,
+  FaBuildingColumns,
+} from "react-icons/fa6";
+
 import logo from "../../assets/img/eventhub-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext.jsx";
@@ -43,49 +42,58 @@ import DrawerPlacement from "./Drawer";
 
 const navListMenuItems = [
   {
-    title: "Products",
+    title: "Berlin",
     description: "Find the perfect solution for your needs.",
-    icon: SquaresPlusIcon,
+    icon: FaBuildingWheat,
+    link: "/cities/berlin",
   },
   {
-    title: "About Us",
+    title: "Düsseldorf",
     description: "Meet and learn about our dedication",
-    icon: UserGroupIcon,
+    icon: RiBuilding3Fill,
+    link: "/cities/düsseldorf",
   },
   {
-    title: "Blog",
+    title: "Köln",
     description: "Find the perfect solution for your needs.",
-    icon: Bars4Icon,
+    icon: BsBuildingFill,
+    link: "/cities/köln",
   },
   {
-    title: "Services",
+    title: "Stuttgart",
     description: "Learn how we can help you achieve your goals.",
-    icon: SunIcon,
+    icon: BsBuildings,
+    link: "/cities/stuttgart",
   },
   {
-    title: "Support",
+    title: "München",
     description: "Reach out to us for assistance or inquiries",
-    icon: GlobeAmericasIcon,
+    icon: FaBuildingLock,
+    link: "/cities/münchen",
   },
   {
-    title: "Contact",
+    title: "Hamburg",
     description: "Find the perfect solution for your needs.",
-    icon: PhoneIcon,
+    icon: PiBuildingsFill,
+    link: "/cities/hamburg",
   },
   {
-    title: "News",
+    title: "Leipzig",
     description: "Read insightful articles, tips, and expert opinions.",
-    icon: NewspaperIcon,
+    icon: PiBuildingApartmentFill,
+    link: "/cities/leipzig",
   },
   {
-    title: "Products",
+    title: "Frankfurt",
     description: "Find the perfect solution for your needs.",
-    icon: RectangleGroupIcon,
+    icon: FaBuildingColumns,
+    link: "/cities/frankfurt",
   },
   {
-    title: "Special Offers",
+    title: "Essen",
     description: "Explore limited-time deals and bundles",
-    icon: TagIcon,
+    icon: BsBuildings,
+    link: "/cities/essen",
   },
 ];
 
@@ -173,8 +181,10 @@ function AllCities() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const renderItems = navListMenuItems.map(
-    ({ icon, title, description }, key) => (
-      <a href="#" key={key}>
+    ({ icon, title, description, link }, key) => (
+      <Link to={link} key={key}>
+        {" "}
+        {/* Verwende Link von react-router-dom für client-seitiges Routing */}
         <MenuItem className="flex items-center gap-3 rounded-lg">
           <div className="flex items-center justify-center rounded-lg !bg-blue-gray-50 p-2">
             {React.createElement(icon, {
@@ -191,14 +201,14 @@ function AllCities() {
               {title}
             </Typography>
             <Typography
-              variant="paragraph"
+              variant="body2"
               className="text-xs !font-medium text-blue-gray-500"
             >
               {description}
             </Typography>
           </div>
         </MenuItem>
-      </a>
+      </Link>
     )
   );
 
@@ -212,27 +222,29 @@ function AllCities() {
         allowHover={true}
       >
         <MenuHandler>
-          <Typography as="div" variant="small" className="font-medium">
-            <ListItem
-              className="flex items-center gap-2 py-2 pr-4 font-medium text-gray-900 text-xl"
-              selected={isMenuOpen || isMobileMenuOpen}
-              onClick={() => setIsMobileMenuOpen((cur) => !cur)}
-            >
-              All cities
-              <ChevronDownIcon
-                strokeWidth={2.5}
-                className={`hidden h-3 w-3 transition-transform lg:block ${
-                  isMenuOpen ? "rotate-180" : ""
-                }`}
-              />
-              <ChevronDownIcon
-                strokeWidth={2.5}
-                className={`block h-3 w-3 transition-transform lg:hidden ${
-                  isMobileMenuOpen ? "rotate-180" : ""
-                }`}
-              />
-            </ListItem>
-          </Typography>
+          <Link to={"/allcities"}>
+            <Typography as="div" variant="small" className="font-medium">
+              <ListItem
+                className="flex items-center gap-2 py-2 pr-4 font-medium text-gray-900 text-xl"
+                selected={isMenuOpen || isMobileMenuOpen}
+                onClick={() => setIsMobileMenuOpen((cur) => !cur)}
+              >
+                All cities
+                <ChevronDownIcon
+                  strokeWidth={2.5}
+                  className={`hidden h-3 w-3 transition-transform lg:block ${
+                    isMenuOpen ? "rotate-180" : ""
+                  }`}
+                />
+                <ChevronDownIcon
+                  strokeWidth={2.5}
+                  className={`block h-3 w-3 transition-transform lg:hidden ${
+                    isMobileMenuOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </ListItem>
+            </Typography>
+          </Link>
         </MenuHandler>
         <MenuList className="hidden max-w-screen-xl rounded-xl lg:block">
           <ul className="grid grid-cols-3 gap-y-2 outline-none outline-0">
