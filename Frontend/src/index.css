@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.citys-image {
+
+height: 500px;
+width: 50%;
+  
+}
+@media screen and (max-width: 768px) {
+  .citys-image {
+    height: 300px;
+    width: 100%;
+  }
+    
+}

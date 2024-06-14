@@ -23,17 +23,16 @@ import {
   InboxArrowDownIcon,
   PowerIcon,
 } from "@heroicons/react/24/outline";
+import { BsBuildings, BsBuildingFill } from "react-icons/bs";
+import { PiBuildingApartmentFill, PiBuildingsFill } from "react-icons/pi";
+// eslint-disable-next-line no-unused-vars
+import { RiBuilding3Fill } from "react-icons/ri";
 import {
-  Bars4Icon,
-  GlobeAmericasIcon,
-  NewspaperIcon,
-  PhoneIcon,
-  RectangleGroupIcon,
-  SquaresPlusIcon,
-  SunIcon,
-  TagIcon,
-  UserGroupIcon,
-} from "@heroicons/react/24/solid";
+  FaBuildingWheat,
+  FaBuildingLock,
+  FaBuildingColumns,
+} from "react-icons/fa6";
+
 import logo from "../../assets/img/eventhub-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext.jsx";
@@ -42,55 +41,55 @@ const navListMenuItems = [
   {
     title: "Berlin",
     description: "Find the perfect solution for your needs.",
-    icon: SquaresPlusIcon,
+    icon: FaBuildingWheat,
     link: "/cities/berlin",
   },
   {
     title: "Düsseldorf",
     description: "Meet and learn about our dedication",
-    icon: UserGroupIcon,
+    icon: RiBuilding3Fill,
     link: "/cities/düsseldorf",
   },
   {
     title: "Köln",
     description: "Find the perfect solution for your needs.",
-    icon: Bars4Icon,
+    icon: BsBuildingFill,
     link: "/cities/köln",
   },
   {
     title: "Stuttgart",
     description: "Learn how we can help you achieve your goals.",
-    icon: SunIcon,
+    icon: BsBuildings,
     link: "/cities/stuttgart",
   },
   {
     title: "München",
     description: "Reach out to us for assistance or inquiries",
-    icon: GlobeAmericasIcon,
+    icon: FaBuildingLock,
     link: "/cities/münchen",
   },
   {
     title: "Hamburg",
     description: "Find the perfect solution for your needs.",
-    icon: PhoneIcon,
+    icon: PiBuildingsFill,
     link: "/cities/hamburg",
   },
   {
     title: "Leipzig",
     description: "Read insightful articles, tips, and expert opinions.",
-    icon: NewspaperIcon,
+    icon: PiBuildingApartmentFill,
     link: "/cities/leipzig",
   },
   {
     title: "Frankfurt",
     description: "Find the perfect solution for your needs.",
-    icon: RectangleGroupIcon,
+    icon: FaBuildingColumns,
     link: "/cities/frankfurt",
   },
   {
     title: "Essen",
     description: "Explore limited-time deals and bundles",
-    icon: TagIcon,
+    icon: BsBuildings,
     link: "/cities/essen",
   },
 ];

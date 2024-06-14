@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, Outlet, useParams } from "react-router-dom";
+import "../../index.css";
 
 const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_ACCES_KEY;
 
@@ -8,6 +9,11 @@ const AllCities = () => {
   const [events, setEvents] = useState([]);
   const [cityImage, setCityImage] = useState("");
   const { city } = useParams(); // Hole den Stadtnamen aus der URL
+  const historicalFacts = [
+    "Berlin ist die Hauptstadt von Deutschland",
+    "Berlin hat 3,6 Millionen Einwohner",
+    "Berlin ist die größte Stadt Deutschlands",
+  ];
 
   useEffect(() => {
     if (city) {
@@ -48,16 +54,17 @@ const AllCities = () => {
     <div>
       <Outlet />
       <div className="flex flex-col">
-        <div>
+        <div className="flex bg-orange-500 items-center justify-center">
           {cityImage && (
-            <img
-              className="bg- w-full h-96 object-scale-down"
-              src={cityImage}
-              alt={city}
-            />
+            <img className="citys-image" src={cityImage} alt={city} />
           )}
-          <p>{city.toUpperCase()}</p>
+          <div className="items-center">
+            <h2 className="text-9xl font-bold text-black italic">
+              {city.toUpperCase()}
+            </h2>
+          </div>
         </div>
+
         <div className="flex flex-wrap">
           {events.length > 0 ? (
             events.map((event) => (
