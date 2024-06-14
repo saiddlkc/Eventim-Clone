@@ -22,6 +22,8 @@ import {
   UserCircleIcon,
   InboxArrowDownIcon,
   PowerIcon,
+  ShoppingCartIcon,
+  BellIcon,
 } from "@heroicons/react/24/outline";
 import {
   Bars4Icon,
@@ -37,6 +39,7 @@ import {
 import logo from "../../assets/img/eventhub-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext.jsx";
+import DrawerPlacement from "./Drawer";
 
 const navListMenuItems = [
   {
@@ -353,58 +356,65 @@ function ProfileMenu() {
   };
 
   return (
-    <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
-      <MenuHandler>
-        <Button
-          variant="text"
-          color="blue-gray"
-          className="flex items-center gap-1 py-0.5 pr-2 pl-0.5 lg:ml-auto"
-        >
-          <Avatar
-            variant="circular"
-            size="sm"
-            alt="User Profile"
-            className="border border-gray-900 p-0.5"
-            src={user && user.profilePicture}
-          />
-          <ChevronDownIcon
-            strokeWidth={2.5}
-            className={`h-3 w-3 transition-transform ${
-              isMenuOpen ? "rotate-180" : ""
-            }`}
-          />
-        </Button>
-      </MenuHandler>
-      <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon, to, action }, key) => {
-          const isLastItem = key === profileMenuItems.length - 1;
-          return (
-            <MenuItem
-              key={label}
-              onClick={() => handleMenuItemClick(action, to)}
-              className={`flex items-center gap-2 rounded ${
-                isLastItem
-                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                  : ""
+    <div className="flex items-center ">
+      <div className="flex space-x-4 pr-2">
+        <DrawerPlacement />
+        <ShoppingCartIcon className="h-6 w-6 text-black" />
+        <BellIcon className="h-6 w-6 text-black" />
+      </div>
+      <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
+        <MenuHandler>
+          <Button
+            variant="text"
+            color="blue-gray"
+            className="flex items-center gap-1 py-0.5 pr-2 pl-0.5 lg:ml-auto"
+          >
+            <Avatar
+              variant="circular"
+              size="sm"
+              alt="User Profile"
+              className="border border-gray-900 p-0.5"
+              src={user && user.profilePicture}
+            />
+            <ChevronDownIcon
+              strokeWidth={2.5}
+              className={`h-3 w-3 transition-transform ${
+                isMenuOpen ? "rotate-180" : ""
               }`}
-            >
-              {React.createElement(icon, {
-                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
-                strokeWidth: 2,
-              })}
-              <Typography
-                as="span"
-                variant="small"
-                className="font-normal"
-                color={isLastItem ? "red" : "inherit"}
+            />
+          </Button>
+        </MenuHandler>
+        <MenuList className="p-1">
+          {profileMenuItems.map(({ label, icon, to, action }, key) => {
+            const isLastItem = key === profileMenuItems.length - 1;
+            return (
+              <MenuItem
+                key={label}
+                onClick={() => handleMenuItemClick(action, to)}
+                className={`flex items-center gap-2 rounded ${
+                  isLastItem
+                    ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                    : ""
+                }`}
               >
-                {label}
-              </Typography>
-            </MenuItem>
-          );
-        })}
-      </MenuList>
-    </Menu>
+                {React.createElement(icon, {
+                  className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
+                  strokeWidth: 2,
+                })}
+                <Typography
+                  as="span"
+                  variant="small"
+                  className="font-normal"
+                  color={isLastItem ? "red" : "inherit"}
+                >
+                  {label}
+                </Typography>
+              </MenuItem>
+            );
+          })}
+        </MenuList>
+      </Menu>
+    </div>
   );
 }
 
@@ -420,7 +430,7 @@ export function NavbarWithMegaMenu() {
   }, []);
 
   return (
-    <Navbar className="sticky top-0 z-50 mx-auto max-w-full px-6 py-2 ">
+    <Navbar className="sticky top-0 z-50 mx-auto max-w-full px-6 py-2 bg-white">
       <div className="flex items-center justify-between text-blue-gray-900">
         <Link to={"/"}>
           <img src={logo} alt="logo" className="h-16" />

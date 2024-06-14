@@ -1,8 +1,13 @@
 import React from "react";
-import HomeLayout from "../../Layout/HomeLayout";
+import DrawerPlacement from "../../Components/Home/Drawer";
 
 const HomePage = () => {
-  return <div>home</div>;
+  return (
+    <div>
+      home
+      <DrawerPlacement />
+    </div>
+  );
 };
 
 export default HomePage;
