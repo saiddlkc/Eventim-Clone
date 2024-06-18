@@ -15,7 +15,7 @@ export default function DrawerPlacement() {
 
   return (
     <React.Fragment>
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap gap-4 fixed">
         <CogIcon className="h-6 w-6 text-black" onClick={openDrawerRight} />
       </div>
 

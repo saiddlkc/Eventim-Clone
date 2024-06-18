@@ -38,7 +38,6 @@ import {
 import logo from "../../assets/img/eventhub-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext.jsx";
-import DrawerPlacement from "./Drawer";
 
 const navListMenuItems = [
   {
@@ -222,29 +221,27 @@ function AllCities() {
         allowHover={true}
       >
         <MenuHandler>
-          <Link to={"/allcities"}>
-            <Typography as="div" variant="small" className="font-medium">
-              <ListItem
-                className="flex items-center gap-2 py-2 pr-4 font-medium text-gray-900 text-xl"
-                selected={isMenuOpen || isMobileMenuOpen}
-                onClick={() => setIsMobileMenuOpen((cur) => !cur)}
-              >
-                All cities
-                <ChevronDownIcon
-                  strokeWidth={2.5}
-                  className={`hidden h-3 w-3 transition-transform lg:block ${
-                    isMenuOpen ? "rotate-180" : ""
-                  }`}
-                />
-                <ChevronDownIcon
-                  strokeWidth={2.5}
-                  className={`block h-3 w-3 transition-transform lg:hidden ${
-                    isMobileMenuOpen ? "rotate-180" : ""
-                  }`}
-                />
-              </ListItem>
-            </Typography>
-          </Link>
+          <Typography as="div" variant="small" className="font-medium">
+            <ListItem
+              className="flex items-center gap-2 py-2 pr-4 font-medium text-gray-900 text-xl"
+              selected={isMenuOpen || isMobileMenuOpen}
+              onClick={() => setIsMobileMenuOpen((cur) => !cur)}
+            >
+              All cities
+              <ChevronDownIcon
+                strokeWidth={2.5}
+                className={`hidden h-3 w-3 transition-transform lg:block ${
+                  isMenuOpen ? "rotate-180" : ""
+                }`}
+              />
+              <ChevronDownIcon
+                strokeWidth={2.5}
+                className={`block h-3 w-3 transition-transform lg:hidden ${
+                  isMobileMenuOpen ? "rotate-180" : ""
+                }`}
+              />
+            </ListItem>
+          </Typography>
         </MenuHandler>
         <MenuList className="hidden max-w-screen-xl rounded-xl lg:block">
           <ul className="grid grid-cols-3 gap-y-2 outline-none outline-0">
@@ -370,7 +367,6 @@ function ProfileMenu() {
   return (
     <div className="flex items-center ">
       <div className="flex space-x-4 pr-2">
-        <DrawerPlacement />
         <ShoppingCartIcon className="h-6 w-6 text-black" />
         <BellIcon className="h-6 w-6 text-black" />
       </div>
