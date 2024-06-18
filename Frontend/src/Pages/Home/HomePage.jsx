@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Settings from "../../Components/Home/Settings";
+import AllCities from "../Citys/Allcities";
+import CarouselWithContent from "../../Components/Home/Carousel";
 
 const HomePage = () => {
   const [backgroundColor, setbackgroundColor] = useState("white");
@@ -17,9 +19,13 @@ const HomePage = () => {
   };
 
   return (
-    <div style={{ backgroundColor: backgroundColor, height: "100vh" }}>
+    <div style={{ backgroundColor: backgroundColor }}>
       <Settings setBackgroundColor={handleSetBackgroundColor} />
-      home
+      <div className="">
+        <CarouselWithContent />
+
+        <AllCities />
+      </div>
     </div>
   );
 };
