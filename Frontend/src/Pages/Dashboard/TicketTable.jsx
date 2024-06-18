@@ -17,7 +17,7 @@ const TicketTable = () => {
     startTime: "",
     endTime: "",
     organizer: "",
-    price: 0,
+    price: [],
     currency: "",
     ticketType: "",
     quantityAvailable: 0,
