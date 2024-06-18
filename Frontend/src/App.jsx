@@ -7,6 +7,8 @@ import EventsTableList from "./Pages/Dashboard/EventsTableList";
 import SignUp from "./Pages/Login/Register";
 import AdminLayout from "./Layout/AdminLayout";
 import Login from "./Pages/Login/Login";
+import Tickets from "./Components/Tickets/Tickets";
+import Seat from "./Components/Tickets/seat/SeatPicker";
 import "./App.css";
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
         <Route index element={<Statistics />} />
         <Route path="/users" element={<UsersTable />} />
         <Route path="/tickets" element={<TicketTable />} />
+        <Route path="/ticket" element={<Tickets />} />
+        <Route path="/seat" element={<Seat />} />
         <Route path="/events" element={<EventsTableList />} />
         <Route path="/profile" element={<Profile />} />
       </Route>

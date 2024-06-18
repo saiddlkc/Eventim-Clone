@@ -68,6 +68,22 @@ export default function Sidebar() {
             Tickets
           </ListItem>
         </Link>
+        <Link to="/ticket">
+          <ListItem selected={location.pathname === "/ticket"}>
+            <ListItemPrefix>
+              <FaTicketAlt className="h-5 w-5" />
+            </ListItemPrefix>
+            Ticket
+          </ListItem>
+        </Link>
+        <Link to="/seat">
+          <ListItem selected={location.pathname === "/seat"}>
+            <ListItemPrefix>
+              <FaTicketAlt className="h-5 w-5" />
+            </ListItemPrefix>
+            Seat
+          </ListItem>
+        </Link>
         <Link to="/profile">
           <ListItem selected={location.pathname === "/profile"}>
             <ListItemPrefix>

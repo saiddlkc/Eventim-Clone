@@ -6,6 +6,7 @@ const cors = require("cors");
 const eventRoutes = require("./Routers/eventRoutes");
 const authRoutes = require("./Routers/authRoutes");
 const ticketRoutes = require("./Routers/RouteTicket");
+const qrCode = require("./Routers/QrRoutes");
 
 const app = express();
 app.use(cors({ origin: "http://localhost:5173" }));
@@ -20,10 +21,11 @@ app.use((req, res, next) => {
 app.use("/dashboard", userRoutes);
 app.use("/dashboard", eventRoutes);
 app.use("/dashboard", ticketRoutes);
+app.use("/dashboard", qrCode);
 app.use("/auth", authRoutes);
 
 mongoose
-  .connect(process.env.SERVER)
+  .connect(process.env.DataBase)
   .then(() => {
     console.log("connected to db");
     // listen for requests

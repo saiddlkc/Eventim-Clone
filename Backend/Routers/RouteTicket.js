@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Ticket = require("../model/Tickets");
-const qr = require("qrcode");
-const fs = require("fs").promises;
+const fs = require("fs");
 
 // GET alle Tickets
 router.get("/tickets", async (req, res) => {
@@ -24,12 +23,6 @@ router.post("/tickets", async (req, res) => {
   const ticket = new Ticket(req.body);
   try {
     const newTicket = await ticket.save();
-    // QR-Code generieren und zum Ticket hinzufügen
-    const qrCodeData = `Ticket ID: ${newTicket._id}, Title: ${newTicket.title}`; // Beispiel QR-Code-Daten
-    const qrCodeFilename = `qr-${newTicket._id}.png`; // Beispiel Dateiname
-    await generateQRCode(qrCodeData, qrCodeFilename);
-    newTicket.qrCode = qrCodeFilename; // Den Dateinamen des QR-Codes zum Ticket hinzufügen
-    await newTicket.save(); // Ticket mit QR-Code speichern
     res.status(201).json(newTicket);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -59,20 +52,15 @@ router.delete("/tickets/:id", getTicket, async (req, res) => {
   try {
     // Ticket abrufen, um den Dateipfad des QR-Codes zu erhalten
     const ticket = res.ticket;
-    const qrCodeFilename = ticket.qrCode;
+    const qrCodeFilename = ticket.qrCodeImage; // Hier den Dateinamen des QR-Code-Bildes verwenden
 
     // QR-Code Datei löschen, wenn vorhanden
     if (qrCodeFilename) {
       // Passe den Dateipfad entsprechend deiner QR-Code-Speicherstruktur an
       const qrCodePath = `./qr_codes/${qrCodeFilename}`;
-
-      try {
-        await fs.unlink(qrCodePath);
-        console.log("QR-Code erfolgreich gelöscht:", qrCodePath);
-      } catch (err) {
-        console.error("Fehler beim Löschen des QR-Codes:", err);
-        // Optional: Rückmeldung an den Benutzer, dass die Datei nicht gelöscht werden konnte
-      }
+      // QR-Code Datei löschen
+      fs.unlinkSync(qrCodePath);
+      console.log("QR-Code erfolgreich gelöscht:", qrCodePath);
     }
 
     // Ticket löschen
@@ -97,16 +85,6 @@ async function getTicket(req, res, next) {
 
   res.ticket = ticket;
   next();
-}
-
-// Funktion zum Generieren des QR-Codes und Speichern in einer Datei
-async function generateQRCode(data, filename) {
-  try {
-    await qr.toFile(`./qr_codes/${filename}`, data);
-    console.log("QR-Code erfolgreich generiert und gespeichert:", filename);
-  } catch (err) {
-    console.error("Fehler beim Generieren des QR-Codes:", err);
-  }
 }
 
 module.exports = router;
