@@ -9,21 +9,24 @@ import {
   Option,
   Switch,
 } from "@material-tailwind/react";
-import logo from "../../assets/img/eventhub-logo.png";
 
-export default function DrawerDefault() {
+export default function DrawerDefault({ setBackgroundColor }) {
   const [open, setOpen] = React.useState(false);
 
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
 
   const sidenavColors = {
-    white: "from-gray-100 to-gray-100 border-gray-200",
-    dark: "from-black to-black border-gray-200",
-    green: "from-green-400 to-green-600",
-    orange: "from-orange-400 to-orange-600",
-    red: "from-red-400 to-red-600",
-    pink: "from-pink-400 to-pink-600",
+    white: "#ffffff",
+
+    blue: "#3B82F6",
+    teal: "#14B8A6",
+    purple: "#8B5CF6",
+    yellow: "#F59E0B",
+    green: "#34D399",
+    orange: "#FB923C",
+    red: "#F87171",
+    pink: "#F472B6",
   };
 
   return (
@@ -44,7 +47,7 @@ export default function DrawerDefault() {
         <div className="mb-6 flex items-center justify-between">
           <Typography variant="h5" color="blue-gray">
             Eventhub
-            <br /> Configurator
+            <br /> Home Page Background Color
           </Typography>
           <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
             <XMarkIcon strokeWidth={2.5} className="h-5 w-5" />
@@ -59,7 +62,9 @@ export default function DrawerDefault() {
               {Object.keys(sidenavColors).map((color) => (
                 <span
                   key={color}
-                  className={`h-6 w-6 cursor-pointer rounded-full border bg-gradient-to-br transition-transform hover:scale-105 ${sidenavColors[color]}`}
+                  className={`h-6 w-6 cursor-pointer rounded-full border bg-gradient-to-br transition-transform hover:scale-105 border-gray-700`}
+                  onClick={() => setBackgroundColor(sidenavColors[color])}
+                  style={{ backgroundColor: sidenavColors[color] }}
                 />
               ))}
             </div>
