@@ -70,23 +70,26 @@ const City = () => {
             <img
               src={cityImage}
               alt={city}
-              className="h-96 w-full object-cover"
+              className="h-96 w-full object-center "
             />
           )}
           <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center text-8xl text-bold text-white italic bg-opacity-15 bg-black">
             {city.toUpperCase()}
           </div>
         </div>
+        <p className="text-5xl text-center p-4">
+          Beliebtesten Events in Berlin
+        </p>
 
         <div className="flex flex-wrap justify-center">
           {events.length > 0 ? (
             events.map((event) => (
               <div
                 key={event._id}
-                className="p-4 m-4 border-orange-700 border-2 w-full max-w-4xl flex"
+                className="p-8 m-4 border-orange-700 border-2  w-full max-w-4xl flex rounded-2xl bg-white shadow-lg"
               >
                 <img
-                  className="w-64 h-48 object-cover"
+                  className="w-64 h-48 border-orange-700 border-2 rounded-md "
                   src={event.bild}
                   alt={event.titel}
                 />
