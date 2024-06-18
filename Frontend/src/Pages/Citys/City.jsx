@@ -5,15 +5,10 @@ import "../../index.css";
 
 const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_ACCES_KEY;
 
-const AllCities = () => {
+const City = () => {
   const [events, setEvents] = useState([]);
   const [cityImage, setCityImage] = useState("");
   const { city } = useParams(); // Hole den Stadtnamen aus der URL
-  const historicalFacts = [
-    "Berlin ist die Hauptstadt von Deutschland",
-    "Berlin hat 3,6 Millionen Einwohner",
-    "Berlin ist die größte Stadt Deutschlands",
-  ];
 
   useEffect(() => {
     if (city) {
@@ -55,9 +50,7 @@ const AllCities = () => {
       <Outlet />
       <div className="flex flex-col">
         <div className="flex bg-orange-500 items-center justify-center">
-          {cityImage && (
-            <img className="citys-image" src={cityImage} alt={city} />
-          )}
+          {cityImage && <img src={cityImage} alt={city} />}
           <div className="items-center">
             <h2 className="text-9xl font-bold text-black italic">
               {city.toUpperCase()}
@@ -91,4 +84,4 @@ const AllCities = () => {
   );
 };
 
-export default AllCities;
+export default City;

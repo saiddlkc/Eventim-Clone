@@ -14,8 +14,8 @@ import Inbox from "./Pages/Dashboard/Inbox";
 import HomePage from "./Pages/Home/HomePage";
 import EventsPage from "./Pages/Categories/EventsPage";
 import HomeLayout from "./Layout/HomeLayout";
-import AllCities from "./Pages/Citys/AllCities";
-import Berlin from "./Pages/Citys/Berlin";
+import AllCities from "./Pages/Citys/Allcities";
+import City from "./Pages/Citys/City";
 
 function App() {
   return (
@@ -25,8 +25,8 @@ function App() {
       <Route path="/" element={<HomeLayout />}>
         <Route index element={<HomePage />} />
         <Route path="/categories" element={<EventsPage />} />
-        <Route path="/cities/:city?" element={<AllCities />} />
-        <Route path="/allcities" element={<Berlin />} />
+        <Route path="/cities/:city?" element={<City />} />
+        <Route path="/allcities" element={<AllCities />} />
       </Route>
       <Route
         path="/customer-dashboard"
