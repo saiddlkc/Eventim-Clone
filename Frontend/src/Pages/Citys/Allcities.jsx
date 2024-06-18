@@ -65,7 +65,7 @@ const AllCities = () => {
       <Outlet />
       <div className="">
         <div>
-          <div className="flex  flex-wrap justify-center gap-8 my-4">
+          <div className="flex  flex-wrap justify-center gap-8 my-4 ">
             {cities.map((city, index) => (
               <Link
                 to={city.link}

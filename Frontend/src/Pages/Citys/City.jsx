@@ -1,14 +1,34 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, Outlet, useParams } from "react-router-dom";
+import { format } from "date-fns";
 import "../../index.css";
 
-const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_ACCES_KEY;
+const cityImages = {
+  berlin:
+    "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/berlin-city-header-1440x244.jpg",
+  hamburg:
+    "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/hamburg-city-header-1440x244.jpg",
+  münchen:
+    "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/muenchen-city-header-1440x244.jpg",
+  köln:
+    "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/koeln-city-header-1440x244.jpg",
+  frankfurt:
+    "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/frankfurt-city-header-1440x244.jpg",
+  stuttgart:
+    "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/stuttgart-city-header-1440x244.jpg",
+  leipzig:
+    "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/leipzig-city-header-1440x244.jpg",
+  bremen:
+    "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/bremen-city-header-1440x244.jpg",
+  düsseldorf:
+    "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/duesseldorf-city-header-1440x244.jpg",
+};
 
 const City = () => {
   const [events, setEvents] = useState([]);
   const [cityImage, setCityImage] = useState("");
-  const { city } = useParams(); // Hole den Stadtnamen aus der URL
+  const { city } = useParams();
 
   useEffect(() => {
     if (city) {
@@ -25,54 +45,72 @@ const City = () => {
           console.error("There was an error fetching the events!", error);
         });
 
-      // Unsplash API Anfrage
-      axios
-        .get(
-          `https://api.unsplash.com/search/photos?page=1&query=${city}&client_id=${UNSPLASH_ACCESS_KEY}`
-        )
-        .then((response) => {
-          if (response.data.results.length > 0) {
-            setCityImage(response.data.results[1].urls.regular);
-            console.log(setCityImage);
-          } else {
-            setCityImage("");
-          }
-        })
-        .catch((error) => {
-          console.log(UNSPLASH_ACCESS_KEY);
-          console.error("There was an error fetching the city image!", error);
-        });
+      if (cityImages[city]) {
+        setCityImage(cityImages[city]);
+      } else {
+        setCityImage("");
+      }
     }
   }, [city]);
+
+  const formatDate = (dateString) => {
+    return format(new Date(dateString), "dd.MM.yyyy");
+  };
+
+  const formatTime = (dateString) => {
+    return format(new Date(dateString), "HH:mm");
+  };
 
   return (
     <div>
       <Outlet />
       <div className="flex flex-col">
-        <div className="flex bg-orange-500 items-center justify-center">
-          {cityImage && <img src={cityImage} alt={city} />}
-          <div className="items-center">
-            <h2 className="text-9xl font-bold text-black italic">
-              {city.toUpperCase()}
-            </h2>
+        <div className="flex bg-orange-500 items-center justify-start relative">
+          {cityImage && (
+            <img
+              src={cityImage}
+              alt={city}
+              className="h-96 w-full object-cover"
+            />
+          )}
+          <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center text-8xl text-bold text-white italic bg-opacity-15 bg-black">
+            {city.toUpperCase()}
           </div>
         </div>
 
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap justify-center">
           {events.length > 0 ? (
             events.map((event) => (
               <div
                 key={event._id}
-                className="p-4 m-4 border-red-700 border-2 w-96"
+                className="p-4 m-4 border-orange-700 border-2 w-full max-w-4xl flex"
               >
-                <h2>{event.titel}</h2>
-                <img className="w-72 h-52" src={event.bild} alt={event.titel} />
-                <p>
-                  Hier geht weiter zu den Tickets für{" "}
-                  <Link to={`/events/${event._id}`}>
-                    <span className="text-orange-700">{event.titel}</span>
-                  </Link>
-                </p>
+                <img
+                  className="w-64 h-48 object-cover"
+                  src={event.bild}
+                  alt={event.titel}
+                />
+                <div className="ml-4 flex flex-col flex-1">
+                  <div>
+                    <h2 className="text-xl font-bold">{event.titel}</h2>
+                    <p className="mt-2 opacity-70">{event.beschreibung}</p>
+                    <p className="mt-2 opacity-70">{event.ort.adresse}</p>
+                    <p className="mt-2 opacity-70">
+                      Beginnt am: {formatDate(event.startDatum)}
+                    </p>
+                    <p className="mt-2 opacity-70">
+                      {" "}
+                      Endet am: {formatDate(event.endDatum)}
+                    </p>
+                  </div>
+                  <div className="flex justify-end mt-auto">
+                    <Link to={`/events/${event._id}`}>
+                      <button className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600">
+                        Zu den Tickets
+                      </button>
+                    </Link>
+                  </div>
+                </div>
               </div>
             ))
           ) : (
