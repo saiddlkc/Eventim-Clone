@@ -57,10 +57,6 @@ const City = () => {
     return format(new Date(dateString), "dd.MM.yyyy");
   };
 
-  const formatTime = (dateString) => {
-    return format(new Date(dateString), "HH:mm");
-  };
-
   return (
     <div>
       <Outlet />
@@ -70,30 +66,30 @@ const City = () => {
             <img
               src={cityImage}
               alt={city}
-              className="h-96 w-full object-center "
+              className="h-96 w-full object-cover"
             />
           )}
-          <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center text-8xl text-bold text-white italic bg-opacity-15 bg-black">
+          <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center text-5xl sm:text-6xl md:text-8xl lg:text-8xl font-bold text-white italic bg-opacity-15 bg-black">
             {city.toUpperCase()}
           </div>
         </div>
         <p className="text-5xl text-center p-4">
-          Beliebtesten Events in Berlin
+          Beliebtesten Events in {city}
         </p>
 
-        <div className="flex flex-wrap justify-center">
+        <div className="flex flex-wrap justify-center ">
           {events.length > 0 ? (
             events.map((event) => (
               <div
                 key={event._id}
-                className="p-8 m-4 border-orange-700 border-2  w-full max-w-4xl flex rounded-2xl bg-white shadow-lg"
+                className="p-4 m-4 border-orange-700 border-2 w-full max-w-4xl flex flex-col md:flex-row rounded-2xl bg-white shadow-lg "
               >
                 <img
-                  className="w-64 h-48 border-orange-700 border-2 rounded-md "
+                  className="w-full md:w-48 h-48  rounded-md object-cover"
                   src={event.bild}
                   alt={event.titel}
                 />
-                <div className="ml-4 flex flex-col flex-1">
+                <div className="ml-4 flex flex-col flex-1 mt-4 md:mt-0">
                   <div>
                     <h2 className="text-xl font-bold">{event.titel}</h2>
                     <p className="mt-2 opacity-70">{event.beschreibung}</p>
@@ -101,12 +97,11 @@ const City = () => {
                     <p className="mt-2 opacity-70">
                       Beginnt am: {formatDate(event.startDatum)}
                     </p>
-                    <p className="mt-2 opacity-70">
-                      {" "}
+                    <p className="mt-2 opacity-70 mb-6">
                       Endet am: {formatDate(event.endDatum)}
                     </p>
                   </div>
-                  <div className="flex justify-end mt-auto">
+                  <div className="flex justify-center  sm:justify-center  md:justify-end ">
                     <Link to={`/events/${event._id}`}>
                       <button className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600">
                         Zu den Tickets
