@@ -42,57 +42,62 @@ import { useAuthContext } from "../../hooks/useAuthContext.jsx";
 const navListMenuItems = [
   {
     title: "Berlin",
-    description: "Find the perfect solution for your needs.",
+    description:
+      " Entdecken Sie die vielfältigen kulturellen Highlights der Hauptstadt",
     icon: FaBuildingWheat,
     link: "/cities/berlin",
   },
   {
     title: "Düsseldorf",
-    description: "Meet and learn about our dedication",
+    description: "Erleben Sie den einzigartigen Charme am Rhein",
     icon: RiBuilding3Fill,
     link: "/cities/düsseldorf",
   },
   {
     title: "Köln",
-    description: "Find the perfect solution for your needs.",
+    description: "Besuchen Sie den berühmten Kölner Dom und die Altstadt",
     icon: BsBuildingFill,
     link: "/cities/köln",
   },
   {
     title: "Stuttgart",
-    description: "Learn how we can help you achieve your goals.",
+    description: "Genießen Sie das Automobilmuseum und die Feste",
     icon: BsBuildings,
     link: "/cities/stuttgart",
   },
   {
     title: "München",
-    description: "Reach out to us for assistance or inquiries",
+    description:
+      "Tauchen Sie ein in das bayerische Lebensgefühl und das Oktoberfest",
     icon: FaBuildingLock,
     link: "/cities/münchen",
   },
   {
     title: "Hamburg",
-    description: "Find the perfect solution for your needs.",
+    description: " Erkunden Sie den Hafen und die berühmte Reeperbahn.",
     icon: PiBuildingsFill,
     link: "/cities/hamburg",
   },
   {
     title: "Leipzig",
-    description: "Read insightful articles, tips, and expert opinions.",
+    description:
+      "Erleben Sie die historische Altstadt und das pulsierende Kulturleben",
     icon: PiBuildingApartmentFill,
     link: "/cities/leipzig",
   },
   {
     title: "Frankfurt",
-    description: "Find the perfect solution for your needs.",
+    description:
+      " Bewundern Sie die beeindruckende Skyline und die Finanzmetropole",
     icon: FaBuildingColumns,
     link: "/cities/frankfurt",
   },
   {
-    title: "Essen",
-    description: "Explore limited-time deals and bundles",
+    title: "Bremen",
+    description:
+      "Spazieren Sie durch das historische Schnoorviertel und besuchen Sie die Bremer Stadtmusikanten",
     icon: BsBuildings,
-    link: "/cities/essen",
+    link: "/cities/bremen",
   },
 ];
 
@@ -221,27 +226,29 @@ function AllCities() {
         allowHover={true}
       >
         <MenuHandler>
-          <Typography as="div" variant="small" className="font-medium">
-            <ListItem
-              className="flex items-center gap-2 py-2 pr-4 font-medium text-gray-900 text-xl"
-              selected={isMenuOpen || isMobileMenuOpen}
-              onClick={() => setIsMobileMenuOpen((cur) => !cur)}
-            >
-              All cities
-              <ChevronDownIcon
-                strokeWidth={2.5}
-                className={`hidden h-3 w-3 transition-transform lg:block ${
-                  isMenuOpen ? "rotate-180" : ""
-                }`}
-              />
-              <ChevronDownIcon
-                strokeWidth={2.5}
-                className={`block h-3 w-3 transition-transform lg:hidden ${
-                  isMobileMenuOpen ? "rotate-180" : ""
-                }`}
-              />
-            </ListItem>
-          </Typography>
+          <Link to={"/allcities"}>
+            <Typography as="div" variant="small" className="font-medium">
+              <ListItem
+                className="flex items-center gap-2 py-2 pr-4 font-medium text-gray-900 text-xl"
+                selected={isMenuOpen || isMobileMenuOpen}
+                onClick={() => setIsMobileMenuOpen((cur) => !cur)}
+              >
+                All cities
+                <ChevronDownIcon
+                  strokeWidth={2.5}
+                  className={`hidden h-3 w-3 transition-transform lg:block ${
+                    isMenuOpen ? "rotate-180" : ""
+                  }`}
+                />
+                <ChevronDownIcon
+                  strokeWidth={2.5}
+                  className={`block h-3 w-3 transition-transform lg:hidden ${
+                    isMobileMenuOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </ListItem>
+            </Typography>
+          </Link>
         </MenuHandler>
         <MenuList className="hidden max-w-screen-xl rounded-xl lg:block">
           <ul className="grid grid-cols-3 gap-y-2 outline-none outline-0">
@@ -267,7 +274,7 @@ function NavList() {
         className="font-medium"
       >
         <ListItem className="flex items-center gap-2 py-2 pr-4 text-xl">
-          Home
+          <Link to="/">Home</Link>
         </ListItem>
       </Typography>
       <NavListMenu />
