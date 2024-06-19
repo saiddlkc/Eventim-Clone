@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import {
   MagnifyingGlassIcon,
   ChevronUpDownIcon,
+  UserGroupIcon,
+  UserIcon,
+  UsersIcon,
+  BriefcaseIcon,
 } from "@heroicons/react/24/outline";
 import {
   Card,
@@ -37,10 +41,11 @@ export function SortableTable() {
     role: "",
     profilePicture: "",
   });
-  const [currentUser, setCurrentUser] = useState(null); // [1
+  const [currentUser, setCurrentUser] = useState(null);
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isAddUserFormOpen, setIsAddUserFormOpen] = useState(false);
 
   useEffect(() => {
     axios
@@ -195,13 +200,20 @@ export function SortableTable() {
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const userStats = {
+    total: users.length,
+    admin: users.filter((user) => user.role === "admin").length,
+    organizer: users.filter((user) => user.role === "organizer").length,
+    customer: users.filter((user) => user.role === "customer").length,
+  };
+
   return (
-    <div className=" mb-8 flex flex-col gap-2 ">
+    <div className="mb-8 flex flex-col gap-2">
       <ToastContainer />
       <div className="m-2">
-        <Card className="h-full w-full mb-6 ">
+        <Card className="h-full w-full mb-6">
           <CardHeader floated={false} shadow={false} className="rounded-none">
-            <div className="mb-8 flex items-center justify-between gap-8 ">
+            <div className="mb-8 flex items-center justify-between gap-8">
               <div>
                 <Typography variant="h5" color="blue-gray">
                   Users Management
@@ -211,104 +223,164 @@ export function SortableTable() {
                 </Typography>
               </div>
               <div className="flex shrink-0 flex-col gap-2 sm:flex-row p-4">
-                <div className="flex flex-col items-center justify-between gap-4 md:flex-row "></div>
+                <div className="flex flex-col items-center justify-between gap-4 md:flex-row"></div>
               </div>
             </div>
           </CardHeader>
-          <CardBody className=" px-0">
+          <CardBody className="px-0">
+            <div className=" container flex justify-center m-2 mx-auto">
+              <div className="bg-blue-500 text-white p-4 rounded-md flex items-center m-1 w-full">
+                <UserGroupIcon className="h-6 w-6 mr-2" />
+                <div>
+                  <Typography variant="h6" color="white">
+                    Total Users
+                  </Typography>
+                  <Typography variant="h4" color="white">
+                    {userStats.total}
+                  </Typography>
+                </div>
+              </div>
+              <div className="bg-green-500 text-white p-4 rounded-md flex items-center m-1 w-full">
+                <UserIcon className="h-6 w-6 mr-2" />
+                <div>
+                  <Typography variant="h6" color="white">
+                    Admins
+                  </Typography>
+                  <Typography variant="h4" color="white">
+                    {userStats.admin}
+                  </Typography>
+                </div>
+              </div>
+              <div className="bg-orange-500 text-white p-4 rounded-md flex items-center m-1 w-full">
+                <UsersIcon className="h-6 w-6 mr-2" />
+                <div>
+                  <Typography variant="h6" color="white">
+                    Organizers
+                  </Typography>
+                  <Typography variant="h4" color="white">
+                    {userStats.organizer}
+                  </Typography>
+                </div>
+              </div>
+              <div className="bg-red-500 text-white p-4 rounded-md flex items-center m-1 w-full">
+                <BriefcaseIcon className="h-6 w-6 mr-2" />
+                <div>
+                  <Typography variant="h6" color="white">
+                    Customers
+                  </Typography>
+                  <Typography variant="h4" color="white">
+                    {userStats.customer}
+                  </Typography>
+                </div>
+              </div>
+            </div>
             <table className="mt-4 w-full min-w-max table-auto text-left">
               <thead>
                 <tr>
-                  <th className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-500 p-4 transition-colors hover:bg-blue-gray-50 rounded">
+                  <th
+                    className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-500 p-2 transition-colors hover:bg-blue-gray-300 rounded"
+                    onClick={() => setIsAddUserFormOpen(!isAddUserFormOpen)}
+                  >
                     <Typography
-                      variant="h2"
-                      color="blue-gray"
-                      className="flex items-center justify-between gap-2 font-normal leading-none opacity-70 capitalize"
+                      variant="h4"
+                      color="white"
+                      className="flex items-center justify-between gap-2 font-normal leading-none capitalize"
                     >
-                      Add a new user <UserPlusIcon className="h-5 w-5" />
+                      <span className="flex">
+                        <UserPlusIcon className="h-5 w-5" />
+                        Add a new user
+                      </span>
+                      <Button>show form</Button>
                     </Typography>
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td className="p-4">
-                    <form onSubmit={handleSubmit}>
-                      <div className="flex gap-4 p-2">
-                        <Input
-                          size="md"
-                          label="Name"
-                          name="name"
-                          value={newUser.name}
-                          onChange={handleChange}
-                        />
-                        <Input
-                          type="email"
-                          label="Email Address"
-                          name="email"
-                          value={newUser.email}
-                          onChange={handleChange}
-                          className="pr-20"
-                          containerProps={{
-                            className: "min-w-0",
-                          }}
-                        />
-                      </div>
-                      <div className="flex gap-4 p-2">
-                        <Input
-                          type="password"
-                          size="md"
-                          label="Password"
-                          name="password"
-                          value={newUser.password}
-                          onChange={handleChange}
-                        />
-
-                        <Select
-                          label="Select Role"
-                          name="role"
-                          value={newUser.role}
-                          onChange={handleSelectChange}
-                        >
-                          <Option value="admin">Admin</Option>
-                          <Option value="organizer">Organizer</Option>
-                          <Option value="customer">Customer</Option>
-                        </Select>
-                      </div>
-                      <div className="flex gap-4 p-2">
-                        <div className="flex-grow" style={{ flexBasis: "70%" }}>
+              {isAddUserFormOpen && (
+                <tbody>
+                  <tr>
+                    <td className="p-4">
+                      <form onSubmit={handleSubmit}>
+                        <div className="flex gap-4 p-2">
                           <Input
-                            type="file"
                             size="md"
-                            label="Profile"
-                            onChange={handleFileChange}
+                            label="Name"
+                            name="name"
+                            value={newUser.name}
+                            onChange={handleChange}
+                          />
+                          <Input
+                            type="email"
+                            label="Email Address"
+                            name="email"
+                            value={newUser.email}
+                            onChange={handleChange}
+                            className="pr-20"
+                            containerProps={{
+                              className: "min-w-0",
+                            }}
                           />
                         </div>
-                        <div className="flex-grow" style={{ flexBasis: "30%" }}>
-                          <Button
-                            type="submit"
-                            className="w-full flex items-center justify-center gap-2 "
+                        <div className="flex gap-4 p-2">
+                          <Input
+                            type="password"
+                            size="md"
+                            label="Password"
+                            name="password"
+                            value={newUser.password}
+                            onChange={handleChange}
+                          />
+                          <Select
+                            label="Select Role"
+                            name="role"
+                            value={newUser.role}
+                            onChange={handleSelectChange}
                           >
-                            {currentUser ? "Update user" : "Add user"}{" "}
-                            <UserPlusIcon className="h-4 w-4" />
-                          </Button>
+                            <Option value="admin">Admin</Option>
+                            <Option value="organizer">Organizer</Option>
+                            <Option value="customer">Customer</Option>
+                          </Select>
                         </div>
-                      </div>
-                      {error && (
-                        <div className="text-red-500 mt-2">{error}</div>
-                      )}
-                    </form>
-                  </td>
-                </tr>
-              </tbody>
+                        <div className="flex gap-4 p-2">
+                          <div
+                            className="flex-grow"
+                            style={{ flexBasis: "70%" }}
+                          >
+                            <Input
+                              type="file"
+                              size="md"
+                              label="Profile"
+                              onChange={handleFileChange}
+                            />
+                          </div>
+                          <div
+                            className="flex-grow"
+                            style={{ flexBasis: "30%" }}
+                          >
+                            <Button
+                              type="submit"
+                              className="w-full flex items-center justify-center gap-2"
+                            >
+                              {currentUser ? "Update user" : "Add user"}{" "}
+                              <UserPlusIcon className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                        {error && (
+                          <div className="text-red-500 mt-2">{error}</div>
+                        )}
+                      </form>
+                    </td>
+                  </tr>
+                </tbody>
+              )}
             </table>
           </CardBody>
         </Card>
       </div>
       <hr className="border-t-2 border-blue-gray-200 mt-4 mb-4" />
       <div className="m-2">
-        <Card className="h-full w-full ">
-          <CardHeader floated={false} shadow={false} className="rounded-none ">
+        <Card className="h-full w-full">
+          <CardHeader floated={false} shadow={false} className="rounded-none">
             <div className="flex justify-between items-center">
               <Typography variant="h5" color="blue-gray">
                 Users
@@ -323,7 +395,7 @@ export function SortableTable() {
               </div>
             </div>
           </CardHeader>
-          <CardBody className=" px-0">
+          <CardBody className="px-0">
             <table className="mt-4 w-full min-w-max table-auto text-left">
               <thead>
                 <tr>
