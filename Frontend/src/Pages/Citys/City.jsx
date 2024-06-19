@@ -25,11 +25,23 @@ const cityImages = {
     "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/duesseldorf-city-header-1440x244.jpg",
 };
 
+/**
+ * Komponente, die die Events einer bestimmten Stadt anzeigt.
+ */
+/**
+ * Renders the City component.
+ * Displays a list of popular events in a specific city.
+ */
 const City = () => {
-  const [events, setEvents] = useState([]);
-  const [cityImage, setCityImage] = useState("");
-  const { city } = useParams();
+  const [events, setEvents] = useState([]); // Zustand für die Events
+  const [cityImage, setCityImage] = useState(""); // Zustand für das Stadtbild
+  const { city } = useParams(); // Parameter für die Stadt aus der URL
 
+  /**
+   * Effekt, der bei Änderung der Stadt aufgerufen wird.
+   * Ruft die Events für die Stadt ab und aktualisiert den Zustand.
+   * Ruft das Stadtbild ab und aktualisiert den Zustand.
+   */
   useEffect(() => {
     if (city) {
       axios
@@ -42,7 +54,10 @@ const City = () => {
           console.log(cityEvents);
         })
         .catch((error) => {
-          console.error("There was an error fetching the events!", error);
+          console.error(
+            "Beim Abrufen der Events ist ein Fehler aufgetreten!",
+            error
+          );
         });
 
       if (cityImages[city]) {
@@ -52,10 +67,6 @@ const City = () => {
       }
     }
   }, [city]);
-
-  const formatDate = (dateString) => {
-    return format(new Date(dateString), "dd.MM.yyyy");
-  };
 
   return (
     <div>
@@ -82,7 +93,7 @@ const City = () => {
             events.map((event) => (
               <div
                 key={event._id}
-                className="p-4 m-4 border-orange-700 border-2 w-full max-w-4xl flex flex-col md:flex-row rounded-2xl bg-white shadow-lg "
+                className="p-4 m-4 border-orange-700 border-2  max-w-4xl flex flex-col  rounded-2xl bg-white shadow-lg  container"
               >
                 <img
                   className="w-full md:w-48 h-48  rounded-md object-cover"
@@ -92,27 +103,19 @@ const City = () => {
                 <div className="ml-4 flex flex-col flex-1 mt-4 md:mt-0">
                   <div>
                     <h2 className="text-xl font-bold">{event.titel}</h2>
-                    <p className="mt-2 opacity-70">{event.beschreibung}</p>
-                    <p className="mt-2 opacity-70">{event.ort.adresse}</p>
-                    <p className="mt-2 opacity-70">
-                      Beginnt am: {formatDate(event.startDatum)}
-                    </p>
-                    <p className="mt-2 opacity-70 mb-6">
-                      Endet am: {formatDate(event.endDatum)}
-                    </p>
-                  </div>
-                  <div className="flex justify-center  sm:justify-center  md:justify-end ">
-                    <Link to={`/events/${event._id}`}>
-                      <button className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600">
-                        Zu den Tickets
-                      </button>
-                    </Link>
+                    <div className="flex justify-center  sm:justify-center  md:justify-end ">
+                      <Link to={`/events/${event._id}`}>
+                        <button className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600">
+                          Zu den Tickets
+                        </button>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
             ))
           ) : (
-            <p>No events found for {city}.</p>
+            <p>Keine Events gefunden für {city}.</p>
           )}
         </div>
       </div>

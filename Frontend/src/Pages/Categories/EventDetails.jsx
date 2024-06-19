@@ -35,7 +35,7 @@ const EventDetails = () => {
           src={event.bild}
           alt={event.titel}
         />
-        <div className="p-8">
+        <div className="p-8 container">
           <h1 className="text-3xl font-bold mb-4 text-gray-800">
             {event.titel}
           </h1>
