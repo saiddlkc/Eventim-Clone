@@ -1,5 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
-import { Carousel, Typography, Button } from "@material-tailwind/react";
+import { Carousel, Typography } from "@material-tailwind/react";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 const cities = [
   {
@@ -60,11 +61,11 @@ const cities = [
 
 const CarouselWithContent = () => {
   return (
-    <Carousel className="rounded-xl">
+    <Carousel className="container mx-auto">
       {cities.map((city, index) => (
         <div
           key={index}
-          className="relative h-full w-full flex items-center p-2 "
+          className="relative h-full w-full flex items-center p-2"
           style={{
             backgroundColor: "#00000",
             backgroundImage: `
@@ -77,7 +78,7 @@ const CarouselWithContent = () => {
           }}
         >
           <div className="w-3/5 h-full flex justify-center items-center">
-            <div className="text-center px-16">
+            <div className="text-center">
               <Typography
                 variant="h3"
                 color="white"
@@ -88,29 +89,30 @@ const CarouselWithContent = () => {
               <Typography
                 variant="lead"
                 color="white"
-                className="mb-4 opacity-80  "
+                className="mb-4 opacity-80 text-sm md:text-base lg:text-lg"
               >
-                Die coolsten Events in {city.name} bieten bieten unvergessliche
+                Die coolsten Events in {city.name} bieten unvergessliche
                 Erlebnisse und Kultur.
               </Typography>
               <div className="flex justify-center gap-2">
-                <Button size="sm" color="white" as={Link} to={city.link}>
-                  Explore
-                </Button>
+                <ArrowRightIcon className="h-5 w-5 ml-2 text-white hover:scale-105 transition-transform duration-500 ease-in-out" />
               </div>
             </div>
           </div>
-          <div className="w-1/5 h-full">
-            <img
-              src={city.imgSrc}
-              alt={city.name}
-              className="h-full w-full object-cover rounded-xl "
-              style={{
-                maxWidth: "250px",
-                height: "auto",
-                boxShadow: "0px 20px 40px rgba(255, 255, 255, 0.8)",
-              }}
-            />
+          <div
+            className="flex items-center justify-center w-2/5"
+            style={{ height: "250px" }}
+          >
+            <Link to={city.link}>
+              <img
+                src={city.imgSrc}
+                alt={city.name}
+                className="h-full w-full object-cover rounded-xl transform transition-transform duration-300 hover:scale-105 hover:rotate-2"
+                style={{
+                  boxShadow: "0px 0px 30px 20px rgba(255, 255, 255, 0.8)",
+                }}
+              />
+            </Link>
           </div>
         </div>
       ))}
