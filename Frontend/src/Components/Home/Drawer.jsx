@@ -46,8 +46,7 @@ export default function DrawerDefault({ setBackgroundColor }) {
       >
         <div className="mb-6 flex items-center justify-between">
           <Typography variant="h5" color="blue-gray">
-            Eventhub
-            <br /> Home Page Background Color
+            Eventhub Settings
           </Typography>
           <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
             <XMarkIcon strokeWidth={2.5} className="h-5 w-5" />
@@ -56,7 +55,7 @@ export default function DrawerDefault({ setBackgroundColor }) {
         <div className="py-2 px-2">
           <div className="mb-10">
             <Typography variant="h6" color="blue-gray">
-              Background Colors
+              Home Page Background Colors
             </Typography>
             <div className="mt-3 flex items-center gap-1">
               {Object.keys(sidenavColors).map((color) => (
