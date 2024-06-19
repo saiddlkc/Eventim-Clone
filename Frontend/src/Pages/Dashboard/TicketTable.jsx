@@ -6,58 +6,33 @@ import EditableRow from "../../Components/Dashboard/EditableRow";
 
 const TicketTable = () => {
   const [ticket, setTicket] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  // const [ticketData, setTicketData] = useState();
   const [addFormData, setAddFormData] = useState({
     title: "",
     artist: "",
     description: "",
-    location: {
-      venueName: "",
-      addressLine1: "",
-      state: "",
-      postalCode: "",
-      country: "",
-    },
+    // location: {
+    //   venueName: "",
+    //   addressLine1: "",
+    //   state: "",
+    //   postalCode: "",
+    //   country: "",
+    // },
     date: "",
     startTime: "1",
     endTime: "",
     organizer: "",
-    price: 25,
+    price: [],
     currency: "",
     ticketType: "",
-    quantityAvailable: 100,
+    quantityAvailable: [],
     image: "",
     qrCode: "",
     qrCodeImage: "",
     seat: "",
     selectedSeats: [],
   });
-  const [editFormData, setEditFormData] = useState({
-    title: "",
-    artist: "",
-    description: "",
-    location: {
-      venueName: "",
-      addressLine1: "",
-      state: "",
-      postalCode: "",
-      country: "",
-    },
-    date: "",
-    startTime: "1",
-    endTime: "",
-    organizer: "",
-    price: 25,
-    currency: "",
-    ticketType: "",
-    quantityAvailable: 100,
-    image: "",
-    qrCode: "",
-    qrCodeImage: "",
-    seat: "",
-    selectedSeats: [],
-  });
+
+  const [editFormData, setEditFormData] = useState(ticket);
   const [editTicketID, setEditTicketID] = useState(null);
 
   useEffect(() => {
@@ -97,40 +72,45 @@ const TicketTable = () => {
     newFormData[fieldName] = fieldValue;
 
     setEditFormData(newFormData);
+    console.log("editFormData", editFormData);
   };
 
   const handleAddFormSubmit = async (event) => {
     event.preventDefault();
-
-    const newTicket = {
-      id: nanoid(),
-      title: addFormData.title,
-      artist: addFormData.artist,
-      description: addFormData.description,
-      location: {
-        venueName: addFormData.location.venueName,
-        addressLine1: addFormData.location.addressLine1,
-        state: addFormData.location.state,
-        postalCode: addFormData.location.postalCode,
-        country: addFormData.location.country,
-      },
-      date: addFormData.date,
-      startTime: addFormData.startTime,
-      endTime: addFormData.endTime,
-      organizer: addFormData.organizer,
-      price: 25,
-      currency: addFormData.currency,
-      ticketType: addFormData.ticketType,
-      quantityAvailable: 100,
-      image: addFormData.image,
-      qrCode: addFormData.qrCode,
-      qrCodeImage: addFormData.qrCodeImage,
-      seat: addFormData.seat,
-      selectedSeats: [],
-    };
-
-    const newTickets = [...ticket, newTicket];
-    setTicket(newTickets);
+    try {
+      const res = await axios.post("http://localhost:4000/dashboard/tickets/", {
+        ...addFormData,
+      });
+      console.log(res.data);
+      setTicket([...ticket, res.data]);
+      setAddFormData({
+        title: "",
+        artist: "",
+        description: "",
+        // location: {
+        //   venueName: "",
+        //   addressLine1: "",
+        //   state: "",
+        //   postalCode: "",
+        //   country: "",
+        // },
+        date: "",
+        startTime: "",
+        endTime: "",
+        organizer: "",
+        price: [],
+        currency: "",
+        ticketType: "",
+        quantityAvailable: [],
+        image: "",
+        qrCode: "",
+        qrCodeImage: "",
+        seat: "",
+        selectedSeats: [],
+      });
+    } catch (error) {
+      console.error("Fehler beim Hinzufügen des Tickets:", error);
+    }
   };
 
   // handleEditFormSubmit
@@ -143,13 +123,13 @@ const TicketTable = () => {
       title: editFormData.title,
       artist: editFormData.artist,
       description: editFormData.description,
-      location: {
-        venueName: editFormData.location.venueName,
-        addressLine1: editFormData.location.addressLine1,
-        state: editFormData.location.state,
-        postalCode: editFormData.location.postalCode,
-        country: editFormData.location.country,
-      },
+      // location: {
+      //   venueName: editFormData.location.venueName,
+      //   addressLine1: editFormData.location.addressLine1,
+      //   state: editFormData.location.state,
+      //   postalCode: editFormData.location.postalCode,
+      //   country: editFormData.location.country,
+      // },
       date: editFormData.date,
       startTime: editFormData.startTime,
       endTime: editFormData.endTime,
@@ -174,17 +154,31 @@ const TicketTable = () => {
     setTicket(newTickets);
     setEditTicketID(null);
   };
+
   // handleCancelClick
   const handleCancelClick = () => {
     setEditTicketID(null);
   };
 
-  // handleCancelClick
-  const handleDeleteClick = (ticketID) => {
-    const newTickets = [...ticket];
-    const index = ticket.findIndex((ticket) => ticket._id === ticketID);
-    newTickets.splice(index, 1);
-    setTicket(newTickets);
+  const getTicketID = (event, ticket) => {
+    event.preventDefault();
+    setEditTicketID(ticket._id);
+    console.log("ticketID", editTicketID);
+  };
+
+  // handleDeleteClick
+  const handleDeleteClick = async (id) => {
+    try {
+      // API-Aufruf zum Löschen des Tickets
+      await axios.delete(`http://localhost:4000/dashboard/tickets/${id}`);
+
+      // Nach erfolgreichem Löschen das Ticket aus dem State entfernen
+      setTicket((prevTickets) =>
+        prevTickets.filter((ticket) => ticket._id !== id)
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // handleEditClick
@@ -195,13 +189,13 @@ const TicketTable = () => {
       title: ticket.title,
       artist: ticket.artist,
       description: ticket.description,
-      location: {
-        venueName: ticket.location.venueName,
-        addressLine1: ticket.location.addressLine1,
-        state: ticket.location.state,
-        postalCode: ticket.location.postalCode,
-        country: ticket.location.country,
-      },
+      // location: {
+      //   venueName: ticket.location.venueName,
+      //   addressLine1: ticket.location.addressLine1,
+      //   state: ticket.location.state,
+      //   postalCode: ticket.location.postalCode,
+      //   country: ticket.location.country,
+      // },
       date: ticket.date,
       startTime: ticket.startTime,
       endTime: ticket.endTime,
@@ -252,7 +246,7 @@ const TicketTable = () => {
             placeholder="Description"
             required
           />
-          <input
+          {/* <input
             className="border border-gray-300 rounded p-2 w-full"
             type="text"
             name="location.venueName"
@@ -290,7 +284,7 @@ const TicketTable = () => {
             onChange={handleAddFormChange}
             placeholder="Country"
             required
-          />
+          /> */}
           <input
             className="border border-gray-300 rounded p-2 w-full"
             type="date"
@@ -413,7 +407,7 @@ const TicketTable = () => {
                       Description
                     </h6>
                   </th>
-                  <th className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray 500 p-4 transition-colors hover:bg-blue-gray-100">
+                  {/* <th className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray 500 p-4 transition-colors hover:bg-blue-gray-100">
                     <h6 className="antialiased tracking-normal font-sans text-base text-blue-gray-900  flex justify-between items-center gap-2 font-normal  leading-none opercity-70 capitalize ">
                       Venue Name
                     </h6>
@@ -437,7 +431,7 @@ const TicketTable = () => {
                     <h6 className="antialiased tracking-normal font-sans text-base text-blue-gray-900  flex justify-between items-center gap-2 font-normal  leading-none opercity-70 capitalize ">
                       Country
                     </h6>
-                  </th>
+                  </th> */}
                   <th className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray 500 p-4 transition-colors hover:bg-blue-gray-100">
                     <h6 className="antialiased tracking-normal font-sans text-base text-blue-gray-900  flex justify-between items-center gap-2 font-normal  leading-none opercity-70 capitalize ">
                       Date
@@ -511,6 +505,7 @@ const TicketTable = () => {
                         editFormData={editFormData}
                         handleEditFormChange={handleEditFormChange}
                         handleCancelClick={handleCancelClick}
+                        editTicketID={editTicketID}
                       />
                     ) : (
                       <ReadOnly

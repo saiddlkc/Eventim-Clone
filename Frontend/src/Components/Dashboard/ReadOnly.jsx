@@ -21,7 +21,7 @@ const ReadOnly = ({ ticket, handleEditClick, handleDeleteClick }) => {
           {ticket.description}
         </p>
       </td>
-      <td className="p-4 border-b boder-blue-gray-50">
+      {/* <td className="p-4 border-b boder-blue-gray-50">
         <p className="blo antialiased font-sane text-sm leading-normal text-blue-gray-900">
           {" "}
           {ticket.location.venueName}
@@ -50,7 +50,7 @@ const ReadOnly = ({ ticket, handleEditClick, handleDeleteClick }) => {
           {" "}
           {ticket.location.country}
         </p>
-      </td>
+      </td> */}
       <td className="p-4 border-b boder-blue-gray-50">
         <p className="blo antialiased font-sane text-sm leading-normal text-blue-gray-900">
           {" "}

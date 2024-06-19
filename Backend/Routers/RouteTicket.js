@@ -37,7 +37,47 @@ router.put("/tickets/:id", getTicket, async (req, res) => {
   if (req.body.description != null) {
     res.ticket.description = req.body.description;
   }
-  // Füge hier alle weiteren Felder hinzu, die aktualisiert werden können...
+  if (req.body.artist != null) {
+    res.ticket.artist = req.body.artist;
+  }
+  if (req.body.currency != null) {
+    res.ticket.currency = req.body.currency;
+  }
+  if (req.body.date != null) {
+    res.ticket.date = req.body.date;
+  }
+  if (req.body.startTime != null) {
+    res.ticket.startTime = req.body.startTime;
+  }
+  if (req.body.endTime != null) {
+    res.ticket.endTime = req.body.endTime;
+  }
+  if (req.body.organizer != null) {
+    res.ticket.organizer = req.body.organizer;
+  }
+  if (req.body.price != null) {
+    res.ticket.price = req.body.price;
+  }
+  if (req.body.ticketType != null) {
+    res.ticket.ticketType = req.body.ticketType;
+  }
+  if (req.body.quantityAvailable != null) {
+    res.ticket.quantityAvailable = req.body.quantityAvailable;
+  }
+  if (req.body.seat != null) {
+    res.ticket.seat = req.body.seat;
+  }
+  if (req.body.row != null) {
+    res.ticket.row = req.body.row;
+  }
+  if (req.body.selectedSeats != null) {
+    res.ticket.selectedSeats = req.body.selectedSeats;
+  }
+  if (req.body.qrCode != null) {
+    res.ticket.qrCode = req.body.qrCode;
+  }
+  if (req.body.qrCodeImage != null) {
+  }
 
   try {
     const updatedTicket = await res.ticket.save();
@@ -51,17 +91,17 @@ router.put("/tickets/:id", getTicket, async (req, res) => {
 router.delete("/tickets/:id", getTicket, async (req, res) => {
   try {
     // Ticket abrufen, um den Dateipfad des QR-Codes zu erhalten
-    const ticket = res.ticket;
-    const qrCodeFilename = ticket.qrCodeImage; // Hier den Dateinamen des QR-Code-Bildes verwenden
+    // const ticket = res.ticket;
+    // const qrCodeFilename = ticket.qrCodeImage; // Hier den Dateinamen des QR-Code-Bildes verwenden
 
-    // QR-Code Datei löschen, wenn vorhanden
-    if (qrCodeFilename) {
-      // Passe den Dateipfad entsprechend deiner QR-Code-Speicherstruktur an
-      const qrCodePath = `./qr_codes/${qrCodeFilename}`;
-      // QR-Code Datei löschen
-      fs.unlinkSync(qrCodePath);
-      console.log("QR-Code erfolgreich gelöscht:", qrCodePath);
-    }
+    // // QR-Code Datei löschen, wenn vorhanden
+    // if (qrCodeFilename) {
+    //   // Passe den Dateipfad entsprechend deiner QR-Code-Speicherstruktur an
+    //   const qrCodePath = `./qr_codes/${qrCodeFilename}`;
+    //   // QR-Code Datei löschen
+    //   fs.unlinkSync(qrCodePath);
+    //   console.log("QR-Code erfolgreich gelöscht:", qrCodePath);
+    // }
 
     // Ticket löschen
     await Ticket.findByIdAndDelete(req.params.id);

@@ -1,10 +1,30 @@
+import axios from "axios";
 import React from "react";
 
 const EditableRow = ({
   editFormData,
   handleEditFormChange,
   handleCancelClick,
+  editTicketID,
 }) => {
+  const handleUpdateTicket = async () => {
+    console.log(
+      editFormData.artist,
+      editFormData.date,
+      editFormData,
+      editTicketID
+    );
+    try {
+      const res = await axios.put(
+        `http://localhost:4000/dashboard/tickets/${editTicketID}`,
+        editFormData
+      );
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <tr>
       <td>
@@ -34,7 +54,7 @@ const EditableRow = ({
           onChange={handleEditFormChange}
         />
       </td>
-      <td>
+      {/* <td>
         <input
           type="text"
           name="venueName"
@@ -78,7 +98,7 @@ const EditableRow = ({
           value={editFormData.location.country}
           onChange={handleEditFormChange}
         />
-      </td>
+      </td> */}
       <td>
         <input
           type="date"
@@ -179,7 +199,9 @@ const EditableRow = ({
         />
       </td>
       <td>
-        <button type="submit">Save</button>
+        <button type="submit" onClick={handleUpdateTicket}>
+          Save
+        </button>
         <button type="button" onClick={handleCancelClick}>
           Cancel
         </button>

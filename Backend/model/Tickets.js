@@ -9,8 +9,15 @@ const fs = require("fs");
 async function generateQRCodeData(ticket) {
   const qrCodeData = {
     _id: ticket._id.toString(),
+    title: ticket.title.toString(),
+    artist: ticket.artist.toString(),
+    description: ticket.description,
+    date: ticket.date,
+    startTime: ticket.startTime,
+    endTime: ticket.endTime,
+    price: ticket.price,
+
     qrCode: uuidv4(), // UUID for unique identification
-    qrCodeImage: ticket.qrCodeImage,
   };
   return JSON.stringify(qrCodeData);
 }
@@ -18,6 +25,7 @@ async function generateQRCodeData(ticket) {
 // Function to generate the QR code image as Base64
 async function generateQRCodeImage(qrCodeData) {
   try {
+    // Example: Create QR code with only _id and qrCode properties
     const qrCodeDataURL = await qrcode.toDataURL(qrCodeData);
     return qrCodeDataURL;
   } catch (error) {
@@ -30,13 +38,6 @@ const ticketSchema = new mongoose.Schema({
   title: { type: String, required: true },
   artist: { type: String, required: true },
   description: { type: String, required: true },
-  location: {
-    venueName: { type: String, required: true },
-    addressLine1: { type: String, required: true },
-    state: String,
-    postalCode: { type: String, required: true },
-    country: { type: String, required: true },
-  },
   date: { type: Date, required: true },
   startTime: { type: String, required: true },
   endTime: { type: String, required: true },
@@ -46,18 +47,11 @@ const ticketSchema = new mongoose.Schema({
   ticketType: { type: String, required: true },
   quantityAvailable: { type: Number, required: true },
   image: { type: String },
-  qrCode: { type: String, unique: true },
-  qrCodeImage: { type: String, unique: true },
-  additionalInfo: {
-    ageRestriction: { type: String },
-    dressCode: { type: String },
-    accessibilityInfo: { type: String },
-    parkingInfo: { type: String },
-    contactInfo: { type: String },
-  },
+  qrCode: { type: String, unique: true, maxlength: 100 },
+  qrCodeImage: { type: String, unique: true, maxlength: 10000 },
   seat: { type: String, required: true },
   row: { type: String, required: true },
-  selectedSeats: [String], // Array von ausgewählten Sitzplatz-IDs oder anderen relevanten Informationen
+  selectedSeats: [String],
 });
 
 // Pre-save hook to generate QR codes and QR code images

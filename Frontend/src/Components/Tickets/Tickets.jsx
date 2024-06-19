@@ -60,16 +60,16 @@ const Ticket = () => {
             <p className=" description text-lg text-[#d8475e] mb-5 flex justify-center ">
               {ticket.description}
             </p>
-            <div className="flex justify-around mb-5 bg-gray-300 p-5">
-              <div className="text-center  ">
+            <div className=" trs flex justify-around mb-5 bg-gray-300 p-5  ">
+              <div className="time text-center text-[#d8475e] ">
                 <p className="text-sm">TIME</p>
                 <p className="text-2xl text-[#2d3b56]">{ticket.startTime}</p>
               </div>
-              <div className="text-center">
+              <div className=" row text-center text-[#d8475e]">
                 <p className="text-sm">ROW</p>
                 <p className="text-2xl text-[#2d3b56]">{ticket.row}</p>
               </div>
-              <div className="text-center">
+              <div className=" seat text-center text-[#d8475e]">
                 <p className="text-sm">SEAT</p>
                 <p className="text-2xl text-[#2d3b56]">{ticket.seat}</p>
               </div>

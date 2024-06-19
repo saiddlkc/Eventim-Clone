@@ -39,6 +39,26 @@
 }
 
 
+
+.time {
+    font-family: 'BOYCOTT';
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.row {
+    font-family: 'BOYCOTT';
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.seat {
+    font-family: 'BOYCOTT';
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+
 /* .ticket-container {
 
 }
