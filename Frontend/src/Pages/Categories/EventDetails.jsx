@@ -28,35 +28,37 @@ const EventDetails = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 p-8">
-      <div className="bg-white shadow-md rounded-lg overflow-hidden w-full max-w-4xl">
+    <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 p-8">
+      <div className="bg-white shadow-md overflow-hidden w-full max-w-4xl">
         <img
           className="w-full h-64 object-cover"
           src={event.bild}
           alt={event.titel}
         />
-        <div className="p-8 container">
-          <h1 className="text-3xl font-bold mb-4 text-gray-800">
+        <div className="p-8">
+          <h1 className="text-4xl font-extrabold mb-6 text-gray-800">
             {event.titel}
           </h1>
-          <p className="text-lg text-gray-600 mb-4">{event.beschreibung}</p>
-          <div className="text-lg text-gray-700">
-            <p className="mb-2">
+          <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+            {event.beschreibung}
+          </p>
+          <div className="text-lg text-gray-700 mb-6">
+            <p className="mb-4">
               <span className="font-semibold">Stadt:</span> {event.ort.stadt}
             </p>
-            <p className="mb-2">
+            <p className="mb-4">
               <span className="font-semibold">Adresse:</span>{" "}
               {event.ort.adresse}
             </p>
-            <p className="mb-2">
+            <p className="mb-4">
               <span className="font-semibold">Beginnt am:</span>{" "}
               {formatDate(event.startDatum)}
             </p>
-            <p className="mb-2">
+            <p className="mb-4">
               <span className="font-semibold">Endet am:</span>{" "}
               {formatDate(event.endDatum)}
             </p>
-            <p className="mb-4">
+            <p>
               <span className="font-semibold">Uhrzeit:</span> 21:00
             </p>
           </div>

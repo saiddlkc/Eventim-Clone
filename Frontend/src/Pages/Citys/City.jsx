@@ -85,37 +85,42 @@ const City = () => {
           </div>
         </div>
         <p className="text-5xl text-center p-4">
-          Beliebtesten Events in {city}
+          Beliebtesten Events in {city.charAt(0).toUpperCase() + city.slice(1)}
         </p>
 
-        <div className="flex flex-wrap justify-center ">
+        <div className="flex flex-wrap justify-center">
           {events.length > 0 ? (
             events.map((event) => (
               <div
                 key={event._id}
-                className="p-4 m-4 border-orange-700 border-2  max-w-4xl flex flex-col  rounded-2xl bg-white shadow-lg  container"
+                className="p-2 m-2 border-orange-700 border-2 w-48 flex flex-col rounded-2xl bg-white shadow-lg"
               >
                 <img
-                  className="w-full md:w-48 h-48  rounded-md object-cover"
+                  className="w-full h-32 rounded-t-md object-cover"
                   src={event.bild}
                   alt={event.titel}
                 />
-                <div className="ml-4 flex flex-col flex-1 mt-4 md:mt-0">
-                  <div>
-                    <h2 className="text-xl font-bold">{event.titel}</h2>
-                    <div className="flex justify-center  sm:justify-center  md:justify-end ">
-                      <Link to={`/events/${event._id}`}>
-                        <button className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600">
-                          Zu den Tickets
-                        </button>
-                      </Link>
-                    </div>
+                <div className="p-2 flex flex-col flex-1">
+                  <h2 className="text-lg font-bold">{event.titel}</h2>
+                  <p className="mt-1 text-md">
+                    Ticketpreis ab: {event.ticketPreis}€
+                  </p>
+                  <div className="flex-grow"></div>
+                  <div className="flex justify-center mt-2">
+                    <Link to={`/events/${event._id}`}>
+                      <button className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600">
+                        Zu den Tickets
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>
             ))
           ) : (
-            <p>Keine Events gefunden für {city}.</p>
+            <p>
+              Keine Events gefunden für{" "}
+              {city.charAt(0).toUpperCase() + city.slice(1)}.
+            </p>
           )}
         </div>
       </div>
