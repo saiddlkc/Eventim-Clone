@@ -1,0 +1,7 @@
+.fit-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px; /* oder eine andere gewünschte Höhe */
+  }
+  
