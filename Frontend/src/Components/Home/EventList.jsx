@@ -31,14 +31,18 @@ export default function EventList() {
               <img
                 src={event.bild}
                 alt={event.titel}
-                className="w-full h-28 object-cover"
+                className="w-full h-20 object-cover object-fit"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                <div className="text-center">
-                  <Typography variant="h5" color="white">
+              <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-between">
+                <div className="text-center flex items-center justify-center mx-4">
+                  <Typography
+                    variant="h5"
+                    color="white"
+                    className="border rounded-full border-white w-10 h-10 flex items-center justify-center "
+                  >
                     {index + 1 < 10 ? `0${index + 1}` : index + 1}
                   </Typography>
-                  <Typography variant="h6" color="white" className="mt-2">
+                  <Typography variant="h6" color="white" className="pl-2">
                     {event.titel}
                   </Typography>
                 </div>

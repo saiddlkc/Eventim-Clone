@@ -278,19 +278,19 @@ export function SortableTable() {
               <thead>
                 <tr>
                   <th
-                    className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-500 p-2 transition-colors hover:bg-blue-gray-300 rounded"
+                    className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-500 px-4 py-1 transition-colors hover:bg-blue-gray-300 rounded"
                     onClick={() => setIsAddUserFormOpen(!isAddUserFormOpen)}
                   >
                     <Typography
                       variant="h4"
                       color="white"
-                      className="flex items-center justify-between gap-2 font-normal leading-none capitalize"
+                      className="flex items-center justify-between font-normal leading-none capitalize"
                     >
                       <span className="flex">
                         <UserPlusIcon className="h-5 w-5" />
                         Add a new user
                       </span>
-                      <Button>show form</Button>
+                      <Button size="sm">show form</Button>
                     </Typography>
                   </th>
                 </tr>
@@ -377,7 +377,7 @@ export function SortableTable() {
           </CardBody>
         </Card>
       </div>
-      <hr className="border-t-2 border-blue-gray-200 mt-4 mb-4" />
+
       <div className="m-2">
         <Card className="h-full w-full">
           <CardHeader floated={false} shadow={false} className="rounded-none">

@@ -20,7 +20,11 @@ export default function CarouselWithEvents() {
   }, []);
 
   return (
-    <Carousel className="h-[500px]" autoplay={true} interval={3000}>
+    <Carousel
+      className="h-[300px] container mx-auto"
+      autoplay={true}
+      interval={3000}
+    >
       {events.map((event) => (
         <div key={event._id} className="relative h-full w-full">
           <img
