@@ -79,8 +79,9 @@ const TicketTable = () => {
     event.preventDefault();
     try {
       const res = await axios.post("http://localhost:4000/dashboard/tickets/", {
-        ...addFormData,
+        addFormData,
       });
+      setAddFormData(res.data);
       console.log(res.data);
       setTicket([...ticket, res.data]);
       setAddFormData({
