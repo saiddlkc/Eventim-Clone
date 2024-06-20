@@ -28,42 +28,27 @@ const EventDetails = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 p-8">
-      <div className="bg-white shadow-md rounded-lg overflow-hidden w-full max-w-4xl">
+    <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 container mx-auto">
+      {/* Hintergrundbild mit überlagertem Text */}
+      <div className="relative lg:flex sm:flex-col   items-center justify-start w-full font-extrabold  bg-gray-300">
         <img
-          className="w-full h-64 object-cover"
-          src={event.bild}
+          src={event.headerUrl}
           alt={event.titel}
+          className="h-full w-full  lg:object-cover "
         />
-        <div className="p-8">
-          <h1 className="text-3xl font-bold mb-4 text-gray-800">
-            {event.titel}
-          </h1>
-          <p className="text-lg text-gray-600 mb-4">{event.beschreibung}</p>
-          <div className="text-lg text-gray-700">
-            <p className="mb-2">
-              <span className="font-semibold">Stadt:</span> {event.ort.stadt}
+        <div className="lg:absolute sm:relative top-0 lg:w-full h-full flex items-center justify-start p-4 sm:left-0 italic bg-opacity-25  bg-black ">
+          <div className="lg:ml-16 md:ml-5 sm:mt-5 lg:mt-1 ">
+            <h2 className=" font-extrabold sm:mb-1 lg:m-6 lg:text-white sm:text-black">
+              {event.titel}
+            </h2>
+            <p className=" lg:text-white  sm:text-black sm:mb-1 lg:m-6 ">
+              {event.beschreibung}
             </p>
-            <p className="mb-2">
-              <span className="font-semibold">Adresse:</span>{" "}
-              {event.ort.adresse}
-            </p>
-            <p className="mb-2">
-              <span className="font-semibold">Beginnt am:</span>{" "}
-              {formatDate(event.startDatum)}
-            </p>
-            <p className="mb-2">
-              <span className="font-semibold">Endet am:</span>{" "}
-              {formatDate(event.endDatum)}
-            </p>
-            <p className="mb-4">
-              <span className="font-semibold">Uhrzeit:</span> 21:00
-            </p>
-          </div>
-          <div className="flex justify-center">
-            <button className="bg-orange-600 text-white py-2 px-8 rounded-lg hover:bg-orange-700 transition duration-300">
-              Kaufen
-            </button>
+            <div className=" lg:text-white sm:text-black sm:mb-1 lg:m-6 text-xs">
+              <p className="mb-4">
+                {formatDate(event.startDatum)} - {formatDate(event.endDatum)}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -72,7 +57,7 @@ const EventDetails = () => {
 };
 
 const formatDate = (dateString) => {
-  const options = { year: "numeric", month: "long", day: "numeric" };
+  const options = { year: "numeric", month: "numeric", day: "numeric" };
   return new Date(dateString).toLocaleDateString("de-DE", options);
 };
 
