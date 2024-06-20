@@ -25,23 +25,11 @@ const cityImages = {
     "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/duesseldorf-city-header-1440x244.jpg",
 };
 
-/**
- * Komponente, die die Events einer bestimmten Stadt anzeigt.
- */
-/**
- * Renders the City component.
- * Displays a list of popular events in a specific city.
- */
 const City = () => {
   const [events, setEvents] = useState([]); // Zustand für die Events
   const [cityImage, setCityImage] = useState(""); // Zustand für das Stadtbild
   const { city } = useParams(); // Parameter für die Stadt aus der URL
 
-  /**
-   * Effekt, der bei Änderung der Stadt aufgerufen wird.
-   * Ruft die Events für die Stadt ab und aktualisiert den Zustand.
-   * Ruft das Stadtbild ab und aktualisiert den Zustand.
-   */
   useEffect(() => {
     if (city) {
       axios
