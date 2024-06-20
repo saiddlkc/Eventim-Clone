@@ -36,7 +36,7 @@ const EventDetails = () => {
           alt={event.titel}
           className="h-full w-full  lg:object-cover "
         />
-        <div className="lg:absolute sm:relative top-0 lg:w-full h-full flex items-center justify-start p-4 sm:left-0 italic bg-opacity-25   ">
+        <div className="lg:absolute sm:relative top-0 lg:w-full h-full flex items-center justify-start p-4 sm:left-0 italic bg-opacity-25  bg-black ">
           <div className="lg:ml-16 md:ml-5 sm:mt-5 lg:mt-1 ">
             <h2 className=" font-extrabold sm:mb-1 lg:m-6 lg:text-white sm:text-black">
               {event.titel}
