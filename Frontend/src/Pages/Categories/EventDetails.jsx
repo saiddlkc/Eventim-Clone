@@ -28,13 +28,9 @@ const EventDetails = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 p-8">
+    <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 p-8 container mx-auto">
+      <img className="mb-4" src={event.headerUrl} alt={event.titel} />
       <div className="bg-white shadow-md overflow-hidden w-full max-w-4xl">
-        <img
-          className="w-full h-64 object-cover"
-          src={event.bild}
-          alt={event.titel}
-        />
         <div className="p-8">
           <h1 className="text-4xl font-extrabold mb-6 text-gray-800">
             {event.titel}
@@ -51,21 +47,8 @@ const EventDetails = () => {
               {event.ort.adresse}
             </p>
             <p className="mb-4">
-              <span className="font-semibold">Beginnt am:</span>{" "}
-              {formatDate(event.startDatum)}
+              {formatDate(event.startDatum)} - {formatDate(event.endDatum)}
             </p>
-            <p className="mb-4">
-              <span className="font-semibold">Endet am:</span>{" "}
-              {formatDate(event.endDatum)}
-            </p>
-            <p>
-              <span className="font-semibold">Uhrzeit:</span> 21:00
-            </p>
-          </div>
-          <div className="flex justify-center">
-            <button className="bg-orange-600 text-white py-2 px-8 rounded-lg hover:bg-orange-700 transition duration-300">
-              Kaufen
-            </button>
           </div>
         </div>
       </div>
@@ -74,7 +57,7 @@ const EventDetails = () => {
 };
 
 const formatDate = (dateString) => {
-  const options = { year: "numeric", month: "long", day: "numeric" };
+  const options = { year: "numeric", month: "numeric", day: "numeric" };
   return new Date(dateString).toLocaleDateString("de-DE", options);
 };
 

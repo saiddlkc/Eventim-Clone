@@ -96,7 +96,7 @@ const City = () => {
                 className="p-2 m-2 border-orange-700 border-2 w-48 flex flex-col rounded-2xl bg-white shadow-lg"
               >
                 <img
-                  className="w-full h-32 rounded-t-md object-cover"
+                  className="w-full h-32  object-cover object-top"
                   src={event.bild}
                   alt={event.titel}
                 />
