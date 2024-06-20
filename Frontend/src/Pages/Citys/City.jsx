@@ -11,8 +11,7 @@ const cityImages = {
     "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/hamburg-city-header-1440x244.jpg",
   münchen:
     "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/muenchen-city-header-1440x244.jpg",
-  köln:
-    "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/koeln-city-header-1440x244.jpg",
+  köln: "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/koeln-city-header-1440x244.jpg",
   frankfurt:
     "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/frankfurt-city-header-1440x244.jpg",
   stuttgart:
