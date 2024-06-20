@@ -33,6 +33,7 @@ const EventsTableList = () => {
     startDatum: "",
     endDatum: "",
     bild: "",
+    headerUrl: "",
     ort: {
       adresse: "",
       stadt: "",
@@ -63,11 +64,11 @@ const EventsTableList = () => {
       .delete(`http://localhost:4000/dashboard/event/${eventId}`)
       .then(() => {
         setEvents(events.filter((event) => event._id !== eventId));
-        toast.success("Event added successfully");
+        toast.success("Event deleted successfully");
       })
       .catch((err) => {
         console.error("Error deleting event:", err);
-        toast.error("Error adding event");
+        toast.error("Error deleting event");
       });
   };
 
@@ -87,17 +88,17 @@ const EventsTableList = () => {
           events.map((event) => (event._id === editEventId ? res.data : event))
         );
         setEditEventId(null);
-        toast.success("Event added successfully");
+        toast.success("Event updated successfully");
       })
       .catch((err) => {
         console.error("Error updating event:", err);
-        toast.error("Error Update event");
+        toast.error("Error updating event");
       });
   };
 
   const handleCancel = () => {
     setEditEventId(null);
-    toast.error("Error Update event");
+    toast.error("Cancelled editing event");
   };
 
   const handleChange = (e) => {
@@ -118,6 +119,7 @@ const EventsTableList = () => {
         case "startDatum":
         case "endDatum":
         case "bild":
+        case "headerUrl":
           newEvent[name] = value;
           break;
         case "adresse":
@@ -155,6 +157,7 @@ const EventsTableList = () => {
           startDatum: "",
           endDatum: "",
           bild: "",
+          headerUrl: "",
           ort: {
             adresse: "",
             stadt: "",
@@ -189,9 +192,9 @@ const EventsTableList = () => {
   ];
 
   return (
-    <div className="mt-4  table-auto text-left">
+    <div className="mt-4">
       <ToastContainer />
-      <div className="mt-4">
+      <div className="mb-4">
         <Card className="h-full w-full bg-blue-gray-100 p-3">
           <CardHeader
             floated={false}
@@ -202,7 +205,7 @@ const EventsTableList = () => {
               <Typography
                 variant="4"
                 color="blue-gray"
-                className="flex items-center justify-between gap-2  font-normal leading-none  capitalize"
+                className="flex items-center justify-between gap-2 font-normal leading-none capitalize"
               >
                 Add New Event
               </Typography>
@@ -225,7 +228,7 @@ const EventsTableList = () => {
                   value={newEvent.titel}
                   onChange={handleNewEventChange}
                   color="black"
-                  className=" bg-gray-50"
+                  className="bg-gray-50"
                 />
                 <Input
                   type="text"
@@ -233,7 +236,7 @@ const EventsTableList = () => {
                   label="Category"
                   value={newEvent.kategorie}
                   onChange={handleNewEventChange}
-                  className=" bg-gray-50"
+                  className="bg-gray-50"
                 />
                 <Input
                   type="text"
@@ -241,7 +244,7 @@ const EventsTableList = () => {
                   label="Description"
                   value={newEvent.beschreibung}
                   onChange={handleNewEventChange}
-                  className=" bg-gray-50"
+                  className="bg-gray-50"
                 />
                 <Input
                   type="text"
@@ -249,7 +252,15 @@ const EventsTableList = () => {
                   label="Image URL"
                   value={newEvent.bild}
                   onChange={handleNewEventChange}
-                  className=" bg-gray-50"
+                  className="bg-gray-50"
+                />
+                <Input
+                  type="text"
+                  name="headerUrl"
+                  label="Header Image URL"
+                  value={newEvent.headerUrl}
+                  onChange={handleNewEventChange}
+                  className="bg-gray-50"
                 />
                 <Input
                   type="date"
@@ -257,7 +268,7 @@ const EventsTableList = () => {
                   label="Start Date"
                   value={newEvent.startDatum}
                   onChange={handleNewEventChange}
-                  className=" bg-gray-50"
+                  className="bg-gray-50"
                 />
                 <Input
                   type="date"
@@ -265,7 +276,7 @@ const EventsTableList = () => {
                   label="End Date"
                   value={newEvent.endDatum}
                   onChange={handleNewEventChange}
-                  className=" bg-gray-50"
+                  className="bg-gray-50"
                 />
                 <Input
                   type="text"
@@ -273,7 +284,7 @@ const EventsTableList = () => {
                   label="Address"
                   value={newEvent.ort.adresse}
                   onChange={handleNewEventChange}
-                  className=" bg-gray-50"
+                  className="bg-gray-50"
                 />
                 <Input
                   type="text"
@@ -281,7 +292,7 @@ const EventsTableList = () => {
                   label="City"
                   value={newEvent.ort.stadt}
                   onChange={handleNewEventChange}
-                  className=" bg-gray-50"
+                  className="bg-gray-50"
                 />
                 <Input
                   type="text"
@@ -289,7 +300,7 @@ const EventsTableList = () => {
                   label="State"
                   value={newEvent.ort.bundesland}
                   onChange={handleNewEventChange}
-                  className=" bg-gray-50"
+                  className="bg-gray-50"
                 />
                 <Input
                   type="text"
@@ -297,7 +308,7 @@ const EventsTableList = () => {
                   label="Country"
                   value={newEvent.ort.land}
                   onChange={handleNewEventChange}
-                  className=" bg-gray-50"
+                  className="bg-gray-50"
                 />
                 <Input
                   type="text"
@@ -305,7 +316,7 @@ const EventsTableList = () => {
                   label="Organizer Name"
                   value={newEvent.veranstalter.name}
                   onChange={handleNewEventChange}
-                  className=" bg-gray-50"
+                  className="bg-gray-50"
                 />
                 <Input
                   type="email"
@@ -313,7 +324,7 @@ const EventsTableList = () => {
                   label="Organizer Email"
                   value={newEvent.veranstalter.kontakt.email}
                   onChange={handleNewEventChange}
-                  className=" bg-gray-50"
+                  className="bg-gray-50"
                 />
                 <Button variant="solid" color="black" onClick={handleAddEvent}>
                   Add Event
@@ -338,7 +349,7 @@ const EventsTableList = () => {
             </div>
           </CardHeader>
           <CardBody className="overflow-scroll px-0">
-            <table className="mt-4 w-full min-w-max table-auto text-left">
+            <table className="w-full min-w-max table-auto text-left">
               <thead>
                 <tr>
                   {TABLE_HEAD.map((head) => (

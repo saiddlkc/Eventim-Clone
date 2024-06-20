@@ -25,11 +25,23 @@ const cityImages = {
     "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/duesseldorf-city-header-1440x244.jpg",
 };
 
+/**
+ * Komponente, die die Events einer bestimmten Stadt anzeigt.
+ */
+/**
+ * Renders the City component.
+ * Displays a list of popular events in a specific city.
+ */
 const City = () => {
-  const [events, setEvents] = useState([]);
-  const [cityImage, setCityImage] = useState("");
-  const { city } = useParams();
+  const [events, setEvents] = useState([]); // Zustand für die Events
+  const [cityImage, setCityImage] = useState(""); // Zustand für das Stadtbild
+  const { city } = useParams(); // Parameter für die Stadt aus der URL
 
+  /**
+   * Effekt, der bei Änderung der Stadt aufgerufen wird.
+   * Ruft die Events für die Stadt ab und aktualisiert den Zustand.
+   * Ruft das Stadtbild ab und aktualisiert den Zustand.
+   */
   useEffect(() => {
     if (city) {
       axios
@@ -42,7 +54,10 @@ const City = () => {
           console.log(cityEvents);
         })
         .catch((error) => {
-          console.error("There was an error fetching the events!", error);
+          console.error(
+            "Beim Abrufen der Events ist ein Fehler aufgetreten!",
+            error
+          );
         });
 
       if (cityImages[city]) {
@@ -53,14 +68,6 @@ const City = () => {
     }
   }, [city]);
 
-  const formatDate = (dateString) => {
-    return format(new Date(dateString), "dd.MM.yyyy");
-  };
-
-  const formatTime = (dateString) => {
-    return format(new Date(dateString), "HH:mm");
-  };
-
   return (
     <div>
       <Outlet />
@@ -70,15 +77,15 @@ const City = () => {
             <img
               src={cityImage}
               alt={city}
-              className="h-96 w-full object-center "
+              className="h-96 w-full object-cover"
             />
           )}
-          <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center text-8xl text-bold text-white italic bg-opacity-15 bg-black">
+          <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center text-5xl sm:text-6xl md:text-8xl lg:text-8xl font-bold text-white italic bg-opacity-15 bg-black">
             {city.toUpperCase()}
           </div>
         </div>
         <p className="text-5xl text-center p-4">
-          Beliebtesten Events in Berlin
+          Beliebtesten Events in {city.charAt(0).toUpperCase() + city.slice(1)}
         </p>
 
         <div className="flex flex-wrap justify-center">
@@ -86,27 +93,20 @@ const City = () => {
             events.map((event) => (
               <div
                 key={event._id}
-                className="p-8 m-4 border-orange-700 border-2  w-full max-w-4xl flex rounded-2xl bg-white shadow-lg"
+                className="p-2 m-2 border-orange-700 border-2 w-48 flex flex-col rounded-2xl bg-white shadow-lg"
               >
                 <img
-                  className="w-64 h-48 border-orange-700 border-2 rounded-md "
+                  className="w-full h-32  object-cover object-top"
                   src={event.bild}
                   alt={event.titel}
                 />
-                <div className="ml-4 flex flex-col flex-1">
-                  <div>
-                    <h2 className="text-xl font-bold">{event.titel}</h2>
-                    <p className="mt-2 opacity-70">{event.beschreibung}</p>
-                    <p className="mt-2 opacity-70">{event.ort.adresse}</p>
-                    <p className="mt-2 opacity-70">
-                      Beginnt am: {formatDate(event.startDatum)}
-                    </p>
-                    <p className="mt-2 opacity-70">
-                      {" "}
-                      Endet am: {formatDate(event.endDatum)}
-                    </p>
-                  </div>
-                  <div className="flex justify-end mt-auto">
+                <div className="p-2 flex flex-col flex-1">
+                  <h2 className="text-lg font-bold">{event.titel}</h2>
+                  <p className="mt-1 text-md">
+                    Ticketpreis ab: {event.ticketPreis}€
+                  </p>
+                  <div className="flex-grow"></div>
+                  <div className="flex justify-center mt-2">
                     <Link to={`/events/${event._id}`}>
                       <button className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600">
                         Zu den Tickets
@@ -117,7 +117,10 @@ const City = () => {
               </div>
             ))
           ) : (
-            <p>No events found for {city}.</p>
+            <p>
+              Keine Events gefunden für{" "}
+              {city.charAt(0).toUpperCase() + city.slice(1)}.
+            </p>
           )}
         </div>
       </div>
