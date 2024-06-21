@@ -7,6 +7,10 @@ const EventDetails = () => {
   const { id } = useParams();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (id) {
       axios
         .get(`http://localhost:4000/dashboard/event/${id}`)

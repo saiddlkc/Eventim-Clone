@@ -34,6 +34,13 @@ import {
   FaBuildingLock,
   FaBuildingColumns,
 } from "react-icons/fa6";
+import { FaReact } from "react-icons/fa";
+import { MdOutlineTheaterComedy } from "react-icons/md";
+import { IoIosMusicalNotes } from "react-icons/io";
+import { RiSlideshow2Line } from "react-icons/ri";
+import { BiSolidParty } from "react-icons/bi";
+import { MdOutlineSportsSoccer } from "react-icons/md";
+import { MdSportsKabaddi } from "react-icons/md";
 
 import logo from "../../assets/img/eventhub-logo.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -101,17 +108,69 @@ const navListMenuItems = [
   },
 ];
 
+const navCategoryMenuItems = [
+  {
+    title: "Comedy",
+    description: "Lachen Sie sich schlapp bei den besten Comedians",
+    icon: MdOutlineTheaterComedy,
+    link: "/cities/berlin",
+  },
+  {
+    title: "Musical",
+    description: " Erleben Sie die besten Musicals live",
+    icon: IoIosMusicalNotes,
+    link: "/cities/düsseldorf",
+  },
+  {
+    title: "Show",
+    description: " Erleben Sie die besten Shows live",
+    icon: RiSlideshow2Line,
+    link: "/cities/köln",
+  },
+  {
+    title: "Theater",
+    description: " Genießen Sie die besten Theaterstücke live",
+    icon: MdOutlineTheaterComedy,
+    link: "/cities/stuttgart",
+  },
+  {
+    title: "Konzert",
+    description:
+      " Tauchen Sie ein in die Welt der Musik und erleben Sie die besten Konzerte live",
+    icon: BiSolidParty,
+    link: "/cities/münchen",
+  },
+  {
+    title: "Sport",
+    description: " Erleben Sie die besten Sportevents live",
+    icon: MdOutlineSportsSoccer,
+    link: "/cities/hamburg",
+  },
+  {
+    title: "Kultur",
+    description: " Erleben Sie die besten Kulturveranstaltungen live",
+    icon: FaReact,
+    link: "/cities/leipzig",
+  },
+  {
+    title: "Boxen & Wrestling ",
+    description: " Erleben Sie die besten Box- und Wrestlingevents live",
+    icon: MdSportsKabaddi,
+    link: "/cities/frankfurt",
+  },
+];
+
 function NavListMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const renderItems = navListMenuItems.map(
+  const renderItems = navCategoryMenuItems.map(
     ({ icon, title, description }, key) => (
       <a href="#" key={key}>
         <MenuItem className="flex items-center gap-3 rounded-lg">
           <div className="flex items-center justify-center rounded-lg !bg-blue-gray-50 p-2">
             {React.createElement(icon, {
               strokeWidth: 2,
-              className: "h-6 text-gray-900 w-6",
+              className: "h-5 text-gray-900 w-6",
             })}
           </div>
           <div>
@@ -144,7 +203,7 @@ function NavListMenu() {
         allowHover={true}
       >
         <MenuHandler>
-          <Link to={"/categories"}>
+          <Link to={"/allcategories"}>
             <Typography as="div" variant="small" className="font-medium">
               <ListItem
                 className="flex items-center gap-2 py-2 pr-4 font-medium text-gray-900 text-xl"
@@ -169,7 +228,7 @@ function NavListMenu() {
           </Link>
         </MenuHandler>
         <MenuList className="hidden max-w-screen-xl rounded-xl lg:block">
-          <ul className="grid grid-cols-3 gap-y-2 outline-none outline-0">
+          <ul className="grid grid-cols-1 gap-y-2 outline-none outline-0">
             {renderItems}
           </ul>
         </MenuList>
@@ -187,13 +246,11 @@ function AllCities() {
   const renderItems = navListMenuItems.map(
     ({ icon, title, description, link }, key) => (
       <Link to={link} key={key}>
-        {" "}
-        {/* Verwende Link von react-router-dom für client-seitiges Routing */}
         <MenuItem className="flex items-center gap-3 rounded-lg">
           <div className="flex items-center justify-center rounded-lg !bg-blue-gray-50 p-2">
             {React.createElement(icon, {
               strokeWidth: 2,
-              className: "h-6 text-gray-900 w-6",
+              className: "h-5 text-gray-900 w-6",
             })}
           </div>
           <div>
@@ -251,7 +308,7 @@ function AllCities() {
           </Link>
         </MenuHandler>
         <MenuList className="hidden max-w-screen-xl rounded-xl lg:block">
-          <ul className="grid grid-cols-3 gap-y-2 outline-none outline-0">
+          <ul className="grid grid-cols-1 gap-y-2 outline-none outline-0">
             {renderItems}
           </ul>
         </MenuList>

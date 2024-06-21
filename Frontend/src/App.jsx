@@ -17,6 +17,7 @@ import HomeLayout from "./Layout/HomeLayout";
 import AllCities from "./Pages/Citys/Allcities";
 import City from "./Pages/Citys/City";
 import EventDetails from "./Pages/Categories/EventDetails";
+import AllEventCategorys from "./Pages/Categories/AllEventCategorys";
 
 function App() {
   return (
@@ -25,10 +26,11 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<HomeLayout />}>
         <Route index element={<HomePage />} />
-        <Route path="/categories" element={<EventsPage />} />
         <Route path="/events/:id" element={<EventDetails />} />
         <Route path="/cities/:city?" element={<City />} />
         <Route path="/allcities" element={<AllCities />} />
+        <Route path="/allcategories" element={<AllEventCategorys />} />
+        <Route path="/categories/:category" element={<EventsPage />} />
       </Route>
       <Route
         path="/customer-dashboard"
