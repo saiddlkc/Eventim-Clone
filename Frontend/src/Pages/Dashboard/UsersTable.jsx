@@ -46,6 +46,8 @@ export function SortableTable() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddUserFormOpen, setIsAddUserFormOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 6;
 
   useEffect(() => {
     axios
@@ -196,8 +198,23 @@ export function SortableTable() {
     setSearchTerm(e.target.value);
   };
 
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) =>
+      Math.min(prevPage + 1, Math.ceil(filteredUsers.length / usersPerPage))
+    );
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const displayedUsers = filteredUsers.slice(
+    (currentPage - 1) * usersPerPage,
+    currentPage * usersPerPage
   );
 
   const userStats = {
@@ -379,9 +396,9 @@ export function SortableTable() {
       </div>
 
       <div className="m-2">
-        <Card className="h-full w-full">
+        <Card className="h-full w-full bg-blue-gray-100">
           <CardHeader floated={false} shadow={false} className="rounded-none">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center bg-blue-gray-100">
               <Typography variant="h5" color="blue-gray">
                 Users
               </Typography>
@@ -396,13 +413,13 @@ export function SortableTable() {
             </div>
           </CardHeader>
           <CardBody className="px-0">
-            <table className="mt-4 w-full min-w-max table-auto text-left">
+            <table className=" mt-4 w-full min-w-max table-auto text-left ">
               <thead>
                 <tr>
                   {TABLE_HEAD.map((head, index) => (
                     <th
                       key={head}
-                      className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-500 p-4 transition-colors hover:bg-blue-gray-50"
+                      className=" cursor-pointer border-y border-blue-gray-100 bg-blue-gray-500 p-4 transition-colors hover:bg-blue-gray-50"
                     >
                       <Typography
                         variant="h6"
@@ -422,7 +439,7 @@ export function SortableTable() {
                 </tr>
               </thead>
               <tbody>
-                {filteredUsers.map(
+                {displayedUsers.map(
                   (
                     { _id, profilePicture, name, email, role, createdAt },
                     index
@@ -514,34 +531,37 @@ export function SortableTable() {
               </tbody>
             </table>
           </CardBody>
-          <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-            <Button variant="outlined" size="sm">
+          <CardFooter className="flex items-center justify-between p-4">
+            <Button
+              variant="outlined"
+              size="sm"
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+            >
               Previous
             </Button>
             <div className="flex items-center gap-2">
-              <IconButton variant="outlined" size="sm">
-                1
-              </IconButton>
-              <IconButton variant="text" size="sm">
-                2
-              </IconButton>
-              <IconButton variant="text" size="sm">
-                3
-              </IconButton>
-              <IconButton variant="text" size="sm">
-                ...
-              </IconButton>
-              <IconButton variant="text" size="sm">
-                8
-              </IconButton>
-              <IconButton variant="text" size="sm">
-                9
-              </IconButton>
-              <IconButton variant="text" size="sm">
-                10
-              </IconButton>
+              {Array.from({
+                length: Math.ceil(filteredUsers.length / usersPerPage),
+              }).map((_, index) => (
+                <IconButton
+                  key={index + 1}
+                  variant={currentPage === index + 1 ? "filled" : "text"}
+                  size="sm"
+                  onClick={() => setCurrentPage(index + 1)}
+                >
+                  {index + 1}
+                </IconButton>
+              ))}
             </div>
-            <Button variant="outlined" size="sm">
+            <Button
+              variant="outlined"
+              size="sm"
+              onClick={handleNextPage}
+              disabled={
+                currentPage === Math.ceil(filteredUsers.length / usersPerPage)
+              }
+            >
               Next
             </Button>
           </CardFooter>

@@ -47,6 +47,8 @@ const EventsTableList = () => {
       },
     },
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const eventsPerPage = 6;
 
   useEffect(() => {
     axios
@@ -180,6 +182,16 @@ const EventsTableList = () => {
       });
   };
 
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) =>
+      Math.min(prevPage + 1, Math.ceil(events.length / eventsPerPage))
+    );
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
   const TABLE_HEAD = [
     "Bild",
     "Titel",
@@ -190,6 +202,11 @@ const EventsTableList = () => {
     "Veranstalter",
     "Aktionen",
   ];
+
+  const currentEvents = events.slice(
+    (currentPage - 1) * eventsPerPage,
+    currentPage * eventsPerPage
+  );
 
   return (
     <div className="mt-4">
@@ -348,14 +365,14 @@ const EventsTableList = () => {
               </Typography>
             </div>
           </CardHeader>
-          <CardBody className="overflow-scroll px-0">
-            <table className="w-full min-w-max table-auto text-left">
+          <CardBody className="overflow-scroll px-0 ">
+            <table className="container mx-auto w-full min-w-max table-auto text-left">
               <thead>
                 <tr>
                   {TABLE_HEAD.map((head) => (
                     <th
                       key={head}
-                      className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-500 p-4 transition-colors hover:bg-blue-gray-50"
+                      className="w-[100px] cursor-pointer border-y border-blue-gray-100 bg-blue-gray-500 p-4 transition-colors hover:bg-blue-gray-50"
                     >
                       <Typography
                         variant="h6"
@@ -369,7 +386,7 @@ const EventsTableList = () => {
                 </tr>
               </thead>
               <tbody>
-                {events.map((event, index) => {
+                {currentEvents.map((event, index) => {
                   const isLast = index === events.length - 1;
                   const classes = isLast
                     ? "p-4"
@@ -383,7 +400,7 @@ const EventsTableList = () => {
                         <Avatar
                           src={event.bild}
                           alt="Event Bild"
-                          size="md"
+                          size="lg"
                           className="border border-blue-gray-50 bg-blue-gray-50/50 object-contain p-1"
                         />
                       </td>
@@ -601,20 +618,31 @@ const EventsTableList = () => {
               </tbody>
             </table>
           </CardBody>
-          <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+          <CardFooter className="flex items-center justify-between p-4">
             <Typography
               variant="small"
               color="blue-gray"
               className="font-normal"
             >
-              Page 1 of 5
+              Page {currentPage} of {Math.ceil(events.length / eventsPerPage)}
             </Typography>
             <div className="flex gap-2">
-              <Button variant="outlined" size="sm">
+              <Button
+                variant="outlined"
+                size="sm"
+                onClick={handlePreviousPage}
+                disabled={currentPage === 1}
+              >
                 Previous
               </Button>
-
-              <Button variant="outlined" size="sm">
+              <Button
+                variant="outlined"
+                size="sm"
+                onClick={handleNextPage}
+                disabled={
+                  currentPage === Math.ceil(events.length / eventsPerPage)
+                }
+              >
                 Next
               </Button>
             </div>
