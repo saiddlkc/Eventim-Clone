@@ -44,7 +44,7 @@ const SwiperMain = () => {
 
   return (
     <>
-      <div className="block md:hidden">
+      <div className="block md:hidden ">
         <Swiper
           slidesPerView={1}
           grid={{
@@ -89,7 +89,7 @@ const SwiperMain = () => {
         </Swiper>
       </div>
 
-      <div className="hidden md:block">
+      <div className="hidden md:block ">
         <Swiper
           slidesPerView={1}
           grid={{
@@ -112,7 +112,7 @@ const SwiperMain = () => {
               key={index}
               className="flex justify-center items-center"
             >
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 my-1">
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 my-1 py-2 mb-8">
                 {eventGroup.map((event) => (
                   <Card
                     key={event._id}

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Settings from "../../Components/Home/Settings";
-import AllCities from "../Citys/Allcities";
+import AllCitiesCard from "../../Components/Home/AllCitiesCard";
 import CarouselWithContent from "../../Components/Home/CarouselCities";
 import CarouselWithEvents from "../../Components/Home/CorouselEvents";
 import EventList from "../../Components/Home/EventList";
-import EventCardList from "../../Components/Home/EventCardList";
+import MasonryGridGallery from "../../Components/Home/Galery";
+
 import SwiperMain from "../../Components/Home/Swiper/Swiper";
-import SwiperFooter from "../../Components/Home/Swiper/SwiperFooter";
 
 const HomePage = () => {
   const [backgroundColor, setbackgroundColor] = useState("white");
@@ -30,12 +30,12 @@ const HomePage = () => {
         <SwiperMain />
         <CarouselWithContent />
         <div className="container mx-auto">
-          <AllCities />
+          <AllCitiesCard />
+          <MasonryGridGallery />
         </div>
         <CarouselWithEvents />
         {/* <EventCardList /> */}
         <EventList />
-        <SwiperFooter />
       </div>
     </div>
   );
