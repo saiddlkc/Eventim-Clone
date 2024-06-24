@@ -17,6 +17,7 @@ import HomeLayout from "./Layout/HomeLayout";
 import AllCities from "./Pages/Citys/Allcities";
 import City from "./Pages/Citys/City";
 import EventDetails from "./Pages/Categories/EventDetails";
+import AboutPage from "./Pages/About/AboutPage";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/events/:id" element={<EventDetails />} />
         <Route path="/cities/:city?" element={<City />} />
         <Route path="/allcities" element={<AllCities />} />
+        <Route path="/about" element={<AboutPage />} />
       </Route>
       <Route
         path="/customer-dashboard"

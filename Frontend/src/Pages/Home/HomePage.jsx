@@ -6,6 +6,7 @@ import CarouselWithEvents from "../../Components/Home/CorouselEvents";
 import EventList from "../../Components/Home/EventList";
 import EventCardList from "../../Components/Home/EventCardList";
 import SwiperMain from "../../Components/Home/Swiper/Swiper";
+import SwiperFooter from "../../Components/Home/Swiper/SwiperFooter";
 
 const HomePage = () => {
   const [backgroundColor, setbackgroundColor] = useState("white");
@@ -34,6 +35,7 @@ const HomePage = () => {
         <CarouselWithEvents />
         {/* <EventCardList /> */}
         <EventList />
+        <SwiperFooter />
       </div>
     </div>
   );
