@@ -7,6 +7,10 @@ const EventDetails = () => {
   const { id } = useParams();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (id) {
       axios
         .get(`http://localhost:4000/dashboard/event/${id}`)
@@ -28,7 +32,7 @@ const EventDetails = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 container mx-auto">
+    <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 container mx-auto text-center">
       {/* Hintergrundbild mit überlagertem Text */}
       <div className="relative lg:flex sm:flex-col   items-center justify-start w-full font-extrabold  bg-gray-300">
         <img
@@ -41,11 +45,11 @@ const EventDetails = () => {
             <h2 className=" font-extrabold sm:mb-1 lg:m-6 lg:text-white sm:text-black">
               {event.titel}
             </h2>
-            <p className=" lg:text-white  sm:text-black sm:mb-1 lg:m-6 ">
+            <p className=" lg:text-white  sm:mb-1 lg:m-6 ">
               {event.beschreibung}
             </p>
-            <div className=" lg:text-white sm:text-black sm:mb-1 lg:m-6 text-xs">
-              <p className="mb-4">
+            <div className=" lg:text-white sm:text-black  sm:mb-3 lg:m-6 text-xs">
+              <p className="mt-3">
                 {formatDate(event.startDatum)} - {formatDate(event.endDatum)}
               </p>
             </div>

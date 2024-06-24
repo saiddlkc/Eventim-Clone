@@ -7,6 +7,8 @@ import EventList from "../../Components/Home/EventList";
 import MasonryGridGallery from "../../Components/Home/Galery";
 
 import SwiperMain from "../../Components/Home/Swiper/Swiper";
+import ComedySwiper from "../../Components/Home/ComedySwiper";
+import KonzertSwiper from "../../Components/Home/KonzertSwiper";
 
 const HomePage = () => {
   const [backgroundColor, setbackgroundColor] = useState("white");
@@ -31,11 +33,16 @@ const HomePage = () => {
         <CarouselWithContent />
         <div className="container mx-auto">
           <AllCitiesCard />
+          <ComedySwiper />
+          <KonzertSwiper />
+          <CarouselWithEvents />
+          <ComedySwiper />
+          <KonzertSwiper />
+          <EventList />
+
           <MasonryGridGallery />
         </div>
-        <CarouselWithEvents />
         {/* <EventCardList /> */}
-        <EventList />
       </div>
     </div>
   );
