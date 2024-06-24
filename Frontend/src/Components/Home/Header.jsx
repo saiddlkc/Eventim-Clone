@@ -113,50 +113,50 @@ const navCategoryMenuItems = [
     title: "Comedy",
     description: "Lachen Sie sich schlapp bei den besten Comedians",
     icon: MdOutlineTheaterComedy,
-    link: "/cities/berlin",
+    link: "/categories/comedy",
   },
   {
     title: "Musical",
     description: " Erleben Sie die besten Musicals live",
     icon: IoIosMusicalNotes,
-    link: "/cities/düsseldorf",
+    link: "/categories/musical",
   },
   {
     title: "Show",
     description: " Erleben Sie die besten Shows live",
     icon: RiSlideshow2Line,
-    link: "/cities/köln",
+    link: "/categories/show",
   },
   {
     title: "Theater",
     description: " Genießen Sie die besten Theaterstücke live",
     icon: MdOutlineTheaterComedy,
-    link: "/cities/stuttgart",
+    link: "/categories/theater",
   },
   {
     title: "Konzert",
     description:
       " Tauchen Sie ein in die Welt der Musik und erleben Sie die besten Konzerte live",
     icon: BiSolidParty,
-    link: "/cities/münchen",
+    link: "/categories/konzert",
   },
   {
     title: "Sport",
     description: " Erleben Sie die besten Sportevents live",
     icon: MdOutlineSportsSoccer,
-    link: "/cities/hamburg",
+    link: "/categories/sport",
   },
   {
     title: "Kultur",
     description: " Erleben Sie die besten Kulturveranstaltungen live",
     icon: FaReact,
-    link: "/cities/leipzig",
+    link: "/categories/kultur",
   },
   {
     title: "Boxen & Wrestling ",
     description: " Erleben Sie die besten Box- und Wrestlingevents live",
     icon: MdSportsKabaddi,
-    link: "/cities/frankfurt",
+    link: "/categories/boxen-wrestling",
   },
 ];
 
@@ -164,8 +164,8 @@ function NavListMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const renderItems = navCategoryMenuItems.map(
-    ({ icon, title, description }, key) => (
-      <a href="#" key={key}>
+    ({ icon, title, description, link }, key) => (
+      <Link to={link} key={key}>
         <MenuItem className="flex items-center gap-3 rounded-lg">
           <div className="flex items-center justify-center rounded-lg !bg-blue-gray-50 p-2">
             {React.createElement(icon, {
@@ -189,7 +189,7 @@ function NavListMenu() {
             </Typography>
           </div>
         </MenuItem>
-      </a>
+      </Link>
     )
   );
 
@@ -203,7 +203,7 @@ function NavListMenu() {
         allowHover={true}
       >
         <MenuHandler>
-          <Link to={"/allcategories"}>
+          <Link to={"/allevents"}>
             <Typography as="div" variant="small" className="font-medium">
               <ListItem
                 className="flex items-center gap-2 py-2 pr-4 font-medium text-gray-900 text-xl"

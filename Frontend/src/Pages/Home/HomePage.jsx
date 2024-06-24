@@ -4,8 +4,10 @@ import AllCities from "../Citys/Allcities";
 import CarouselWithContent from "../../Components/Home/CarouselCities";
 import CarouselWithEvents from "../../Components/Home/CorouselEvents";
 import EventList from "../../Components/Home/EventList";
-import EventCardList from "../../Components/Home/EventCardList";
+// import EventCardList from "../../Components/Home/EventCardList";
 import SwiperMain from "../../Components/Home/Swiper/Swiper";
+import ComedySwiper from "../../Components/Home/ComedySwiper";
+import KonzertSwiper from "../../Components/Home/KonzertSwiper";
 
 const HomePage = () => {
   const [backgroundColor, setbackgroundColor] = useState("white");
@@ -33,6 +35,8 @@ const HomePage = () => {
         </div>
         <CarouselWithEvents />
         {/* <EventCardList /> */}
+        <ComedySwiper />
+        <KonzertSwiper />
         <EventList />
       </div>
     </div>

@@ -12,12 +12,13 @@ import PrivateRoute from "./Components/Dashboard/PrivateRoute";
 import AdminRoute from "./Components/Dashboard/AdminRoute";
 import Inbox from "./Pages/Dashboard/Inbox";
 import HomePage from "./Pages/Home/HomePage";
-import EventsPage from "./Pages/Categories/EventsPage";
+// import EventsPage from "./Pages/Categories/EventsPage";
 import HomeLayout from "./Layout/HomeLayout";
 import AllCities from "./Pages/Citys/Allcities";
 import City from "./Pages/Citys/City";
 import EventDetails from "./Pages/Categories/EventDetails";
-import AllEventCategorys from "./Pages/Categories/AllEventCategorys";
+import EventCategory from "./Pages/Categories/EventCategory";
+import AllEvents from "./Pages/Categories/AllEvents";
 
 function App() {
   return (
@@ -29,8 +30,8 @@ function App() {
         <Route path="/events/:id" element={<EventDetails />} />
         <Route path="/cities/:city?" element={<City />} />
         <Route path="/allcities" element={<AllCities />} />
-        <Route path="/allcategories" element={<AllEventCategorys />} />
-        <Route path="/categories/:category" element={<EventsPage />} />
+        <Route path="/allevents" element={<AllEvents />} />
+        <Route path="/categories/:category" element={<EventCategory />} />
       </Route>
       <Route
         path="/customer-dashboard"
