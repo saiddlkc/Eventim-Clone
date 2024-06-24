@@ -18,6 +18,7 @@ import AllCities from "./Pages/Citys/Allcities";
 import City from "./Pages/Citys/City";
 import EventDetails from "./Pages/Categories/EventDetails";
 import AboutPage from "./Pages/About/AboutPage";
+import ContactPage from "./Pages/Contact/ContactPage";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/cities/:city?" element={<City />} />
         <Route path="/allcities" element={<AllCities />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
       </Route>
       <Route
         path="/customer-dashboard"
