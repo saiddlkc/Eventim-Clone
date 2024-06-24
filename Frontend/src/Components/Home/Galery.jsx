@@ -21,7 +21,7 @@ export default function MasonryGridGallery() {
   }, []);
 
   return (
-    <div className="grid grid-cols-2 gap-4 md:grid-cols-4 my-4 border-2 p-4 border-orange-300 rounded-lg">
+    <div className="grid grid-cols-2 gap-4 md:grid-cols-4 my-4 border-r-4 border-t-4 p-4 border-orange-300 ">
       <div className="grid gap-4">
         <div>
           <img
