@@ -59,6 +59,18 @@
 }
 
 
+
+.container-tickets {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 100vh;
+    padding: 20px;
+
+
+}
+
 /* .ticket-container {
 
 }

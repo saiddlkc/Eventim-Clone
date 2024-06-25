@@ -1,18 +1,19 @@
 import {
-  Card,
-  Typography,
   List,
   ListItem,
   ListItemPrefix,
+  ListItemSuffix,
+  Chip,
 } from "@material-tailwind/react";
 import {
   PresentationChartBarIcon,
   PowerIcon,
   UserCircleIcon,
+  InboxIcon,
 } from "@heroicons/react/24/solid";
 import { FaUsers, FaCalendarAlt, FaTicketAlt } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import logo from "../../assets/img/logo-transparent-png.png";
+import logo from "../../assets/img/eventhub-logo.png";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function Sidebar() {
@@ -36,56 +37,58 @@ export default function Sidebar() {
         </Link>
       </div>
       <List>
-        <Link to="/">
-          <ListItem selected={location.pathname === "/"}>
+        <Link to="/admin">
+          <ListItem selected={location.pathname === "/admin"}>
             <ListItemPrefix>
               <PresentationChartBarIcon className="h-5 w-5" />
             </ListItemPrefix>
             Dashboard
           </ListItem>
         </Link>
-        <Link to="/users">
-          <ListItem selected={location.pathname === "/users"}>
+        <Link to="/admin/users">
+          <ListItem selected={location.pathname === "/admin/users"}>
             <ListItemPrefix>
               <FaUsers className="h-5 w-5" />
             </ListItemPrefix>
             Users
           </ListItem>
         </Link>
-        <Link to="/events">
-          <ListItem selected={location.pathname === "/events"}>
+        <Link to="/admin/events">
+          <ListItem selected={location.pathname === "/admin/events"}>
             <ListItemPrefix>
               <FaCalendarAlt className="h-5 w-5" />
             </ListItemPrefix>
             Events
           </ListItem>
         </Link>
-        <Link to="/tickets">
-          <ListItem selected={location.pathname === "/tickets"}>
+        <Link to="/admin/tickets">
+          <ListItem selected={location.pathname === "/admin/tickets"}>
             <ListItemPrefix>
               <FaTicketAlt className="h-5 w-5" />
             </ListItemPrefix>
             Tickets
           </ListItem>
         </Link>
-        <Link to="/ticket">
-          <ListItem selected={location.pathname === "/ticket"}>
+
+        <Link to="/admin/inbox">
+          <ListItem selected={location.pathname === "/admin/inbox"}>
             <ListItemPrefix>
-              <FaTicketAlt className="h-5 w-5" />
+              <InboxIcon className="h-5 w-5" />
             </ListItemPrefix>
-            Ticket
+            Inbox
+            <ListItemSuffix>
+              <Chip
+                value="4"
+                size="sm"
+                variant="ghost"
+                color="blue-gray"
+                className="rounded-full"
+              />
+            </ListItemSuffix>
           </ListItem>
         </Link>
-        <Link to="/seat">
-          <ListItem selected={location.pathname === "/seat"}>
-            <ListItemPrefix>
-              <FaTicketAlt className="h-5 w-5" />
-            </ListItemPrefix>
-            Seat
-          </ListItem>
-        </Link>
-        <Link to="/profile">
-          <ListItem selected={location.pathname === "/profile"}>
+        <Link to="/admin/profile">
+          <ListItem selected={location.pathname === "/admin/profile"}>
             <ListItemPrefix>
               <UserCircleIcon className="h-5 w-5" />
             </ListItemPrefix>

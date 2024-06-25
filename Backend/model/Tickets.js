@@ -41,6 +41,8 @@ const ticketSchema = new mongoose.Schema({
   date: { type: Date, required: true },
   startTime: { type: String, required: true },
   endTime: { type: String, required: true },
+  city: { type: String, required: true },
+  eventLocation: { type: String, required: true },
   organizer: { type: String, required: true },
   price: { type: Number, required: true },
   currency: { type: String, required: true },

@@ -20,6 +20,8 @@ const TicketTable = () => {
     date: "",
     startTime: "1",
     endTime: "",
+    city: "",
+    eventLocation: "",
     organizer: "",
     price: [],
     currency: "",
@@ -98,6 +100,8 @@ const TicketTable = () => {
         date: "",
         startTime: "",
         endTime: "",
+        city: "",
+        eventLocation: "",
         organizer: "",
         price: [],
         currency: "",
@@ -134,6 +138,8 @@ const TicketTable = () => {
       date: editFormData.date,
       startTime: editFormData.startTime,
       endTime: editFormData.endTime,
+      city: editFormData.city,
+      eventLocation: editFormData.eventLocation,
       organizer: editFormData.organizer,
       price: 25,
       currency: editFormData.currency,
@@ -172,7 +178,6 @@ const TicketTable = () => {
     try {
       // API-Aufruf zum Löschen des Tickets
       await axios.delete(`http://localhost:4000/dashboard/tickets/${id}`);
-
       // Nach erfolgreichem Löschen das Ticket aus dem State entfernen
       setTicket((prevTickets) =>
         prevTickets.filter((ticket) => ticket._id !== id)
@@ -200,6 +205,8 @@ const TicketTable = () => {
       date: ticket.date,
       startTime: ticket.startTime,
       endTime: ticket.endTime,
+      city: ticket.city,
+      eventLocation: ticket.eventLocation,
       organizer: ticket.organizer,
       price: ticket.price,
       currency: ticket.currency,
@@ -247,22 +254,24 @@ const TicketTable = () => {
             placeholder="Description"
             required
           />
-          {/* <input
+
+          <input
             className="border border-gray-300 rounded p-2 w-full"
             type="text"
-            name="location.venueName"
+            name="city"
             onChange={handleAddFormChange}
-            placeholder="Venue Name"
+            placeholder="City"
             required
           />
           <input
             className="border border-gray-300 rounded p-2 w-full"
             type="text"
-            name="location.addressLine1"
+            name="eventLocation"
             onChange={handleAddFormChange}
-            placeholder="Address Line 1"
+            placeholder="Event Location"
             required
           />
+          {/*
           <input
             className="border border-gray-300 rounded p-2 w-full"
             type="text"
@@ -357,7 +366,6 @@ const TicketTable = () => {
             placeholder="Image URL"
             required
           />
-
           <input
             className="border border-gray-300 rounded p-2 w-full"
             type="text"
@@ -402,13 +410,14 @@ const TicketTable = () => {
                     <h6 className="antialiased tracking-normal font-sans text-base text-blue-gray-900  flex justify-between items-center gap-2 font-normal  leading-none opercity-70 capitalize ">
                       Artist
                     </h6>
-                  </th>
+                  </th>{" "}
+                  {/* 
                   <th className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray 500 p-4 transition-colors hover:bg-blue-gray-100">
                     <h6 className="antialiased tracking-normal font-sans text-base text-blue-gray-900  flex justify-between items-center gap-2 font-normal  leading-none opercity-70 capitalize ">
                       Description
                     </h6>
                   </th>
-                  {/* <th className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray 500 p-4 transition-colors hover:bg-blue-gray-100">
+              <th className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray 500 p-4 transition-colors hover:bg-blue-gray-100">
                     <h6 className="antialiased tracking-normal font-sans text-base text-blue-gray-900  flex justify-between items-center gap-2 font-normal  leading-none opercity-70 capitalize ">
                       Venue Name
                     </h6>
@@ -450,6 +459,16 @@ const TicketTable = () => {
                   </th>
                   <th className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray 500 p-4 transition-colors hover:bg-blue-gray-100">
                     <h6 className="antialiased tracking-normal font-sans text-base text-blue-gray-900  flex justify-between items-center gap-2 font-normal  leading-none opercity-70 capitalize ">
+                      City
+                    </h6>
+                  </th>
+                  <th className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray 500 p-4 transition-colors hover:bg-blue-gray-100">
+                    <h6 className="antialiased tracking-normal font-sans text-base text-blue-gray-900  flex justify-between items-center gap-2 font-normal  leading-none opercity-70 capitalize ">
+                      Event Location
+                    </h6>
+                  </th>
+                  <th className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray 500 p-4 transition-colors hover:bg-blue-gray-100">
+                    <h6 className="antialiased tracking-normal font-sans text-base text-blue-gray-900  flex justify-between items-center gap-2 font-normal  leading-none opercity-70 capitalize ">
                       Organizer
                     </h6>
                   </th>
@@ -483,13 +502,11 @@ const TicketTable = () => {
                       Seat
                     </h6>
                   </th>
-
                   <th className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray 500 p-4 transition-colors hover:bg-blue-gray-100">
                     <h6 className="antialiased tracking-normal font-sans text-base text-blue-gray-900  flex justify-between items-center gap-2 font-normal  leading-none opercity-70 capitalize ">
                       Row
                     </h6>
                   </th>
-
                   <th className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray 500 p-4 transition-colors hover:bg-blue-gray-100">
                     <h6 className="antialiased tracking-normal font-sans text-base text-blue-gray-900  flex justify-between items-center gap-2 font-normal  leading-none opercity-70 capitalize ">
                       Actions

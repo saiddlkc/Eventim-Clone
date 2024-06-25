@@ -32,6 +32,8 @@ const EventsTableList = () => {
     beschreibung: "",
     startDatum: "",
     endDatum: "",
+    bild: "",
+    headerUrl: "",
     ort: {
       adresse: "",
       stadt: "",
@@ -62,9 +64,11 @@ const EventsTableList = () => {
       .delete(`http://localhost:4000/dashboard/event/${eventId}`)
       .then(() => {
         setEvents(events.filter((event) => event._id !== eventId));
+        toast.success("Event deleted successfully");
       })
       .catch((err) => {
         console.error("Error deleting event:", err);
+        toast.error("Error deleting event");
       });
   };
 
@@ -84,14 +88,17 @@ const EventsTableList = () => {
           events.map((event) => (event._id === editEventId ? res.data : event))
         );
         setEditEventId(null);
+        toast.success("Event updated successfully");
       })
       .catch((err) => {
         console.error("Error updating event:", err);
+        toast.error("Error updating event");
       });
   };
 
   const handleCancel = () => {
     setEditEventId(null);
+    toast.error("Cancelled editing event");
   };
 
   const handleChange = (e) => {
@@ -111,6 +118,8 @@ const EventsTableList = () => {
         case "beschreibung":
         case "startDatum":
         case "endDatum":
+        case "bild":
+        case "headerUrl":
           newEvent[name] = value;
           break;
         case "adresse":
@@ -147,6 +156,8 @@ const EventsTableList = () => {
           beschreibung: "",
           startDatum: "",
           endDatum: "",
+          bild: "",
+          headerUrl: "",
           ort: {
             adresse: "",
             stadt: "",
@@ -181,22 +192,26 @@ const EventsTableList = () => {
   ];
 
   return (
-    <div className="mb-8 flex flex-col gap-2 ">
+    <div className="mt-4">
       <ToastContainer />
-      <div className="m-4">
-        <Card className="h-full w-full bg-blue-gray-100">
+      <div className="mb-4">
+        <Card className="h-full w-full bg-blue-gray-100 p-3">
           <CardHeader
             floated={false}
             shadow={false}
             className="rounded-none bg-blue-gray-100"
           >
             <div className="flex justify-between items-center">
-              <Typography variant="h5" color="blue-gray">
+              <Typography
+                variant="4"
+                color="blue-gray"
+                className="flex items-center justify-between gap-2 font-normal leading-none capitalize"
+              >
                 Add New Event
               </Typography>
               <Button
                 variant="solid"
-                color="blue"
+                color="black"
                 onClick={() => setShowNewEventForm(!showNewEventForm)}
               >
                 {showNewEventForm ? "Hide Form" : "Show Form"}
@@ -209,81 +224,109 @@ const EventsTableList = () => {
                 <Input
                   type="text"
                   name="titel"
-                  placeholder="Title"
+                  label="Title"
                   value={newEvent.titel}
                   onChange={handleNewEventChange}
+                  color="black"
+                  className="bg-gray-50"
                 />
                 <Input
                   type="text"
                   name="kategorie"
-                  placeholder="Category"
+                  label="Category"
                   value={newEvent.kategorie}
                   onChange={handleNewEventChange}
+                  className="bg-gray-50"
                 />
                 <Input
                   type="text"
                   name="beschreibung"
-                  placeholder="Description"
+                  label="Description"
                   value={newEvent.beschreibung}
                   onChange={handleNewEventChange}
+                  className="bg-gray-50"
+                />
+                <Input
+                  type="text"
+                  name="bild"
+                  label="Image URL"
+                  value={newEvent.bild}
+                  onChange={handleNewEventChange}
+                  className="bg-gray-50"
+                />
+                <Input
+                  type="text"
+                  name="headerUrl"
+                  label="Header Image URL"
+                  value={newEvent.headerUrl}
+                  onChange={handleNewEventChange}
+                  className="bg-gray-50"
                 />
                 <Input
                   type="date"
                   name="startDatum"
-                  placeholder="Start Date"
+                  label="Start Date"
                   value={newEvent.startDatum}
                   onChange={handleNewEventChange}
+                  className="bg-gray-50"
                 />
                 <Input
                   type="date"
                   name="endDatum"
-                  placeholder="End Date"
+                  label="End Date"
                   value={newEvent.endDatum}
                   onChange={handleNewEventChange}
+                  className="bg-gray-50"
                 />
                 <Input
                   type="text"
                   name="adresse"
-                  placeholder="Address"
+                  label="Address"
                   value={newEvent.ort.adresse}
                   onChange={handleNewEventChange}
+                  className="bg-gray-50"
                 />
                 <Input
                   type="text"
                   name="stadt"
-                  placeholder="City"
+                  label="City"
                   value={newEvent.ort.stadt}
                   onChange={handleNewEventChange}
+                  className="bg-gray-50"
                 />
                 <Input
                   type="text"
                   name="bundesland"
-                  placeholder="State"
+                  label="State"
                   value={newEvent.ort.bundesland}
                   onChange={handleNewEventChange}
+                  className="bg-gray-50"
                 />
                 <Input
                   type="text"
                   name="land"
-                  placeholder="Country"
+                  label="Country"
                   value={newEvent.ort.land}
                   onChange={handleNewEventChange}
+                  className="bg-gray-50"
                 />
                 <Input
                   type="text"
                   name="veranstalterName"
-                  placeholder="Organizer Name"
+                  label="Organizer Name"
                   value={newEvent.veranstalter.name}
                   onChange={handleNewEventChange}
+                  className="bg-gray-50"
                 />
                 <Input
                   type="email"
                   name="kontaktEmail"
-                  placeholder="Organizer Email"
+                  label="Organizer Email"
                   value={newEvent.veranstalter.kontakt.email}
                   onChange={handleNewEventChange}
+                  className="bg-gray-50"
                 />
-                <Button variant="solid" color="blue" onClick={handleAddEvent}>
+                <Button variant="solid" color="black" onClick={handleAddEvent}>
                   Add Event
                 </Button>
               </div>
@@ -306,7 +349,7 @@ const EventsTableList = () => {
             </div>
           </CardHeader>
           <CardBody className="overflow-scroll px-0">
-            <table className="mt-4 w-full min-w-max table-auto text-left">
+            <table className="w-full min-w-max table-auto text-left">
               <thead>
                 <tr>
                   {TABLE_HEAD.map((head) => (
@@ -570,6 +613,7 @@ const EventsTableList = () => {
               <Button variant="outlined" size="sm">
                 Previous
               </Button>
+
               <Button variant="outlined" size="sm">
                 Next
               </Button>
