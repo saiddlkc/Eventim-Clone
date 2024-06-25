@@ -51,28 +51,26 @@ const cities = [
       "https://www.eventim.de/obj/media/DE-eventim/teaser/de/156x198/2023/staedteteaser-tickets-poster-leipzig.jpg",
     link: "/cities/leipzig",
   },
-  {
-    name: "Bremen",
-    imgSrc:
-      "https://www.eventim.de/obj/media/DE-eventim/teaser/de/156x198/2023/staedteteaser-tickets-poster-bremen.jpg",
-    link: "/cities/bremen",
-  },
+  // {
+  //   name: "Bremen",
+  //   imgSrc:
+  //     "https://www.eventim.de/obj/media/DE-eventim/teaser/de/156x198/2023/staedteteaser-tickets-poster-bremen.jpg",
+  //   link: "/cities/bremen",
+  // },
 ];
 
-const AllCities = () => {
+const AllCitiesCard = () => {
   return (
-    <div className="">
+    <div>
       <Outlet />
-      <div className="lg:grid md:grid-cols-5  my-4 sm:flex sm:flex-wrap sm:justify-center sm:items-center md:flex md:flex-wrap md:justify-center lg:gap-2 m-10">
+      <div className="flex flex-wrap justify-center lg:flex-nowrap overflow-x-auto mb-12 mx-1">
         {cities.map((city, index) => (
-          <Link
-            to={city.link}
-            key={index}
-            className="border-2 p-4 text-center flex flex-col items-center rounded-lg  mt-3 hover:bg-gray-100 hover:shadow-lg transition duration-500 ease-in-out"
-          >
-            <img src={city.imgSrc} alt={city.name} className="w-52 " />
-            <p className="text-center">die coolsten Events in</p>
-            <span className="text-orange-800 text-center ">{city.name}</span>
+          <Link to={city.link} key={index} className="p-2">
+            <img
+              src={city.imgSrc}
+              alt={city.name}
+              className="h-[200px] hover:scale-105 transition-transform duration-500 ease-in-out transform hover:rotate-1"
+            />
           </Link>
         ))}
       </div>
@@ -80,4 +78,4 @@ const AllCities = () => {
   );
 };
 
-export default AllCities;
+export default AllCitiesCard;
