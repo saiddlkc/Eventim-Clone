@@ -5,7 +5,7 @@ import CarouselWithContent from "../../Components/Home/CarouselCities";
 import CarouselWithEvents from "../../Components/Home/CorouselEvents";
 import EventList from "../../Components/Home/EventList";
 import EventCardList from "../../Components/Home/EventCardList";
-
+import TicketBox from "../../Components/Tickets/TicketBox";
 const HomePage = () => {
   const [backgroundColor, setbackgroundColor] = useState("white");
 

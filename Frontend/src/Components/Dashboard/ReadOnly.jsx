@@ -15,24 +15,14 @@ const ReadOnly = ({ ticket, handleEditClick, handleDeleteClick }) => {
           {ticket.artist}
         </p>
       </td>
+      {/* 
       <td className="p-4 border-b boder-blue-gray-50">
         <p className="blo antialiased font-sane text-sm leading-normal text-blue-gray-900">
           {" "}
           {ticket.description}
         </p>
       </td>
-      {/* <td className="p-4 border-b boder-blue-gray-50">
-        <p className="blo antialiased font-sane text-sm leading-normal text-blue-gray-900">
-          {" "}
-          {ticket.location.venueName}
-        </p>
-      </td>
-      <td className="p-4 border-b boder-blue-gray-50">
-        <p className="blo antialiased font-sane text-sm leading-normal text-blue-gray-900">
-          {" "}
-          {ticket.location.addressLine1}
-        </p>
-      </td>
+
       <td className="p-4 border-b boder-blue-gray-50">
         <p className="blo antialiased font-sane text-sm leading-normal text-blue-gray-900">
           {" "}
@@ -67,6 +57,16 @@ const ReadOnly = ({ ticket, handleEditClick, handleDeleteClick }) => {
         <p className="blo antialiased font-sane text-sm leading-normal text-blue-gray-900">
           {" "}
           {ticket.endTime}
+        </p>
+      </td>
+      <td className="p-4 border-b boder-blue-gray-50">
+        <p className="blo antialiased font-sane text-sm leading-normal text-blue-gray-900">
+          {ticket.city}
+        </p>
+      </td>
+      <td className="p-4 border-b boder-blue-gray-50">
+        <p className="blo antialiased font-sane text-sm leading-normal text-blue-gray-900">
+          {ticket.eventLocation}
         </p>
       </td>
       <td className="p-4 border-b boder-blue-gray-50">

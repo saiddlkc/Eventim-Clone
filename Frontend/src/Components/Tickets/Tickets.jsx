@@ -34,7 +34,7 @@ const Ticket = () => {
   };
 
   return (
-    <div className="flex flex-wrap justify-center items-center min-h-screen  p-4">
+    <div className="flex flex-wrap justify-center   p-4">
       {tickets.map((ticket, index) => (
         <div
           key={index}
@@ -57,9 +57,9 @@ const Ticket = () => {
             <h1 className=" artist my-5  flex justify-center text-[#2d3b76]">
               {ticket.artist}
             </h1>
-            <p className=" description text-lg text-[#d8475e] mb-5 flex justify-center ">
+            {/* <p className=" description text-lg text-[#d8475e] mb-5 flex justify-center ">
               {ticket.description}
-            </p>
+            </p> */}
             <div className=" trs flex justify-around mb-5 bg-gray-300 p-5  ">
               <div className="time text-center text-[#d8475e] ">
                 <p className="text-sm">TIME</p>

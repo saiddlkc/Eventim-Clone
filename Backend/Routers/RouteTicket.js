@@ -52,6 +52,12 @@ router.put("/tickets/:id", getTicket, async (req, res) => {
   if (req.body.endTime != null) {
     res.ticket.endTime = req.body.endTime;
   }
+  if (req.body.city != null) {
+    res.ticket.city = req.body.city;
+  }
+  if (req.body.eventLocation != null) {
+    res.ticket.eventLocation = req.body.eventLocation;
+  }
   if (req.body.organizer != null) {
     res.ticket.organizer = req.body.organizer;
   }

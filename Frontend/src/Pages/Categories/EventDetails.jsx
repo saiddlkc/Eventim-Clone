@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import TicketBox from "../../Components/Tickets/TicketBox";
 const EventDetails = () => {
   const [event, setEvent] = useState(null);
   const { id } = useParams();
@@ -52,6 +52,7 @@ const EventDetails = () => {
           </div>
         </div>
       </div>
+      <TicketBox />
     </div>
   );
 };

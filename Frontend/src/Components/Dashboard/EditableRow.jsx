@@ -45,33 +45,17 @@ const EditableRow = ({
           onChange={handleEditFormChange}
         />
       </td>
+      {/* 
       <td>
         <input
           type="text"
           name="description"
-          placeholder="Enter description"
+          placeholder="Enter Description"
           value={editFormData.description}
           onChange={handleEditFormChange}
         />
       </td>
-      {/* <td>
-        <input
-          type="text"
-          name="venueName"
-          placeholder="Enter venue"
-          value={editFormData.location.venueName}
-          onChange={handleEditFormChange}
-        />
-      </td>
-      <td>
-        <input
-          type="text"
-          name="location.addressLine1"
-          placeholder="Address Line 1"
-          value={editFormData.location.addressLine1}
-          onChange={handleEditFormChange}
-        />
-      </td>
+      
       <td>
         <input
           type="text"
@@ -123,6 +107,24 @@ const EditableRow = ({
           name="endTime"
           placeholder="Enter end time"
           value={editFormData.endTime}
+          onChange={handleEditFormChange}
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          name="city"
+          placeholder="Enter City"
+          value={editFormData.city}
+          onChange={handleEditFormChange}
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          name="eventLocation"
+          placeholder="Enter Event Location"
+          value={editFormData.eventLocation}
           onChange={handleEditFormChange}
         />
       </td>
