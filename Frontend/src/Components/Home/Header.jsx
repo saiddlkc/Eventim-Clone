@@ -27,7 +27,6 @@ import {
 } from "@heroicons/react/24/outline";
 import { BsBuildings, BsBuildingFill } from "react-icons/bs";
 import { PiBuildingApartmentFill, PiBuildingsFill } from "react-icons/pi";
-// eslint-disable-next-line no-unused-vars
 import { RiBuilding3Fill } from "react-icons/ri";
 import {
   FaBuildingWheat,
@@ -160,12 +159,12 @@ const navCategoryMenuItems = [
   },
 ];
 
-function NavListMenu() {
+function NavListMenu({ closeNav }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const renderItems = navCategoryMenuItems.map(
+  const renderItems = navListMenuItems.map(
     ({ icon, title, description, link }, key) => (
-      <Link to={link} key={key}>
+      <Link to={link} key={key} onClick={closeNav}>
         <MenuItem className="flex items-center gap-3 rounded-lg">
           <div className="flex items-center justify-center rounded-lg !bg-blue-gray-50 p-2">
             {React.createElement(icon, {
@@ -206,7 +205,7 @@ function NavListMenu() {
           <Link to={"/allevents"}>
             <Typography as="div" variant="small" className="font-medium">
               <ListItem
-                className="flex items-center gap-2 py-2 pr-4 font-medium text-gray-900 text-xl"
+                className="flex items-center gap-2 py-2 pr-3 font-medium text-gray-900 text-lg"
                 selected={isMenuOpen || isMobileMenuOpen}
                 onClick={() => setIsMobileMenuOpen((cur) => !cur)}
               >
@@ -240,12 +239,12 @@ function NavListMenu() {
   );
 }
 
-function AllCities() {
+function AllCities({ closeNav }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const renderItems = navListMenuItems.map(
     ({ icon, title, description, link }, key) => (
-      <Link to={link} key={key}>
+      <Link to={link} key={key} onClick={closeNav}>
         <MenuItem className="flex items-center gap-3 rounded-lg">
           <div className="flex items-center justify-center rounded-lg !bg-blue-gray-50 p-2">
             {React.createElement(icon, {
@@ -286,7 +285,7 @@ function AllCities() {
           <Link to={"/allcities"}>
             <Typography as="div" variant="small" className="font-medium">
               <ListItem
-                className="flex items-center gap-2 py-2 pr-4 font-medium text-gray-900 text-xl"
+                className="flex items-center gap-2 py-2 pr-3 font-medium text-gray-900 text-lg"
                 selected={isMenuOpen || isMobileMenuOpen}
                 onClick={() => setIsMobileMenuOpen((cur) => !cur)}
               >
@@ -320,9 +319,9 @@ function AllCities() {
   );
 }
 
-function NavList() {
+function NavList({ closeNav }) {
   return (
-    <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1 flex items-center space-x-4">
+    <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1 flex flex-col lg:flex-row items-center space-y-2 lg:space-y-0 lg:space-x-2 w-full">
       <Typography
         as="a"
         href="#"
@@ -330,12 +329,14 @@ function NavList() {
         color="blue-gray"
         className="font-medium"
       >
-        <ListItem className="flex items-center gap-2 py-2 pr-4 text-xl">
-          <Link to="/">Home</Link>
+        <ListItem className="flex items-center gap-2 py-2 pr-3 text-lg">
+          <Link to="/" onClick={closeNav}>
+            Home
+          </Link>
         </ListItem>
       </Typography>
-      <NavListMenu />
-      <AllCities />
+      <NavListMenu closeNav={closeNav} />
+      <AllCities closeNav={closeNav} />
       <Typography
         as="a"
         href="#"
@@ -343,8 +344,10 @@ function NavList() {
         color="blue-gray"
         className="font-medium"
       >
-        <ListItem className="flex items-center gap-2 py-2 pr-4 text-xl">
-          Contact Us
+        <ListItem className="flex items-center gap-2 py-2 pr-3 text-lg">
+          <Link to="/contact" onClick={closeNav}>
+            Contact Us
+          </Link>
         </ListItem>
       </Typography>
       <Typography
@@ -354,8 +357,10 @@ function NavList() {
         color="blue-gray"
         className="font-medium"
       >
-        <ListItem className="flex items-center gap-2 py-2 pr-4 text-xl">
-          About Us
+        <ListItem className="flex items-center gap-2 py-2 pr-3 text-lg">
+          <Link to="/about" onClick={closeNav}>
+            About Us
+          </Link>
         </ListItem>
       </Typography>
       <div className="relative flex items-center w-full lg:w-auto gap-2">
@@ -363,15 +368,15 @@ function NavList() {
           type="search"
           color="black"
           label="Type here..."
-          className="pr-20 "
+          className="pr-20"
           containerProps={{
-            className: "min-w-[300px]",
+            className: "min-w-[200px] w-full lg:w-auto",
           }}
         />
         <Button
           size="sm"
           color="black"
-          className="!absolute right-1 top-1 rounded bg-[#f76b1b]"
+          className="!absolute right-1 top-1 rounded bg-[#f76b1b] w-[4.5rem]"
         >
           Search
         </Button>
@@ -494,6 +499,8 @@ export function NavbarWithMegaMenu() {
   const [openNav, setOpenNav] = React.useState(false);
   const { user } = useAuthContext();
 
+  const closeNav = () => setOpenNav(false);
+
   React.useEffect(() => {
     window.addEventListener(
       "resize",
@@ -502,13 +509,13 @@ export function NavbarWithMegaMenu() {
   }, []);
 
   return (
-    <Navbar className="sticky top-0 z-50 mx-auto max-w-full px-6 py-2 bg-white">
+    <Navbar className="sticky top-0 z-50 mx-auto max-w-full px-2 py-2 bg-white">
       <div className="flex items-center justify-between text-blue-gray-900">
         <Link to={"/"}>
-          <img src={logo} alt="logo" className="h-16" />
+          <img src={logo} alt="logo" className="h-12 md:h-14 lg:h-16" />
         </Link>
         <div className="hidden lg:block">
-          <NavList />
+          <NavList closeNav={closeNav} />
         </div>
         <div className="hidden gap-2 lg:flex">
           {user ? (
@@ -544,8 +551,8 @@ export function NavbarWithMegaMenu() {
         </div>
       </div>
       <Collapse open={openNav}>
-        <NavList />
-        <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
+        <NavList closeNav={closeNav} />
+        <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden px-2">
           {user ? (
             <ProfileMenu />
           ) : (
@@ -562,7 +569,7 @@ export function NavbarWithMegaMenu() {
                   </Button>
                 </Link>
               </div>
-              <div className="w-full ">
+              <div className="w-full">
                 <Link to={"/sign-up"}>
                   <Button variant="gradient" size="sm" fullWidth>
                     Sign In

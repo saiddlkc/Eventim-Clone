@@ -19,6 +19,8 @@ import City from "./Pages/Citys/City";
 import EventDetails from "./Pages/Categories/EventDetails";
 import EventCategory from "./Pages/Categories/EventCategory";
 import AllEvents from "./Pages/Categories/AllEvents";
+import AboutPage from "./Pages/About/AboutPage";
+import ContactPage from "./Pages/Contact/ContactPage";
 
 function App() {
   return (
@@ -30,8 +32,10 @@ function App() {
         <Route path="/events/:id" element={<EventDetails />} />
         <Route path="/cities/:city?" element={<City />} />
         <Route path="/allcities" element={<AllCities />} />
+        <Route path="/categories/:category?" element={<EventCategory />} />
         <Route path="/allevents" element={<AllEvents />} />
-        <Route path="/categories/:category" element={<EventCategory />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
       </Route>
       <Route
         path="/customer-dashboard"
