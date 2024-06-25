@@ -30,8 +30,7 @@ const EventCategory = () => {
       <Outlet />
       <div className="flex flex-col bg-gray-100">
         <p className="text-5xl text-center p-4">
-          Beliebtesten Events in der Kategorie{" "}
-          {category.charAt(0).toUpperCase() + category.slice(1)}
+          Beliebtesten Events in der Kategorie {category}
         </p>
 
         <div className="flex flex-wrap lg:grid md:grid-cols-5 justify-center container mx-auto">

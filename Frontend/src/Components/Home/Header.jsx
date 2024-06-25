@@ -113,50 +113,50 @@ const navCategoryMenuItems = [
     title: "Comedy",
     description: "Lachen Sie sich schlapp bei den besten Comedians",
     icon: MdOutlineTheaterComedy,
-    link: "/categories/comedy",
+    link: "/categories/Comedy",
   },
   {
     title: "Musical",
     description: " Erleben Sie die besten Musicals live",
     icon: IoIosMusicalNotes,
-    link: "/categories/musical",
+    link: "/categories/Musical",
   },
   {
     title: "Show",
     description: " Erleben Sie die besten Shows live",
     icon: RiSlideshow2Line,
-    link: "/categories/show",
+    link: "/categories/Show",
   },
   {
     title: "Theater",
     description: " Genießen Sie die besten Theaterstücke live",
     icon: MdOutlineTheaterComedy,
-    link: "/categories/theater",
+    link: "/categories/Theater",
   },
   {
     title: "Konzert",
     description:
       " Tauchen Sie ein in die Welt der Musik und erleben Sie die besten Konzerte live",
     icon: BiSolidParty,
-    link: "/categories/konzert",
+    link: "/categories/Konzert",
   },
   {
     title: "Sport",
     description: " Erleben Sie die besten Sportevents live",
     icon: MdOutlineSportsSoccer,
-    link: "/categories/sport",
+    link: "/categories/Sport",
   },
   {
     title: "Kultur",
     description: " Erleben Sie die besten Kulturveranstaltungen live",
     icon: FaReact,
-    link: "/categories/kultur",
+    link: "/categories/Kultur",
   },
   {
     title: "Boxen & Wrestling ",
     description: " Erleben Sie die besten Box- und Wrestlingevents live",
     icon: MdSportsKabaddi,
-    link: "/categories/boxen-wrestling",
+    link: "/categories/Boxen & Wrestling",
   },
 ];
 
