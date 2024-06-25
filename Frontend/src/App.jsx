@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import UsersTable from "./Components/Dashboard/Table";
-import TicketTable from "./Pages/Dashboard/TicketTable";
+
 import Statistics from "./Pages/Dashboard/StatisticTable";
 import Profile from "./Pages/Dashboard/Profile";
 import EventsTableList from "./Pages/Dashboard/EventsTableList";
@@ -21,6 +21,8 @@ import EventCategory from "./Pages/Categories/EventCategory";
 import AllEvents from "./Pages/Categories/AllEvents";
 import AboutPage from "./Pages/About/AboutPage";
 import ContactPage from "./Pages/Contact/ContactPage";
+// import Ticket from "./Components/Tickets/Tickets";
+import TicketTable from "./Pages/Dashboard/TicketTable";
 
 function App() {
   return (
@@ -59,7 +61,7 @@ function App() {
         <Route path="/admin/users" element={<UsersTable />} />
         <Route path="/admin/tickets" element={<TicketTable />} />
         <Route path="/admin/events" element={<EventsTableList />} />
-        <Route path="/admin/tickets" element={<TicketTable />} />
+        {/* <Route path="/admin/tickets" element={<Ticket />} /> */}
         <Route path="/admin/inbox" element={<Inbox />} />
         <Route path="/admin/profile" element={<Profile />} />
       </Route>
