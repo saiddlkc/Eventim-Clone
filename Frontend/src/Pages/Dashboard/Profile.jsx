@@ -23,6 +23,7 @@ import {
   UserPlusIcon,
 } from "@heroicons/react/24/solid";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { ToastContainer, toast } from "react-toastify";
 
 export function Profile() {
   const location = useLocation();
@@ -31,46 +32,78 @@ export function Profile() {
   const [activeTab, setActiveTab] = useState(initialTab);
   const [users, setUsers] = useState([]);
 
-  const TABLE_HEAD = ["User", "Subject", "Message"];
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [TABLE_ROWS, setTableRows] = useState([]);
+  const [error, setError] = useState("");
 
-  const TABLE_ROWS = [
-    {
-      user: "Alexa Liras",
-      subject: "Ticket #445",
-      message: "I need help with my account",
-    },
-    {
-      user: "Alexa Liras",
-      subject: "Ticket #446",
-      message: "I need help with my account",
-    },
-    {
-      user: "Alexa Liras",
-      subject: "Ticket #447",
-      message: "I need help with my account",
-    },
-    {
-      user: "Alexa Liras",
-      subject: "Ticket #448",
-      message: "I need help with my account",
-    },
-    {
-      user: "Alexa Liras",
-      subject: "Ticket #449",
-      message: "I need help with my account",
-    },
-  ];
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const TABLE_HEAD = ["Email", "Subject", "Message"];
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/dashboard/Users")
+      .get("http://localhost:4000/dashboard/contact")
       .then((res) => {
-        setUsers(res.data);
+        setTableRows(res.data.reverse());
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/dashboard/contact",
+        { email, subject, message },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        const newMessage = response.data; // Verwende die gesamte Antwort, die die ID enthalten sollte
+        setTableRows((prevRows) => [newMessage, ...prevRows]);
+        setEmail("");
+        setSubject("");
+        setMessage("");
+        toast.success("dein Ticket wurde erfolgreich abgesendet!");
+      }
+    } catch (err) {
+      setError("Failed to send message. Please try again.");
+      console.log(err);
+      toast.error("Failed to send message.");
+    }
+  };
+  const handleDelete = async (emailToDelete) => {
+    try {
+      const contact = TABLE_ROWS.find((row) => row.email === emailToDelete);
+      if (!contact) {
+        toast.error("Contact not found.");
+        return;
+      }
+
+      console.log("Contact ID to delete:", contact._id);
+
+      await axios.delete(
+        `http://localhost:4000/dashboard/contact/${contact._id}`
+      );
+
+      setTableRows((prevRows) =>
+        prevRows.filter((row) => row._id !== contact._id)
+      );
+      toast.success("Ticket wurde gelöscht!");
+    } catch (err) {
+      console.log(err);
+      toast.error("Failed to delete contact.");
+    }
+  };
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
@@ -84,6 +117,7 @@ export function Profile() {
 
   return (
     <>
+      <ToastContainer />
       <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover	bg-center">
         <div className="absolute inset-0 h-full w-full bg-gray-900/75" />
       </div>
@@ -132,7 +166,7 @@ export function Profile() {
                       onClick={() => setActiveTab("message")}
                     >
                       <ChatBubbleLeftEllipsisIcon className="-mt-0.5 mr-2 inline-block h-5 w-5" />
-                      Message
+                      Contact
                     </Tab>
                     <Tab
                       value="settings"
@@ -149,51 +183,8 @@ export function Profile() {
 
           {activeTab === "app" && (
             <>
-              <div className="gird-cols-1 mb-12 grid gap-24 px-4 lg:grid-cols-2 xl:grid-cols-2">
-                <div className="border bg-blue-gray-50 p-8">
-                  <Typography variant="h6" color="blue-gray" className="mb-3">
-                    Platform Settings
-                  </Typography>
-                  <ul className="flex flex-col gap-4">
-                    <li className="flex items-center justify-between">
-                      <Typography>Email me when someone follows me</Typography>
-                      <Switch defaultChecked />
-                    </li>
-                    <li className="flex items-center justify-between">
-                      <Typography>
-                        Email me when someone answers on my post
-                      </Typography>
-                      <Switch />
-                    </li>
-                    <li className="flex items-center justify-between">
-                      <Typography>Email me when someone mentions me</Typography>
-                      <Switch defaultChecked />
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="border bg-blue-gray-50 p-8">
-                  <Typography variant="h6" color="blue-gray" className="mb-3">
-                    Application Settings
-                  </Typography>
-                  <ul className="flex flex-col gap-4">
-                    <li className="flex items-center justify-between">
-                      <Typography>New launches and projects</Typography>
-                      <Switch defaultChecked />
-                    </li>
-                    <li className="flex items-center justify-between">
-                      <Typography>Monthly product updates</Typography>
-                      <Switch />
-                    </li>
-                    <li className="flex items-center justify-between">
-                      <Typography>Subscribe to newsletter</Typography>
-                      <Switch defaultChecked />
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="px-4 pb-4">
-                <Typography variant="h6" color="blue-gray" className="mb-2">
+              <div className="px-4 pb-4 border-t-2">
+                <Typography variant="h6" color="blue-gray" className="mt-6">
                   My Tickets
                 </Typography>
                 <Typography
@@ -202,7 +193,61 @@ export function Profile() {
                 >
                   You have 3 tickets
                 </Typography>
-                <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4">
+                <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4 ">
+                  <div>
+                    <Card className="mt-6 w-96">
+                      <CardHeader color="blue-gray" className="relative h-56">
+                        <img
+                          src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
+                          alt="card-image"
+                        />
+                      </CardHeader>
+                      <CardBody>
+                        <Typography
+                          variant="h5"
+                          color="blue-gray"
+                          className="mb-2"
+                        >
+                          UI/UX Review Check
+                        </Typography>
+                        <Typography>
+                          The place is close to Barceloneta Beach and bus stop
+                          just 2 min by walk and near to &quot;Naviglio&quot;
+                          where you can enjoy the main night life in Barcelona.
+                        </Typography>
+                      </CardBody>
+                      <CardFooter className="pt-0">
+                        <Button>Read More</Button>
+                      </CardFooter>
+                    </Card>
+                  </div>
+                  <div>
+                    <Card className="mt-6 w-96">
+                      <CardHeader color="blue-gray" className="relative h-56">
+                        <img
+                          src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
+                          alt="card-image"
+                        />
+                      </CardHeader>
+                      <CardBody>
+                        <Typography
+                          variant="h5"
+                          color="blue-gray"
+                          className="mb-2"
+                        >
+                          UI/UX Review Check
+                        </Typography>
+                        <Typography>
+                          The place is close to Barceloneta Beach and bus stop
+                          just 2 min by walk and near to &quot;Naviglio&quot;
+                          where you can enjoy the main night life in Barcelona.
+                        </Typography>
+                      </CardBody>
+                      <CardFooter className="pt-0">
+                        <Button>Read More</Button>
+                      </CardFooter>
+                    </Card>
+                  </div>
                   <div>
                     <Card className="mt-6 w-96">
                       <CardHeader color="blue-gray" className="relative h-56">
@@ -239,169 +284,186 @@ export function Profile() {
             <div className="p-8 flex">
               <Card className="border bg-blue-gray-50 mx-3 w-full">
                 <CardHeader color="blue-gray">
-                  <Typography variant="h6" color="white" className="p-2">
-                    Inbox
+                  <Typography
+                    variant="h6"
+                    color="white"
+                    className="p-2 text-center"
+                  >
+                    Unser Kontakt Formular für jede Art von Anfrage
                   </Typography>
                 </CardHeader>
                 <CardBody>
-                  <div className="flex gap-4 m-1">
-                    <table className="w-full min-w-max table-auto text-left">
-                      <thead>
-                        <tr>
-                          {TABLE_HEAD.map((head) => (
-                            <th
-                              key={head}
-                              className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
-                            >
-                              <Typography
-                                variant="small"
-                                color="blue-gray"
-                                className="font-normal leading-none opacity-70"
-                              >
-                                {head}
-                              </Typography>
-                            </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {TABLE_ROWS.map(({ user, subject, message }, index) => {
-                          const isLast = index === TABLE_ROWS.length - 1;
-                          const classes = isLast
-                            ? "p-4"
-                            : "p-4 border-b border-blue-gray-50";
+                  <div className="gap-4 m-3">
+                    <p className="text-black">
+                      Wir werden dir per Email antworten. Falls eine Ticket ID
+                      vorhanden ist gib sie bitte im Betreff ein.
+                    </p>
+                  </div>
+                  <form onSubmit={handleSubmit}>
+                    <div className="flex gap-4 m-3">
+                      <Input
+                        type="text"
+                        label="Email"
+                        size="md"
+                        placeholder="Type your Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                      />
+                    </div>
 
-                          return (
-                            <tr key={user}>
-                              <td className={classes}>
-                                <Typography
-                                  variant="small"
-                                  color="blue-gray"
-                                  className="font-normal"
-                                >
-                                  {user}
-                                </Typography>
-                              </td>
-                              <td className={`${classes} bg-blue-gray-50/50`}>
-                                <Typography
-                                  variant="small"
-                                  color="blue-gray"
-                                  className="font-normal"
-                                >
-                                  {subject}
-                                </Typography>
-                              </td>
-                              <td className={classes}>
-                                <Typography
-                                  variant="small"
-                                  color="blue-gray"
-                                  className="font-normal"
-                                >
-                                  {message}
-                                </Typography>
-                              </td>
-                              <td
-                                className={`${classes} bg-blue-gray-50/50`}
-                              ></td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
-                </CardBody>
-              </Card>
-              <Card className="border bg-blue-gray-50 mx-3">
-                <CardHeader color="blue-gray">
-                  <Typography variant="h6" color="white" className="p-2">
-                    Message
-                  </Typography>
-                </CardHeader>
-                <CardBody>
-                  <div className="flex gap-4 m-3">
-                    <Input
-                      type="text"
-                      label="Name"
-                      size="md"
-                      placeholder="Type the subject"
-                    />
-                  </div>
-                  <div className="flex gap-4 m-3">
-                    <Input
-                      type="text"
-                      label="Subject"
-                      size="md"
-                      placeholder="Type the subject"
-                    />
-                  </div>
-                  <div className="flex gap-4 m-3">
-                    <Textarea label="Message" size="md" rows={6} />
-                  </div>
-                  <div className="flex gap-4 m-3">
-                    <Button color="gray" size="regular">
-                      Send
-                    </Button>
-                  </div>
+                    <div className="flex gap-4 m-3">
+                      <Input
+                        type="text"
+                        label="Betreff"
+                        size="md"
+                        placeholder="Betreff"
+                        value={subject}
+                        onChange={(e) => setSubject(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="flex gap-4 m-3">
+                      <Textarea
+                        label="Message"
+                        size="md"
+                        rows={6}
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="flex gap-4 m-3">
+                      <Button color="gray" size="regular" type="submit">
+                        Send
+                      </Button>
+                    </div>
+                  </form>
                 </CardBody>
               </Card>
             </div>
           )}
 
           {activeTab === "settings" && (
-            <div className="p-8">
-              <table className="w-full">
-                <tbody>
-                  <tr>
-                    <td className="p-4">
-                      <form>
-                        <div className="flex gap-4 p-2">
-                          <Input size="md" label="Name" name="name" />
-                        </div>
-                        <div className="flex gap-4 p-2">
-                          <Input
-                            type="email"
-                            label="Email Address"
-                            name="email"
-                            className="pr-20"
-                            containerProps={{
-                              className: "min-w-0",
-                            }}
-                          />
-                        </div>
-                        <div className="flex gap-4 p-2">
-                          <Input
-                            type="password"
-                            size="md"
-                            label="Password"
-                            name="password"
-                          />
-                        </div>
-                        <div className="flex gap-4 p-2">
-                          <div
-                            className="flex-grow"
-                            style={{ flexBasis: "70%" }}
-                          >
-                            <Input type="file" size="md" label="Profile" />
-                          </div>
-                          <div
-                            className="flex-grow"
-                            style={{ flexBasis: "30%" }}
-                          >
-                            <Button
-                              type="submit"
-                              className="w-full flex items-center justify-center gap-2 "
-                            >
-                              {" "}
-                              Edit Profile
-                              <UserPlusIcon className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </div>
-                      </form>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <div className="grid-cols-1 mb-12 grid gap-24 px-4 lg:grid-cols-2 xl:grid-cols-2">
+              <div className="border bg-blue-gray-50 p-8">
+                <Typography variant="h6" color="blue-gray" className="mb-3">
+                  Platform Settings
+                </Typography>
+                <ul className="flex flex-col gap-4">
+                  <li className="flex items-center justify-between">
+                    <Typography>Email me when someone follows me</Typography>
+                    <Switch defaultChecked />
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <Typography>
+                      Email me when someone answers on my post
+                    </Typography>
+                    <Switch />
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <Typography>Email me when someone mentions me</Typography>
+                    <Switch defaultChecked />
+                  </li>
+                </ul>
+              </div>
+              <div className="border bg-blue-gray-50 p-8">
+                <Typography variant="h6" color="blue-gray" className="mb-3">
+                  Application Settings
+                </Typography>
+                <ul className="flex flex-col gap-4">
+                  <li className="flex items-center justify-between">
+                    <Typography>New launches and projects</Typography>
+                    <Switch defaultChecked />
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <Typography>Monthly product updates</Typography>
+                    <Switch />
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <Typography>Subscribe to newsletter</Typography>
+                    <Switch defaultChecked />
+                  </li>
+                </ul>
+              </div>
+              <div className="border bg-blue-gray-50 p-8">
+                <Typography variant="h6" color="blue-gray" className="mb-3">
+                  Privacy Settings
+                </Typography>
+                <ul className="flex flex-col gap-4">
+                  <li className="flex items-center justify-between">
+                    <Typography>Make my profile private</Typography>
+                    <Switch />
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <Typography>
+                      Allow search engines to index my profile
+                    </Typography>
+                    <Switch />
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <Typography>Show my online status</Typography>
+                    <Switch defaultChecked />
+                  </li>
+                </ul>
+              </div>
+              <div className="border bg-blue-gray-50 p-8">
+                <Typography variant="h6" color="blue-gray" className="mb-3">
+                  Account Settings
+                </Typography>
+                <ul className="flex flex-col gap-4">
+                  <li className="flex items-center justify-between">
+                    <Typography>
+                      Receive account activity notifications
+                    </Typography>
+                    <Switch />
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <Typography>Language preference</Typography>
+                    <select className="border rounded p-2">
+                      <option>English</option>
+                      <option>German</option>
+                      <option>Spanish</option>
+                      <option>French</option>
+                    </select>
+                  </li>
+                  <Button
+                    onClick={() => setIsDialogOpen(true)}
+                    className="select-none rounded-lg bg-gradient-to-tr bg-red-700 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                  >
+                    Account löschen
+                  </Button>
+                </ul>
+
+                {isDialogOpen && (
+                  <div
+                    className="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity duration-300"
+                    onClick={() => setIsDialogOpen(false)}
+                  >
+                    <div
+                      className="relative m-4 w-2/5 min-w-[40%] max-w-[40%] rounded-lg bg-white font-sans text-base font-light leading-relaxed text-blue-gray-500 antialiased shadow-2xl"
+                      onClick={(e) => e.stopPropagation()} // Prevents closing the dialog when clicking inside the dialog
+                    >
+                      <div className="flex items-center p-4 font-sans text-2xl antialiased font-semibold leading-snug shrink-0 text-blue-gray-900">
+                        It's not so easy my Friend.
+                      </div>
+                      <div className="relative p-4 font-sans text-base antialiased font-light leading-relaxed border-t border-b border-t-blue-gray-100 border-b-blue-gray-100 text-blue-gray-500">
+                        Um deinen Account zu löschen, musst du uns eine
+                        Nachricht über das Kontaktformular schicken, damit wir
+                        prüfen können, ob du der Besitzer des Accounts bist.
+                      </div>
+                      <div className="flex flex-wrap items-center justify-end p-4 shrink-0 text-blue-gray-500">
+                        <Button
+                          onClick={() => setIsDialogOpen(false)}
+                          className="middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        >
+                          Verstanden
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </CardBody>

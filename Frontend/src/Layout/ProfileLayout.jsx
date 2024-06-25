@@ -1,5 +1,6 @@
-import React from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Typography,
   Button,
@@ -16,7 +17,8 @@ import {
   ChevronDownIcon,
   HomeIcon,
 } from "@heroicons/react/24/solid";
-import { useAuthContext } from "../../hooks/useAuthContext.jsx";
+import { useAuthContext } from "../hooks/useAuthContext";
+import logo from "../assets/img/eventhub-logo.png";
 
 const profileMenuItems = [
   {
@@ -27,17 +29,17 @@ const profileMenuItems = [
   {
     label: "My Tickets",
     icon: UserCircleIcon,
-    to: "/admin/profile?tab=app",
+    to: "/customer-dashboard?tab=app",
   },
   {
     label: "Edit Profile",
     icon: UserCircleIcon,
-    to: "/admin/profile?tab=settings",
+    to: "/customer-dashboard?tab=settings",
   },
   {
     label: "Inbox",
     icon: InboxArrowDownIcon,
-    to: "/admin/profile?tab=message",
+    to: "/customer-dashboard?tab=message",
   },
   {
     label: "Sign Out",
@@ -50,8 +52,7 @@ const profileMenuItems = [
 function ProfileMenu() {
   const { user, dispatch } = useAuthContext();
   const navigate = useNavigate();
-
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -122,26 +123,49 @@ function ProfileMenu() {
   );
 }
 
-export default function Topbar() {
+function Topbar() {
   const location = useLocation();
   const { user } = useAuthContext();
   return (
     <div className="flex justify-between items-center p-4">
-      <div className="fixed top-0 right-0 left-64 mx-3 p-3 z-10 bg-gray-300 rounded-xl ">
+      <div className="fixed top-0 right-0 left-0  p-3 z-10 bg-gray-300 ">
         <div className="flex justify-between items-center">
-          <Typography
-            as="span"
-            variant="h6"
-            className="font-medium text-blue-gray-900"
-          >
-            {location.pathname === "/admin"
-              ? "Dashboard"
-              : location.pathname.slice(1).charAt(0).toUpperCase() +
-                location.pathname.slice(2)}
-            {user ? <p>Welcome, {user.name}!</p> : <p>Please log in.</p>}
-          </Typography>
+          <Link to="/customer-dashboard">
+            <img src={logo} alt="logo" className="h-16" />
+          </Link>
+
           <ProfileMenu />
         </div>
+      </div>
+    </div>
+  );
+}
+
+export default function ProfileLayout() {
+  const navigate = useNavigate();
+  const { user, dispatch } = useAuthContext();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!token || !user) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      dispatch({ type: "LOGOUT" });
+      navigate("/login");
+    } else {
+      dispatch({ type: "LOGIN", payload: user });
+    }
+  }, [navigate, dispatch]);
+
+  return (
+    <div className="flex">
+      <div className="flex-1 flex flex-col">
+        <Topbar />
+        <main className="mt-10 p-4">
+          <Outlet />
+        </main>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ const userRoutes = require("./Routers/userRoutes");
 const cors = require("cors");
 const eventRoutes = require("./Routers/eventRoutes");
 const authRoutes = require("./Routers/authRoutes");
+const contactRoutes = require("./Routers/contactRoutes");
 const ticketRoutes = require("./Routers/RouteTicket");
 const qrCode = require("./Routers/QrRoutes");
 
@@ -23,6 +24,7 @@ app.use("/dashboard", eventRoutes);
 app.use("/dashboard", ticketRoutes);
 app.use("/dashboard", qrCode);
 app.use("/auth", authRoutes);
+app.use("/dashboard", contactRoutes);
 
 mongoose
   .connect(process.env.DataBase)
@@ -39,12 +41,12 @@ mongoose
     console.log(error);
   });
 
-// app.get("/api/daten", async (req, res) => {
-//   try {
-//     const daten = await Daten.find();
-//     res.status(200).json(daten);
-//   } catch (err) {
-//     console.error("Fehler beim Abrufen der Daten:", err);
-//     res.status(500).json({ error: "Interner Serverfehler" });
-//   }
-// });
+app.get("/api/daten", async (req, res) => {
+  try {
+    const daten = await Daten.find();
+    res.status(200).json(daten);
+  } catch (err) {
+    console.error("Fehler beim Abrufen der Daten:", err);
+    res.status(500).json({ error: "Interner Serverfehler" });
+  }
+});
