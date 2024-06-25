@@ -11,6 +11,8 @@ import ComedySwiper from "../../Components/Home/ComedySwiper";
 import KonzertSwiper from "../../Components/Home/KonzertSwiper";
 import NewsLetter from "../../Components/Home/Newsletter";
 import Help from "../../Components/Home/Help";
+import SportSwiper from "../../Components/Home/SportSwiper";
+import ShowSwiper from "../../Components/Home/ShowSwiper";
 
 const HomePage = () => {
   const [backgroundColor, setbackgroundColor] = useState("white");
@@ -38,8 +40,8 @@ const HomePage = () => {
           <ComedySwiper />
           <KonzertSwiper />
           <CarouselWithEvents />
-          <ComedySwiper />
-          <KonzertSwiper />
+          <SportSwiper />
+          <ShowSwiper />
           <EventList />
           <NewsLetter />
 
