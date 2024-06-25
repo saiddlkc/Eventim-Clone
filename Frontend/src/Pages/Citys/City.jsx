@@ -11,7 +11,8 @@ const cityImages = {
     "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/hamburg-city-header-1440x244.jpg",
   münchen:
     "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/muenchen-city-header-1440x244.jpg",
-  köln: "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/koeln-city-header-1440x244.jpg",
+  köln:
+    "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/koeln-city-header-1440x244.jpg",
   frankfurt:
     "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/frankfurt-city-header-1440x244.jpg",
   stuttgart:
@@ -24,23 +25,11 @@ const cityImages = {
     "https://www.eventim.de/obj/media/DE-eventim/teaser/cities/evoHeader/duesseldorf-city-header-1440x244.jpg",
 };
 
-/**
- * Komponente, die die Events einer bestimmten Stadt anzeigt.
- */
-/**
- * Renders the City component.
- * Displays a list of popular events in a specific city.
- */
 const City = () => {
   const [events, setEvents] = useState([]); // Zustand für die Events
   const [cityImage, setCityImage] = useState(""); // Zustand für das Stadtbild
   const { city } = useParams(); // Parameter für die Stadt aus der URL
 
-  /**
-   * Effekt, der bei Änderung der Stadt aufgerufen wird.
-   * Ruft die Events für die Stadt ab und aktualisiert den Zustand.
-   * Ruft das Stadtbild ab und aktualisiert den Zustand.
-   */
   useEffect(() => {
     if (city) {
       axios
@@ -70,7 +59,7 @@ const City = () => {
   return (
     <div>
       <Outlet />
-      <div className="flex flex-col">
+      <div className="flex flex-col bg-gray-100">
         <div className="flex bg-orange-500 items-center justify-start relative">
           {cityImage && (
             <img
@@ -87,7 +76,7 @@ const City = () => {
           Beliebtesten Events in {city.charAt(0).toUpperCase() + city.slice(1)}
         </p>
 
-        <div className="flex flex-wrap justify-center">
+        <div className="flex flex-wrap lg:grid md:grid-cols-5 justify-center container mx-auto">
           {events.length > 0 ? (
             events.map((event) => (
               <div
