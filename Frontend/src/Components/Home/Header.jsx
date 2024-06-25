@@ -162,7 +162,7 @@ const navCategoryMenuItems = [
 function NavListMenu({ closeNav }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const renderItems = navListMenuItems.map(
+  const renderItems = navCategoryMenuItems.map(
     ({ icon, title, description, link }, key) => (
       <Link to={link} key={key} onClick={closeNav}>
         <MenuItem className="flex items-center gap-3 rounded-lg">

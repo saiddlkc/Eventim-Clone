@@ -10,8 +10,6 @@ import SwiperMain from "../../Components/Home/Swiper/Swiper";
 import ComedySwiper from "../../Components/Home/ComedySwiper";
 import KonzertSwiper from "../../Components/Home/KonzertSwiper";
 import NewsLetter from "../../Components/Home/Newsletter";
-import ShowSwiper from "../../Components/Home/ShowSwiper";
-import NewsLetter from "../../Components/Home/NewsLetter";
 import Help from "../../Components/Home/Help";
 
 const HomePage = () => {
@@ -46,11 +44,9 @@ const HomePage = () => {
           <NewsLetter />
 
           <MasonryGridGallery />
+          <Help />
         </div>
         {/* <EventCardList /> */}
-        <ComedySwiper />
-        <KonzertSwiper />
-        <EventList />
       </div>
     </div>
   );
