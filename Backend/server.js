@@ -25,7 +25,7 @@ app.use("/dashboard", qrCode);
 app.use("/auth", authRoutes);
 
 mongoose
-  .connect(process.env.DataBase)
+  .connect(process.env.SERVER)
   .then(() => {
     console.log("connected to db");
     // listen for requests
