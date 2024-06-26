@@ -9,7 +9,7 @@ import MasonryGridGallery from "../../Components/Home/Galery";
 import SwiperMain from "../../Components/Home/Swiper/Swiper";
 import ComedySwiper from "../../Components/Home/ComedySwiper";
 import KonzertSwiper from "../../Components/Home/KonzertSwiper";
-import NewsLetter from "../../Components/Home/Newsletter";
+import NewsLetter from "../../Components/Home/NewsLetter";
 import Help from "../../Components/Home/Help";
 
 const HomePage = () => {
