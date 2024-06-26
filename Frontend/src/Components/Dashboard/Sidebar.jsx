@@ -36,7 +36,7 @@ export default function Sidebar() {
           <img src={logo} alt="logo" />
         </Link>
       </div>
-      <List>
+      <List className="sm:">
         <Link to="/admin">
           <ListItem selected={location.pathname === "/admin"}>
             <ListItemPrefix>
