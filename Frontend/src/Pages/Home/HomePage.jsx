@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Settings from "../../Components/Home/Settings";
-import AllCities from "../Citys/Allcities";
+import AllCitiesCard from "../../Components/Home/AllCitiesCard";
 import CarouselWithContent from "../../Components/Home/CarouselCities";
 import CarouselWithEvents from "../../Components/Home/CorouselEvents";
 import EventList from "../../Components/Home/EventList";
-import EventCardList from "../../Components/Home/EventCardList";
+import MasonryGridGallery from "../../Components/Home/Galery";
+
+import SwiperMain from "../../Components/Home/Swiper/Swiper";
+import ComedySwiper from "../../Components/Home/ComedySwiper";
+import KonzertSwiper from "../../Components/Home/KonzertSwiper";
+import NewsLetter from "../../Components/Home/Newsletter";
+import Help from "../../Components/Home/Help";
+import SportSwiper from "../../Components/Home/SportSwiper";
+import ShowSwiper from "../../Components/Home/ShowSwiper";
 
 const HomePage = () => {
   const [backgroundColor, setbackgroundColor] = useState("white");
@@ -25,13 +33,22 @@ const HomePage = () => {
     <div style={{ backgroundColor: backgroundColor }}>
       <Settings setBackgroundColor={handleSetBackgroundColor} />
       <div className="relative z-10">
-        <CarouselWithEvents />
-        <EventCardList />
+        <SwiperMain />
         <CarouselWithContent />
         <div className="container mx-auto">
-          <AllCities />
+          <AllCitiesCard />
+          <ComedySwiper />
+          <KonzertSwiper />
+          <CarouselWithEvents />
+          <SportSwiper />
+          <ShowSwiper />
+          <EventList />
+          <NewsLetter />
+
+          <MasonryGridGallery />
+          <Help />
         </div>
-        <EventList />
+        {/* <EventCardList /> */}
       </div>
     </div>
   );

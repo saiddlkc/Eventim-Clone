@@ -61,7 +61,7 @@ const cities = [
 
 const AllCities = () => {
   return (
-    <div>
+    <div className="">
       <Outlet />
       <div className="lg:grid md:grid-cols-5  my-4 sm:flex sm:flex-wrap sm:justify-center sm:items-center md:flex md:flex-wrap md:justify-center lg:gap-2 m-10">
         {cities.map((city, index) => (

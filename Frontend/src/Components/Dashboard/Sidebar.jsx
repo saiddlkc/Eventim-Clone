@@ -69,6 +69,7 @@ export default function Sidebar() {
             Tickets
           </ListItem>
         </Link>
+
         <Link to="/admin/inbox">
           <ListItem selected={location.pathname === "/admin/inbox"}>
             <ListItemPrefix>
