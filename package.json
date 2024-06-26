@@ -10,8 +10,7 @@
     "bcrypt": "^5.1.1",
     "date-fns": "^3.6.0",
     "lodash": "^4.17.21",
-    "react-apexcharts": "^1.4.1",
-    "swiper": "^11.1.4"
+    "react-apexcharts": "^1.4.1"
   },
   "name": "eventim-clone",
   "description": "",
