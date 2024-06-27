@@ -61,7 +61,6 @@ function App() {
         <Route path="/admin/users" element={<UsersTable />} />
         <Route path="/admin/tickets" element={<TicketTable />} />
         <Route path="/admin/events" element={<EventsTableList />} />
-        {/* <Route path="/admin/tickets" element={<Ticket />} /> */}
         <Route path="/admin/inbox" element={<Inbox />} />
         <Route path="/admin/profile" element={<Profile />} />
       </Route>

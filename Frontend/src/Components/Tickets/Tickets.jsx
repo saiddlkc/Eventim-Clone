@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ticketImage from "./img1.png"; // Passe den Pfad zum Bild an
+
 import "./Styles.css";
 
 const Ticket = () => {
