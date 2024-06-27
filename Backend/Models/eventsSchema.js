@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const eventSchema = new mongoose.Schema({
   titel: { type: String },
+  artist: { String },
   beschreibung: { type: String },
   startDatum: { type: Date },
   endDatum: { type: Date },
