@@ -9,7 +9,7 @@ import MasonryGridGallery from "../../Components/Home/Galery";
 import SwiperMain from "../../Components/Home/Swiper/Swiper";
 import ComedySwiper from "../../Components/Home/ComedySwiper";
 import KonzertSwiper from "../../Components/Home/KonzertSwiper";
-import NewsLetter from "../../Components/Home/NewsLetter";
+import NewsLetter from "../../Components/Home/Newsletter";
 import Help from "../../Components/Home/Help";
 import SportSwiper from "../../Components/Home/SportSwiper";
 import ShowSwiper from "../../Components/Home/ShowSwiper";

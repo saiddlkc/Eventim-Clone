@@ -15,12 +15,12 @@ const EventDetails = () => {
   useEffect(() => {
     if (id) {
       axios
-        .get(`http://localhost:4000/dashboard/tickets/${id}`)
+        .get(`http://localhost:4000/dashboard/event/${id}`)
         .then((response) => {
-          setTickets(response.data);
+          setEvent(response.data);
         })
         .catch((error) => {
-          console.error("There was an error fetching the tickets!", error);
+          console.error("There was an error fetching the event!", error);
         });
     }
   }, [id]);
@@ -28,12 +28,12 @@ const EventDetails = () => {
   useEffect(() => {
     if (id) {
       axios
-        .get(`http://localhost:4000/dashboard/event/${id}`)
+        .get(`http://localhost:4000/dashboard/tickets`)
         .then((response) => {
-          setEvent(response.data);
+          setTickets(response.data);
         })
         .catch((error) => {
-          console.error("There was an error fetching the event!", error);
+          console.error("There was an error fetching the tickets!", error);
         });
     }
   }, [id]);
@@ -48,7 +48,7 @@ const EventDetails = () => {
 
   return (
     <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 container mx-auto text-center">
-      {/* Hintergrundbild mit überlagertem Text */}
+      {/* Background image with overlaid text */}
       <div className="relative lg:flex sm:flex-col items-center justify-start w-full font-extrabold bg-gray-300">
         <img
           src={event.headerUrl}
