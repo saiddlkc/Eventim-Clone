@@ -26,7 +26,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import { ToastContainer, toast } from "react-toastify";
 
 import Tickets from "../../Components/Tickets/Tickets";
-import TicketBox from "../../Components/Tickets/TicketBox";
+// import TicketBox from "../../Components/Tickets/TicketBox";
 
 export function Profile() {
   const location = useLocation();

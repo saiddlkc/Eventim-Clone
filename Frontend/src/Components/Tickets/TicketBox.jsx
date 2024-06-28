@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const TicketList = () => {
+const TicketBox = () => {
   const [tickets, setTickets] = useState([]);
   const [filteredTickets, setFilteredTickets] = useState([]);
   const [cityFilter, setCityFilter] = useState("");
   const [ticketTypeFilter, setTicketTypeFilter] = useState("");
   const [showFilters, setShowFilters] = useState(false); // Zustand für das Anzeigen/Verstecken der Filter
-
+  const [teddyTickets, setTeddyTickets] = useState([]);
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return {
@@ -32,7 +32,6 @@ const TicketList = () => {
     const fetchTickets = async () => {
       try {
         const res = await axios.get(`http://localhost:4000/dashboard/tickets/`);
-        console.log(res);
         setTickets(res.data);
         setFilteredTickets(res.data); // Initialize filteredTickets with all tickets
       } catch (error) {
@@ -42,6 +41,17 @@ const TicketList = () => {
 
     fetchTickets();
   }, []);
+
+  useEffect(() => {
+    setTeddyTickets(
+      filteredTickets.filter(
+        (ticket) => ticket.artist === "Teddy" || ticket.artist === "Teddy 2025"
+      )
+    );
+    console.log(teddyTickets);
+  }, []);
+
+  console.log(teddyTickets);
 
   // Filter function
   const applyFilters = () => {
@@ -143,7 +153,7 @@ const TicketList = () => {
             <option value="München">München</option>
             <option value="Köln">Köln</option>
             <option value="Frankfurt">Frankfurt</option>
-            <option value="LEIPZIG">Leipzig</option>
+            <option value="Leipzig">Leipzig</option>
             <option value="Bremen">Bremen</option>
             <option value="Hannover">Hannover</option>
             <option value="Stuttgart">Stuttgart</option>
@@ -173,14 +183,14 @@ const TicketList = () => {
 
       {/* Ticket list */}
       <div className="">
-        {filteredTickets.map((ticket) => {
+        {teddyTickets.map((ticket) => {
           const { formattedDate, weekday, month, day, year } = formatDate(
             ticket.date
           );
 
           return (
             <div
-              key={ticket.id}
+              key={ticket._id}
               className="max-w-md mx-auto bg-white rounded-xl shadow-1xl overflow-hidden md:max-w-4xl mb-4 "
             >
               <div className="md:flex">
@@ -251,4 +261,4 @@ const TicketList = () => {
   );
 };
 
-export default TicketList;
+export default TicketBox;

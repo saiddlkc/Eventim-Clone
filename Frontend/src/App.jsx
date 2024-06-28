@@ -23,6 +23,8 @@ import AboutPage from "./Pages/About/AboutPage";
 import ContactPage from "./Pages/Contact/ContactPage";
 // import Ticket from "./Components/Tickets/Tickets";
 import TicketTable from "./Pages/Dashboard/TicketTable";
+import TicketSelectionPage from "./Components/Tickets/TicketSelectionPage";
+import Warenkorb from "./Components/Tickets/Warenkorb";
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
         <Route path="/allcities" element={<AllCities />} />
         <Route path="/categories/:category?" element={<EventCategory />} />
         <Route path="/allevents" element={<AllEvents />} />
+        <Route path="/select-ticket" element={<TicketSelectionPage />} />
+        <Route path="/cart" element={<Warenkorb />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
       </Route>
@@ -61,7 +65,6 @@ function App() {
         <Route path="/admin/users" element={<UsersTable />} />
         <Route path="/admin/tickets" element={<TicketTable />} />
         <Route path="/admin/events" element={<EventsTableList />} />
-        {/* <Route path="/admin/tickets" element={<Ticket />} /> */}
         <Route path="/admin/inbox" element={<Inbox />} />
         <Route path="/admin/profile" element={<Profile />} />
       </Route>
