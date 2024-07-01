@@ -5,34 +5,28 @@ import ReadOnly from "../../Components/Dashboard/ReadOnly";
 import EditableRow from "../../Components/Dashboard/EditableRow";
 
 const TicketTable = () => {
-  const [ticket, setTicket] = useState([]);
-  const [addFormData, setAddFormData] = useState({
+  const initialFormState = {
     title: "",
     artist: "",
     description: "",
-    // location: {
-    //   venueName: "",
-    //   addressLine1: "",
-    //   state: "",
-    //   postalCode: "",
-    //   country: "",
-    // },
     date: "",
-    startTime: "1",
+    startTime: "",
     endTime: "",
     city: "",
     eventLocation: "",
     organizer: "",
-    price: [],
+    price: "",
     currency: "",
     ticketType: "",
-    quantityAvailable: [],
+    quantityAvailable: "",
     image: "",
-    qrCode: "",
-    qrCodeImage: "",
     seat: "",
-    selectedSeats: [],
-  });
+    row: "",
+  };
+
+  const [addFormData, setAddFormData] = useState(initialFormState);
+
+  const [ticket, setTicket] = useState([]);
 
   const [editFormData, setEditFormData] = useState(ticket);
   const [editTicketID, setEditTicketID] = useState(null);
@@ -55,13 +49,11 @@ const TicketTable = () => {
 
   const handleAddFormChange = (event) => {
     event.preventDefault();
-
-    const fieldName = event.target.getAttribute("name");
-    const fieldValue = event.target.value;
-
-    const newFormData = { ...addFormData };
-    newFormData[fieldName] = fieldValue;
-    setAddFormData(newFormData);
+    const { name, value } = event.target;
+    setAddFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleEditFormChange = (event) => {
@@ -76,18 +68,21 @@ const TicketTable = () => {
     setEditFormData(newFormData);
     console.log("editFormData", editFormData);
   };
-
   const handleAddFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      const res = await axios.post("http://localhost:4000/dashboard/tickets/", {
-        addFormData,
-      });
-      setAddFormData(res.data);
-      console.log(res.data);
-      setTicket([...ticket, res.data]);
+      const res = await axios.post(
+        "http://localhost:4000/dashboard/tickets/",
+        addFormData
+      );
+      console.log("Response data:", res.data);
+      setTicket((prevTickets) => [...prevTickets, res.data]);
+      setAddFormData(initialFormState); // Setzt das Formular zurück
     } catch (error) {
-      console.error("Fehler beim Hinzufügen des Tickets:", error);
+      console.error(
+        "Fehler beim Hinzufügen des Tickets:",
+        error.response ? error.response.data : error.message
+      );
     }
   };
 
@@ -198,15 +193,17 @@ const TicketTable = () => {
   return (
     <div className="container mx-auto">
       <h1 className="text-3xl font-semibold mb-4">Add a Tickets</h1>
+
       <form
         onSubmit={handleAddFormSubmit}
         className="bg-white p-6 mb-4 border border-gray-200 rounded-xl shadow-xl"
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input
             className="border border-gray-300 rounded p-2 w-full"
             type="text"
             name="title"
+            value={addFormData.title}
             onChange={handleAddFormChange}
             placeholder="Title"
             required
@@ -215,6 +212,7 @@ const TicketTable = () => {
             className="border border-gray-300 rounded p-2 w-full"
             type="text"
             name="artist"
+            value={addFormData.artist}
             onChange={handleAddFormChange}
             placeholder="Artist"
             required
@@ -223,15 +221,16 @@ const TicketTable = () => {
             className="border border-gray-300 rounded p-2 w-full"
             type="text"
             name="description"
+            value={addFormData.description}
             onChange={handleAddFormChange}
             placeholder="Description"
             required
           />
-
           <input
             className="border border-gray-300 rounded p-2 w-full"
             type="text"
             name="city"
+            value={addFormData.city}
             onChange={handleAddFormChange}
             placeholder="City"
             required
@@ -240,38 +239,16 @@ const TicketTable = () => {
             className="border border-gray-300 rounded p-2 w-full"
             type="text"
             name="eventLocation"
+            value={addFormData.eventLocation}
             onChange={handleAddFormChange}
             placeholder="Event Location"
             required
           />
-          {/*
-          <input
-            className="border border-gray-300 rounded p-2 w-full"
-            type="text"
-            name="location.state"
-            onChange={handleAddFormChange}
-            placeholder="State"
-          />
-          <input
-            className="border border-gray-300 rounded p-2 w-full"
-            type="text"
-            name="location.postalCode"
-            onChange={handleAddFormChange}
-            placeholder="Postal Code"
-            required
-          />
-          <input
-            className="border border-gray-300 rounded p-2 w-full"
-            type="text"
-            name="location.country"
-            onChange={handleAddFormChange}
-            placeholder="Country"
-            required
-          /> */}
           <input
             className="border border-gray-300 rounded p-2 w-full"
             type="date"
             name="date"
+            value={addFormData.date}
             onChange={handleAddFormChange}
             placeholder="Date"
             required
@@ -280,6 +257,7 @@ const TicketTable = () => {
             className="border border-gray-300 rounded p-2 w-full"
             type="time"
             name="startTime"
+            value={addFormData.startTime}
             onChange={handleAddFormChange}
             placeholder="Start Time"
             required
@@ -288,6 +266,7 @@ const TicketTable = () => {
             className="border border-gray-300 rounded p-2 w-full"
             type="time"
             name="endTime"
+            value={addFormData.endTime}
             onChange={handleAddFormChange}
             placeholder="End Time"
             required
@@ -296,6 +275,7 @@ const TicketTable = () => {
             className="border border-gray-300 rounded p-2 w-full"
             type="text"
             name="organizer"
+            value={addFormData.organizer}
             onChange={handleAddFormChange}
             placeholder="Organizer"
             required
@@ -304,6 +284,7 @@ const TicketTable = () => {
             className="border border-gray-300 rounded p-2 w-full"
             type="number"
             name="price"
+            value={addFormData.price}
             onChange={handleAddFormChange}
             placeholder="Price"
             required
@@ -312,6 +293,7 @@ const TicketTable = () => {
             className="border border-gray-300 rounded p-2 w-full"
             type="text"
             name="currency"
+            value={addFormData.currency}
             onChange={handleAddFormChange}
             placeholder="Currency"
             required
@@ -320,6 +302,7 @@ const TicketTable = () => {
             className="border border-gray-300 rounded p-2 w-full"
             type="text"
             name="ticketType"
+            value={addFormData.ticketType}
             onChange={handleAddFormChange}
             placeholder="Ticket Type"
           />
@@ -327,6 +310,7 @@ const TicketTable = () => {
             className="border border-gray-300 rounded p-2 w-full"
             type="number"
             name="quantityAvailable"
+            value={addFormData.quantityAvailable}
             onChange={handleAddFormChange}
             placeholder="Quantity Available"
             required
@@ -335,6 +319,7 @@ const TicketTable = () => {
             className="border border-gray-300 rounded p-2 w-full"
             type="text"
             name="image"
+            value={addFormData.image}
             onChange={handleAddFormChange}
             placeholder="Image URL"
             required
@@ -343,24 +328,27 @@ const TicketTable = () => {
             className="border border-gray-300 rounded p-2 w-full"
             type="text"
             name="seat"
+            value={addFormData.seat}
             onChange={handleAddFormChange}
-            placeholder=" Seat"
+            placeholder="Seat"
           />
           <input
             className="border border-gray-300 rounded p-2 w-full"
             type="text"
             name="row"
+            value={addFormData.row}
             onChange={handleAddFormChange}
             placeholder="Row"
           />
         </div>
         <button
-          className="bg-gray-900 text-white px-4 py-2 rounded mt-4 hover:bg-gray-600"
           type="submit"
+          className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
         >
           Add Ticket
         </button>
       </form>
+
       <div className="relative flex flex-col bg-clip-border shadow-xl rounded-xl text-gray-70 shadow-md h-full w-full bg-blue-gray-100">
         <div className="relative bg-clip-border mt-4 mx-4 overflow-hidden text-gray-700 rounded-none bg-blue-gray-100">
           <div className="flex justify-between items-center ">
