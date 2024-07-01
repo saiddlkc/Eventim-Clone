@@ -86,33 +86,6 @@ const TicketTable = () => {
       setAddFormData(res.data);
       console.log(res.data);
       setTicket([...ticket, res.data]);
-      setAddFormData({
-        title: "",
-        artist: "",
-        description: "",
-        // location: {
-        //   venueName: "",
-        //   addressLine1: "",
-        //   state: "",
-        //   postalCode: "",
-        //   country: "",
-        // },
-        date: "",
-        startTime: "",
-        endTime: "",
-        city: "",
-        eventLocation: "",
-        organizer: "",
-        price: [],
-        currency: "",
-        ticketType: "",
-        quantityAvailable: [],
-        image: "",
-        qrCode: "",
-        qrCodeImage: "",
-        seat: "",
-        selectedSeats: [],
-      });
     } catch (error) {
       console.error("Fehler beim Hinzufügen des Tickets:", error);
     }
