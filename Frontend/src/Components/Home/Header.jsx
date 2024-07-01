@@ -413,7 +413,34 @@ const profileMenuItems = [
     to: "/login",
   },
 ];
-
+const customerMenuItems = [
+  {
+    label: "Home",
+    icon: HomeIcon,
+    to: "/",
+  },
+  {
+    label: "My Tickets",
+    icon: UserCircleIcon,
+    to: "/customer-dashboard?tab=app",
+  },
+  {
+    label: "Edit Profile",
+    icon: UserCircleIcon,
+    to: "/customer-dashboard?tab=settings",
+  },
+  {
+    label: "Inbox",
+    icon: InboxArrowDownIcon,
+    to: "/customer-dashboard?tab=message",
+  },
+  {
+    label: "Sign Out",
+    icon: PowerIcon,
+    action: "logout",
+    to: "/login",
+  },
+];
 function ProfileMenu() {
   const { user, dispatch } = useAuthContext();
   const navigate = useNavigate();
@@ -432,6 +459,9 @@ function ProfileMenu() {
     }
     closeMenu();
   };
+
+  const menuItems =
+    user && user.role === "admin" ? profileMenuItems : customerMenuItems;
 
   return (
     <div className="flex items-center ">
@@ -462,8 +492,8 @@ function ProfileMenu() {
           </Button>
         </MenuHandler>
         <MenuList className="p-1">
-          {profileMenuItems.map(({ label, icon, to, action }, key) => {
-            const isLastItem = key === profileMenuItems.length - 1;
+          {menuItems.map(({ label, icon, to, action }, key) => {
+            const isLastItem = key === menuItems.length - 1;
             return (
               <MenuItem
                 key={label}

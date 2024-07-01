@@ -46,7 +46,7 @@ const usersSchema = new Schema(
     //   },
     // ],
   },
-  { timestamps: true } // Burada timestamps özelliğini ekleyin
+  { timestamps: true }
 );
 
 // Pre-save middleware to set default profile picture
