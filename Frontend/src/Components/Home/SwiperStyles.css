@@ -1,0 +1,34 @@
+/* SwiperStyles.css */
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: white; /* Farbe der Pfeile */
+  background-color: rgba(0, 0, 0, 0.234); 
+  padding: 20px;
+  scale: 1.3;
+
+  
+  
+ 
+}
+
+@media only screen and (max-width: 600px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    padding: 14px;
+    scale: 0.6;
+  }
+}
+
+
+
+
+
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: #f89807; /* Farbe der Pfeile beim Hover */
+ 
+}
+
+

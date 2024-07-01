@@ -25,19 +25,19 @@ const profileMenuItems = [
     to: "/",
   },
   {
-    label: "My Profile",
+    label: "My Tickets",
     icon: UserCircleIcon,
-    to: "/profile?tab=app",
+    to: "/admin/profile?tab=app",
   },
   {
     label: "Edit Profile",
     icon: UserCircleIcon,
-    to: "/profile?tab=settings",
+    to: "/admin/profile?tab=settings",
   },
   {
     label: "Inbox",
     icon: InboxArrowDownIcon,
-    to: "/profile?tab=message",
+    to: "/admin/profile?tab=message",
   },
   {
     label: "Sign Out",
@@ -134,7 +134,7 @@ export default function Topbar() {
             variant="h6"
             className="font-medium text-blue-gray-900"
           >
-            {location.pathname === "/"
+            {location.pathname === "/admin"
               ? "Dashboard"
               : location.pathname.slice(1).charAt(0).toUpperCase() +
                 location.pathname.slice(2)}

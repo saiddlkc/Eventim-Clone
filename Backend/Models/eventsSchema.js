@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const eventSchema = new mongoose.Schema({
   titel: { type: String },
+  artist: { String },
   beschreibung: { type: String },
   startDatum: { type: Date },
   endDatum: { type: Date },
@@ -27,6 +28,7 @@ const eventSchema = new mongoose.Schema({
   ],
   kategorie: { type: String },
   bild: String,
+  headerUrl: String,
   tickets: [
     {
       typ: { type: String },

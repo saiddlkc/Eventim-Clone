@@ -1,0 +1,54 @@
+.seat-picker {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+}
+
+.seat-map {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.seat {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    margin: 0 5px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #bdecb6;
+    /* Standardfarbe für verfügbare Sitze */
+    transition: background-color 0.3s ease;
+}
+
+.seat:hover {
+    background-color: #8ed487;
+    /* Farbe bei Hover über verfügbaren Sitz */
+}
+
+.reserved {
+    background-color: #f28b82;
+    /* Farbe für reservierte Sitze */
+}
+
+.selected {
+    background-color: #f7c948;
+    /* Farbe für ausgewählte Sitze */
+}
+
+.selected-seats {
+    margin-top: 20px;
+    font-size: 18px;
+}

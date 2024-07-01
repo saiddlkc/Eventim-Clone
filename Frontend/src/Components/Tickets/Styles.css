@@ -1,0 +1,238 @@
+@font-face {
+    font-family: 'myfont';
+    font-style: normal;
+    font-weight: 400;
+    src: local('myfont'), local('myfont-Regular'), url(../../assets/font/ANUDRG__.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'BOYCOTT';
+    font-style: normal;
+    font-weight: 400;
+    src: local('BOYCOTT'), local('BOYCOTT-Regular'), url(../../assets/font/BOYCOTT_.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'FrenteH1';
+    font-style: normal;
+    font-weight: 400;
+    src: local('FrenteH1'), local('FrenteH1-Regular'), url(../../assets/font/FrenteH1-Regular.otf) format('truetype');
+}
+
+
+.artist {
+    font-family: 'myfont';
+    font-size: 35px;
+    font-weight: bolder;
+}
+
+.date {
+    font-family: 'BOYCOTT';
+    font-size: 25px;
+    font-weight: bolder;
+}
+
+.description {
+    font-family: 'FrenteH1' !important;
+    font-size: 20px;
+
+}
+
+
+
+.time {
+    font-family: 'BOYCOTT';
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.row {
+    font-family: 'BOYCOTT';
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.seat {
+    font-family: 'BOYCOTT';
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+
+
+.container-tickets {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 100vh;
+    padding: 20px;
+
+
+}
+
+/* .ticket-container {
+
+}
+
+.ticket {
+    display: flex;
+    width: 900px;
+    height: 320px;
+    border: 1px solid #ccc;
+    background-color: #f3f3f3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ticket-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-section {
+    width: 300px;
+    background-color: #56324a;
+
+}
+
+.ticket-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-right: 10px dotted #ccc;
+}
+
+.info-section {
+    width: 450px;
+    padding: 20px;
+}
+
+.info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-header p {
+    margin: 0;
+    font-size: 14px;
+    color: #000;
+}
+
+.date {
+    font-size: 24px;
+    color: #d8475e;
+}
+
+.info-section h1 {
+    margin: 20px 0;
+    font-size: 36px;
+    color: #2d3b56;
+}
+
+.tour {
+    font-size: 18px;
+    color: #d8475e;
+}
+
+.info-details {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.info-details div {
+    text-align: center;
+}
+
+.info-details p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #000;
+}
+
+.time,
+.row,
+.seat {
+    font-size: 24px;
+    color: #2d3b56;
+}
+
+.venue {
+    font-size: 12px;
+    color: #666;
+}
+
+.barcode-section {
+    width: 150px;
+    padding: 20px;
+    background-color: #f3f3f3;
+    border-left: 10px dotted #ccc;
+}
+
+.barcode-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.barcode {
+    width: 100%;
+    height: 100px;
+    background: repeating-linear-gradient(90deg,
+            #000,
+            #000 2px,
+            #fff 2px,
+            #fff 4px);
+    margin: 10px 0;
+}
+
+.barcode-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.barcode-details p {
+    margin: 2px 0;
+    font-size: 14px;
+    color: #000;
+}
+
+.barcode-number {
+    font-size: 12px;
+    color: #666;
+    margin-top: 10px;
+}
+
+@media (max-width: 480px) {
+    .ticket {
+        padding: 10px;
+    }
+
+    .info-header p,
+    .info-details p {
+        font-size: 10px;
+    }
+
+    .date,
+    .time,
+    .row,
+    .seat {
+        font-size: 16px;
+    }
+
+    .info-section h1 {
+        font-size: 20px;
+    }
+
+    .tour {
+        font-size: 14px;
+    }
+
+    .venue {
+        font-size: 8px;
+    }
+} */
