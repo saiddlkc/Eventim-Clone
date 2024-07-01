@@ -27,7 +27,7 @@ const Navbar = () => {
     // Führen Sie hier Ihre Login-Logik aus
     console.log(`Username: ${username}, Password: ${password}`);
   };
-  const handleLoginClick = () => {
+  const handleLoginClick = async() => {
     try {
       const response = await axios.post('/api/login', { username, password });
       console.log(response.data);
