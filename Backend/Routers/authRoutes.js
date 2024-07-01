@@ -30,6 +30,7 @@ router.post("/login", async (req, res) => {
       profilePicture: user.profilePicture,
       name: user.name,
       role: user.role,
+      id: user.user_id,
     });
   } catch (error) {
     res.status(500).json({ error: error.message });

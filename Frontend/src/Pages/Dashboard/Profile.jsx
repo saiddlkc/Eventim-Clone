@@ -24,8 +24,8 @@ import {
 } from "@heroicons/react/24/solid";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { ToastContainer, toast } from "react-toastify";
+import UserTickets from "../../Components/Tickets/UserTickets";
 
-import Tickets from "../../Components/Tickets/Tickets";
 // import TicketBox from "../../Components/Tickets/TicketBox";
 
 export function Profile() {
@@ -186,7 +186,7 @@ export function Profile() {
 
           {activeTab === "app" && (
             <>
-              <Tickets />
+              <UserTickets />
             </>
           )}
 

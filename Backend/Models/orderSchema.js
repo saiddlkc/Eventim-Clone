@@ -6,18 +6,23 @@ const orderSchema = new mongoose.Schema({
     ref: "Ticket",
     required: true,
   },
-  eventId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Event",
-    required: true,
-  },
+  // eventId: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "Event",
+  //   required: true,
+  // },
   quantity: { type: Number, required: true },
   totalPrice: { type: Number, required: true },
   email: { type: String, required: true },
   paymentMethod: {
     type: String,
     required: true,
-    enum: ["Paypal", "Klarna", "Rechnung"],
+    enum: ["", "Paypal", "Klarna", "Rechnung"],
+  },
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
   },
 });
 

@@ -14,6 +14,7 @@ export function Login() {
     password: "",
     role: "" || "customer",
     ProfilePicture: null,
+    id: "",
   });
 
   const { dispatch } = useAuthContext();
