@@ -8,6 +8,7 @@ const authRoutes = require("./Routers/authRoutes");
 const contactRoutes = require("./Routers/contactRoutes");
 const ticketRoutes = require("./Routers/RouteTicket");
 const qrCode = require("./Routers/QrRoutes");
+const orderRoutes = require("./Routers/orderRoutes");
 
 const app = express();
 app.use(cors({ origin: "http://localhost:5173" }));
@@ -25,6 +26,8 @@ app.use("/dashboard", ticketRoutes);
 app.use("/dashboard", qrCode);
 app.use("/auth", authRoutes);
 app.use("/dashboard", contactRoutes);
+app.use("/dashboard", userRoutes);
+app.use("/api", orderRoutes);
 
 mongoose
   .connect(process.env.SERVER)
